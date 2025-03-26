@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ملفات الصف الأول الثانوي - gelvano</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <style>
+        .files-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .subject-section {
+            background-color: var(--light-gray);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .subject-title {
+            color: var(--primary-red);
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+            text-align: center;
+        }
+
+        .files-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .file-card {
+            background-color: var(--white);
+            border-radius: 10px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .file-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .file-icon {
+            color: var(--primary-red);
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .file-name {
+            color: var(--dark-gray);
+            margin-bottom: 1rem;
+            font-weight: 500;
+        }
+
+        .download-button {
+            background-color: var(--primary-red);
+            color: var(--white);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .download-button:hover {
+            background-color: var(--light-red);
+        }
+
+        .back-button {
+            display: inline-block;
+            margin: 1rem;
+            padding: 0.5rem 1rem;
+            background-color: var(--dark-gray);
+            color: var(--white);
+            text-decoration: none;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .back-button:hover {
+            background-color: var(--primary-red);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header with Logo -->
+    <header class="header">
+        <a href="media.html" class="back-button">العودة للصفحة السابقه </a>
+        <div class="logo-container">
+            <img src="assets\65465465.png" alt="شعار الموقع" class="logo animate__animated animate__fadeIn">
+        </div>
+    </header>
+
+    <div class="files-container">
+        <!-- الاسئلة Section -->
+        <section class="subject-section animate__animated animate__fadeInUp">
+            <h2 class="subject-title">الاسئلة</h2>
+            <div class="files-grid">
+                <div class="file-card">
+                    <div class="file-icon">📄</div>
+                    <div class="file-name">الوحدة الأولى </div>
+                    <a href="#" class="download-button">تحميل الملف</a>
+                </div>
+                <!-- Add more file cards as needed -->
+            </div>
+        </section>
+
+        <!-- الملخصات Section -->
+        <section class="subject-section animate__animated animate__fadeInUp" style="animation-delay: 0.2s">
+            <h2 class="subject-title">الملخصات</h2>
+            <div class="files-grid">
+                <div class="file-card">
+                    <div class="file-icon">📄</div>
+                    <div class="file-name">الوحدة الأولى </div>
+                    <a href="#" class="download-button">تحميل الملف</a>
+                </div>
+ 
+                <!-- Add more file cards as needed -->
+            </div>
+        </section>
+
+        <!-- Add more subject sections as needed -->
+    </div>
+
+     <!-- Footer -->
+     <footer class="footer">
+        <div class="contact-info">
+            <h3>للتواصل مع تيم GELVANO</h3>
+            <p> واتساب : 01558450550</p>
+        </div>
+        <div class="copyright">
+            <p>جميع الحقوق محفوظة © 2025 - تم النشر بواسطة Ebrahim Reda</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html> 
