@@ -33,7 +33,7 @@ document.querySelectorAll('[data-animate]').forEach(element => {
     observer.observe(element);
 });
 
-// Add loading animation
+// Improved loading animation
 document.addEventListener('DOMContentLoaded', () => {
     const loading = document.createElement('div');
     loading.className = 'loading';
@@ -45,6 +45,8 @@ document.addEventListener('DOMContentLoaded', () => {
         loading.classList.add('hidden');
         setTimeout(() => {
             loading.remove();
+            // Ensure content is visible
+            document.body.classList.add('active');
         }, 500);
     });
 });
@@ -87,7 +89,7 @@ document.querySelectorAll('button, .nav-button').forEach(button => {
     });
 });
 
-// Add page transition effect
+// Improved page transition effect
 document.querySelectorAll('a').forEach(link => {
     link.addEventListener('click', (e) => {
         if (link.getAttribute('href').startsWith('#')) return;
@@ -95,12 +97,27 @@ document.querySelectorAll('a').forEach(link => {
         e.preventDefault();
         const href = link.getAttribute('href');
         
+        // Add transition class to body
         document.body.classList.add('page-transition');
         
+        // Ensure transition completes before navigation
         setTimeout(() => {
             window.location.href = href;
-        }, 500);
+        }, 300);
     });
+});
+
+// Handle browser navigation (back/forward)
+window.addEventListener('pageshow', (event) => {
+    // If the page is loaded from the cache
+    if (event.persisted) {
+        // Remove any transition classes
+        document.body.classList.remove('page-transition');
+        // Force a reflow
+        document.body.offsetHeight;
+        // Add active class to show content
+        document.body.classList.add('active');
+    }
 });
 
 // Handle form submissions (if any)
