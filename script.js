@@ -5,72 +5,86 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         const target = document.querySelector(this.getAttribute('href'));
         if (target) {
             target.scrollIntoView({
-                behavior: 'smooth'
+                behavior: 'smooth',
+                block: 'start'
             });
         }
     });
 });
 
 // Add intersection observer for animations
+const observerOptions = {
+    root: null,
+    rootMargin: '0px',
+    threshold: 0.1
+};
+
 const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
-            entry.target.classList.add('animate__animated');
-            entry.target.classList.add(entry.target.dataset.animation || 'animate__fadeIn');
+            entry.target.classList.add('animate__animated', 'animate__fadeInUp');
+            observer.unobserve(entry.target);
         }
     });
-}, {
-    threshold: 0.1
-});
+}, observerOptions);
 
-// Observe all elements with animation classes
-document.querySelectorAll('.animate__animated').forEach(element => {
+// Observe elements with data-animate attribute
+document.querySelectorAll('[data-animate]').forEach(element => {
     observer.observe(element);
 });
 
 // Add loading animation
-window.addEventListener('load', () => {
-    document.body.classList.add('loaded');
+document.addEventListener('DOMContentLoaded', () => {
+    const loading = document.createElement('div');
+    loading.className = 'loading';
+    loading.innerHTML = '<div class="loading-spinner"></div>';
+    document.body.appendChild(loading);
+
+    // Hide loading animation after page loads
+    window.addEventListener('load', () => {
+        loading.classList.add('hidden');
+        setTimeout(() => {
+            loading.remove();
+        }, 500);
+    });
 });
 
 // Add hover effect to buttons
-document.querySelectorAll('.nav-button, .grade-button, .media-button').forEach(button => {
+document.querySelectorAll('.nav-button').forEach(button => {
     button.addEventListener('mouseenter', () => {
-        button.style.transform = 'translateY(-3px)';
+        button.style.transform = 'translateY(-5px)';
     });
-
+    
     button.addEventListener('mouseleave', () => {
         button.style.transform = 'translateY(0)';
     });
 });
 
-// Add ripple effect to buttons
-function createRipple(event) {
-    const button = event.currentTarget;
-    const ripple = document.createElement('span');
-    const rect = button.getBoundingClientRect();
-    
-    const diameter = Math.max(rect.width, rect.height);
-    const radius = diameter / 2;
-    
-    ripple.style.width = ripple.style.height = `${diameter}px`;
-    ripple.style.left = `${event.clientX - rect.left - radius}px`;
-    ripple.style.top = `${event.clientY - rect.top - radius}px`;
-    ripple.classList.add('ripple');
-    
-    const rippleContainer = document.createElement('span');
-    rippleContainer.classList.add('ripple-container');
-    
-    rippleContainer.appendChild(ripple);
-    button.appendChild(rippleContainer);
-    
-    setTimeout(() => {
-        rippleContainer.remove();
-    }, 1000);
+// Add parallax effect to banner
+const banner = document.querySelector('.banner');
+if (banner) {
+    window.addEventListener('scroll', () => {
+        const scrolled = window.pageYOffset;
+        banner.style.backgroundPositionY = -(scrolled * 0.5) + 'px';
+    });
 }
 
-document.querySelectorAll('.nav-button, .grade-button, .media-button').forEach(button => {
-    button.addEventListener('click', createRipple);
+// Add click animation to buttons
+document.querySelectorAll('button, .nav-button').forEach(button => {
+    button.addEventListener('click', function(e) {
+        const ripple = document.createElement('span');
+        ripple.className = 'ripple';
+        this.appendChild(ripple);
+        
+        const rect = this.getBoundingClientRect();
+        const size = Math.max(rect.width, rect.height);
+        
+        ripple.style.width = ripple.style.height = size + 'px';
+        ripple.style.left = e.clientX - rect.left - size/2 + 'px';
+        ripple.style.top = e.clientY - rect.top - size/2 + 'px';
+        
+        setTimeout(() => ripple.remove(), 600);
+    });
 });
 
 // Add page transition effect
@@ -96,4 +110,31 @@ forms.forEach(form => {
         e.preventDefault();
         // Add your form handling logic here
     });
+});
+
+// Header Scroll Effect
+const header = document.querySelector('.header');
+let lastScroll = 0;
+
+window.addEventListener('scroll', () => {
+    const currentScroll = window.pageYOffset;
+    
+    if (currentScroll > lastScroll && currentScroll > 100) {
+        header.classList.add('scrolled');
+    } else {
+        header.classList.remove('scrolled');
+    }
+    
+    lastScroll = currentScroll;
+});
+
+// Page Transitions
+document.addEventListener('DOMContentLoaded', () => {
+    const mainContent = document.querySelector('main, .banner');
+    if (mainContent) {
+        mainContent.classList.add('page-transition');
+        setTimeout(() => {
+            mainContent.classList.add('active');
+        }, 100);
+    }
 }); 
