@@ -3,11 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>فيديوهات الصف الأول الثانوي -  gelvano</title>
+    <title>فيديوهات الصف الثالث الثانوي - gelvano</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="access-code.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="access-code.js" defer></script>
     <style>
         .videos-container {
             max-width: 1200px;
@@ -157,39 +159,47 @@
             <div class="videos-grid">
                 <div class="video-card">
                     <div class="video-thumbnail">
-                        <img src="رابط صورة الفيديو" >
-                        <a href="#" class="play-button"></a>
+                        <img src="assets/placeholder.jpg" alt="الفصل الاول">
+                        <a href="https://youtu.be/example3" class="play-button" data-type="video">
+                            <i class="fas fa-play"></i>
+                        </a>
                     </div>
                     <div class="video-info">
-                        <h3 class="video-title"> الفصل الاول </h3>
+                        <h3 class="video-title">الفصل الاول</h3>
                         <div class="video-meta">
-                            <span>المدة: 15:30</span>
-                            <span>المشاهدات: 1.2k</span>
+                            <span>
+                                <i class="far fa-clock"></i>
+                                المدة: 15:30
+                            </span>
+                            <span>
+                                <i class="far fa-eye"></i>
+                                المشاهدات: 1.2k
+                            </span>
                         </div>
                     </div>
                 </div>
-
             </div>
         </section>
 
-        <!-- المراجعات  Course -->
+        <!-- المراجعات Course -->
         <section class="course-section animate__animated animate__fadeInUp" style="animation-delay: 0.2s">
             <h2 class="course-title">المراجعات</h2>
             <div class="videos-grid">
                 <div class="video-card">
                     <div class="video-thumbnail">
                         <img src="assets/physics-thumbnail-1.jpg">
-                        <a href="#" class="play-button"></a>
+                        <a href="https://drive.google.com/file/d/example4" class="play-button" data-type="video">
+                            <i class="fas fa-play"></i>
+                        </a>
                     </div>
                     <div class="video-info">
-                        <h3 class="video-title"> الوحدة الاولي </h3>
+                        <h3 class="video-title">الوحدة الاولي</h3>
                         <div class="video-meta">
                             <span>المدة: 18:45</span>
                             <span>المشاهدات: 1.5k</span>
                         </div>
                     </div>
                 </div>
-
             </div>
         </section>
     </div>
@@ -225,6 +235,5 @@
     </footer>
 
     <script src="script.js"></script>
-    <script src="access-code.js"></script>
 </body>
 </html>   
