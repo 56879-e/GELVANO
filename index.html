@@ -39,6 +39,126 @@
             margin-top: -5px;
             margin-bottom: 5px;
         }
+        .moving-underline {
+            position: relative;
+            font-weight: 800;
+            color: #e31837;
+            display: inline-block;
+            padding-bottom: 5px;
+        }
+        .moving-underline::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, #e31837, #ff4d6d);
+            animation: moveLine 2s ease-in-out infinite;
+            border-radius: 2px;
+        }
+        @keyframes moveLine {
+            0% {
+                transform: scaleX(0.8);
+                opacity: 0.5;
+            }
+            50% {
+                transform: scaleX(1.1);
+                opacity: 1;
+            }
+            100% {
+                transform: scaleX(0.8);
+                opacity: 0.5;
+            }
+        }
+
+        /* Medium Image Section Styles */
+        .medium-image-section {
+            padding: 2rem 0;
+            text-align: center;
+            background-color: #f8f9fa;
+        }
+
+        .image-container {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+
+        .medium-image {
+            width: 100%;
+            height: auto;
+            max-height: 400px;
+            object-fit: contain;
+            border-radius: 8px;
+        }
+
+        /* Services Section Styles */
+        .services-section {
+            padding: 2rem 2rem;
+            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+            text-align: center;
+        }
+
+        .services-section h2 {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .services-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            max-width: 1000px;
+            margin: 1rem auto;
+            padding: 0 1rem;
+        }
+
+        .service-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+
+        .service-icon {
+            margin-bottom: 1.5rem;
+        }
+
+        .service-icon i {
+            font-size: 3rem;
+            color: #e31837;
+            margin-bottom: 1rem;
+        }
+
+        .service-card h3 {
+            color: #333;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .service-card p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 768px) {
+            .services-container {
+                grid-template-columns: 1fr;
+                padding: 0 1rem;
+            }
+            
+            .service-card {
+                padding: 1.5rem;
+            }
+        }
     </style>
 </head>
 <body>
@@ -60,7 +180,9 @@
     <!-- Banner Section -->
     <section class="banner">
         <div class="banner-content">
-            <h1 class="animate__animated animate__slideInRight">  كل مشاكلك في الفيزياااا محلولة مع جلفانو !!  </h1>
+            <h1 class="welcome-text animate__animated animate__slideInRight">
+                كل مشاكلك في الفيزياااا</span> محلولة مع <span class="highlight">جلڤانو </span> !!
+            </h1>
             <div class="banner-image">
                 <img src="assets\78876786786.png" alt="صورة ترحيبية" class="animate__animated animate__fadeIn">
             </div>
@@ -73,46 +195,88 @@
         <a href="media.html" class="nav-button animate__animated animate__fadeInUp">ابدأ مذاكرة</a>
     </section>
 
+    <!-- Medium Image Section -->
+    <section class="medium-image-section">
+        <div class="image-container animate__animated animate__fadeIn">
+            <img src="assets\5645654654654.png" alt="صورة توضيحية" class="medium-image">
+        </div>
+    </section>
+
     <!-- Profile Section -->
     <section class="profile-section">
-        <h2> هدفنا   </h2>
+        <h2 class="moving-underline"> هدفنا </h2>
         <div class="profile-content animate__animated animate__fadeIn">
             <p>منصة جلفانو في الفيزياء والعلوم المتكامله بتوفر لك اقوي شرح وحل ومراجعة واهم الملفات اللي هتلاقي فيها كل الملخصات والاسئلة اللي هتخليك قد اي سوال يا بطل </p>
           <p>.........</p>
             <h1>MR/Khaled Osama</h1>     
-                   <h3>in physics</h3>
+                   <h3> Physics Teacher</h3>
         </div>
     </section>
 
-  <!-- Footer -->
-  <footer class="footer">
-    <div class="footer-content">
-        <div class="footer-section">
-            <h3>  social media  </h3>
-            <p>  تابع صفحاتنا علي السوشيال ميديا عشان يوصلك كل جديد  </p>
-            <div class="social-links">
-                <a href="https://www.facebook.com/profile.php?id=100064048811580#" target="_blank"><i class="fab fa-facebook"></i></a>
-                <a href="https://www.youtube.com/@Gelvano_ph12" target="_blank"><i class="fab fa-youtube"></i></a>
+    <!-- Services Section -->
+    <section class="services-section">
+        <h2 class="moving-underline">خدماتنا</h2>
+        <div class="services-container">
+            <div class="service-card animate__animated animate__fadeInUp">
+                <div class="service-icon">
+                    <i class="fas fa-book-open fa-bounce"></i>
+                </div>
+                <h3>شرح تفصيلي</h3>
+                <p>شرح مبسط ومفصل لجميع دروس الفيزياء والعلوم المتكاملة</p>
+            </div>
+            <div class="service-card animate__animated animate__fadeInUp" style="animation-delay: 0.2s;">
+                <div class="service-icon">
+                    <i class="fas fa-file-alt fa-shake"></i>
+                </div>
+                <h3>ملخصات شاملة</h3>
+                <p>ملخصات مركزة تغطي اهم النقاط الهامه الوارده في الاسئلة  </p>
+            </div>
+            <div class="service-card animate__animated animate__fadeInUp" style="animation-delay: 0.4s;">
+                <div class="service-icon">
+                    <i class="fas fa-video fa-beat"></i>
+                </div>
+                <h3>فيديوهات تعليمية</h3>
+                <p>شرح مرئي لجميع الدروس بأعلي جوده واستفاده عالية </p>
+            </div>
+            <div class="service-card animate__animated animate__fadeInUp" style="animation-delay: 0.6s;">
+                <div class="service-icon">
+                    <i class="fas fa-tasks fa-flip"></i>
+                </div>
+                <h3>تمارين واختبارات</h3>
+                <p>مجموعة متنوعة من التمارين والاختبارات التفاعلية التي تؤهلك للأختبار النهائي </p>
             </div>
         </div>
-        <div class="footer-section">
-            <h3>روابط سريعة</h3>
-            <ul class="footer-links">
-                <li><a href="tests.html"><i class="fas fa-file-alt"></i> امتحانات اونلاين</a></li>
-                <li><a href="media.html"><i class="fas fa-play-circle"></i> ابدأ مذاكرة</a></li>
-            </ul>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>  social media  </h3>
+                <p>  تابع صفحاتنا علي السوشيال ميديا عشان يوصلك كل جديد  </p>
+                <div class="social-links">
+                    <a href="https://www.facebook.com/profile.php?id=100064048811580#" target="_blank"><i class="fab fa-facebook"></i></a>
+                    <a href="https://www.youtube.com/@Gelvano_ph12" target="_blank"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3>روابط سريعة</h3>
+                <ul class="footer-links">
+                    <li><a href="tests.html"><i class="fas fa-file-alt"></i> امتحانات اونلاين</a></li>
+                    <li><a href="media.html"><i class="fas fa-play-circle"></i> ابدأ مذاكرة</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>تواصل مع تيم GELVANO</h3>
+                <p><i class="fab fa-whatsapp"></i> واتساب: 01558450550</p>  
+            </div>
         </div>
-        <div class="footer-section">
-            <h3>تواصل مع تيم GELVANO</h3>
-            <p><i class="fab fa-whatsapp"></i> واتساب: 01558450550</p>  
+        <div class="footer-bottom">
+            <div class="copyright">
+                <p>جميع الحقوق محفوظة © 2025 - تم النشر بواسطة   team Gelvano </p>
+            </div>
         </div>
-    </div>
-    <div class="footer-bottom">
-        <div class="copyright">
-            <p>جميع الحقوق محفوظة © 2025 - تم النشر بواسطة   team Gelvano </p>
-        </div>
-    </div>
-</footer>
+    </footer>
 
     <script src="script.js"></script>
 </body>
