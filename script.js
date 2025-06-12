@@ -73,21 +73,10 @@ document.querySelectorAll('.nav-button, .grade-button, .media-button').forEach(b
     button.addEventListener('click', createRipple);
 });
 
-// Add page transition effect
-document.querySelectorAll('a').forEach(link => {
-    link.addEventListener('click', (e) => {
-        if (link.getAttribute('href').startsWith('#')) return;
-        
-        e.preventDefault();
-        const href = link.getAttribute('href');
-        
-        document.body.classList.add('page-transition');
-        
-        setTimeout(() => {
-            window.location.href = href;
-        }, 500);
-    });
-});
+// Remove global link interception for .download-button and .play-button
+// Only show popup and do not allow any content to be accessed until code is verified
+
+// Remove any global link interception in script.js that could cause content to appear before code verification
 
 // Handle form submissions (if any)
 const forms = document.querySelectorAll('form');
@@ -96,4 +85,4 @@ forms.forEach(form => {
         e.preventDefault();
         // Add your form handling logic here
     });
-}); 
+});

@@ -638,4 +638,77 @@ select:focus {
     .welcome-text {
         font-size: 1.8rem;
     }
-} 
+}
+
+/* Access Code Popup */
+.access-code-popup {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0,0,0,0.5);
+    align-items: center;
+    justify-content: center;
+}
+.access-code-popup[style*="display: flex"] {
+    display: flex !important;
+}
+.access-code-popup .popup-content {
+    background: #fff;
+    padding: 2rem 1.5rem 1.5rem 1.5rem;
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+    min-width: 320px;
+    max-width: 90vw;
+    text-align: center;
+    position: relative;
+}
+.access-code-popup .close-popup {
+    position: absolute;
+    top: 10px;
+    right: 16px;
+    font-size: 1.5rem;
+    color: #e31837;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+.access-code-popup .code-input {
+    width: 80%;
+    padding: 0.5rem;
+    font-size: 1.2rem;
+    margin: 1rem 0 0.5rem 0;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    text-align: center;
+    letter-spacing: 0.2em;
+}
+.access-code-popup .verify-button {
+    background: #e31837;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 0.5rem 1.5rem;
+    font-size: 1.1rem;
+    cursor: pointer;
+    margin-bottom: 0.5rem;
+    transition: background 0.2s;
+}
+.access-code-popup .verify-button:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+}
+.access-code-popup .error-message {
+    color: #e31837;
+    margin-top: 0.5rem;
+    font-size: 1rem;
+    display: none;
+}
+.access-code-popup .attempts-left {
+    color: #333;
+    font-size: 0.95rem;
+    margin-top: 0.25rem;
+}
