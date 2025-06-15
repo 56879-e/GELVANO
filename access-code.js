@@ -13,11 +13,14 @@ const accessCodes = {
     'second-grade-file-1': '7890',
     'second-grade-file-2': '8901',
     // Third grade
-    'third-grade-video-1': '9012',
-    'third-grade-video-الشرح': ['3333', '4444', '5555', '7777'],
-    'third-grade-video-2': '0123',
-    'third-grade-file-1': '1357',
-    'third-grade-file-2': '2468'
+    'third-grade-video-1': ['3333', '4444', '5555', '7777'],
+    'third-grade-video-2': ['1212', '2424', '7474', '1414'],
+    'third-grade-video-3': ['3234', '4535', '2124', '7878'],
+    'third-grade-video-4': ['3477', '7755', '2200', '3458'],
+    'third-grade-video-5': ['4568', '3328', '2525', '7373'],
+    'third-grade-video-6': ['1298', '1446', '7857', '7676'],
+    'third-grade-file-1': ['1357'],
+    'third-grade-file-2': ['2468']
 };
 
 const MAX_ATTEMPTS = 5;
