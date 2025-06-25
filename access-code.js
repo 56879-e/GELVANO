@@ -177,8 +177,19 @@ verifyButton.onclick = function() {
 
     if (isValid) {
         hidePopup();
-        // Instead of window.open, show modal
-        showVideoModal(currentContentUrl);
+        // Check if it's a video or file
+        if (currentContentId && currentContentId.includes('video')) {
+            // Instead of window.open, show modal
+            showVideoModal(currentContentUrl);
+        } else {
+            // For files, trigger download
+            const link = document.createElement('a');
+            link.href = currentContentUrl;
+            link.download = '';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
     } else {
         errorMessage.textContent = 'كود غير صحيح';
         errorMessage.style.display = 'block';
