@@ -167,6 +167,58 @@ videoModal.onclick = function(e) {
     if (e.target === videoModal) hideVideoModal();
 };
 
+// PDF modal HTML
+const pdfModal = document.createElement('div');
+pdfModal.className = 'pdf-modal';
+pdfModal.style.display = 'none';
+pdfModal.style.position = 'fixed';
+pdfModal.style.top = '0';
+pdfModal.style.left = '0';
+pdfModal.style.width = '100vw';
+pdfModal.style.height = '100vh';
+pdfModal.style.background = 'rgba(0,0,0,0.8)';
+pdfModal.style.justifyContent = 'center';
+pdfModal.style.alignItems = 'center';
+pdfModal.style.zIndex = '9999';
+pdfModal.innerHTML = `
+  <div class="pdf-modal-content" style="position:relative;max-width:90vw;max-height:90vh;background:#fff;border-radius:12px;padding:1rem;">
+    <span class="close-pdf-modal" style="position:absolute;top:10px;left:10px;font-size:32px;color:#333;cursor:pointer;z-index:2;">&times;</span>
+    <div class="pdf-embed-container" style="width:80vw;height:80vh;max-width:900px;max-height:90vh;display:flex;align-items:center;justify-content:center;">
+      <!-- PDF iframe will be injected here -->
+    </div>
+    <a class="pdf-download-link" href="#" download style="display:inline-block;margin-top:1rem;background:#e53935;color:#fff;padding:0.5rem 1.5rem;border-radius:8px;text-decoration:none;">تحميل الملف</a>
+  </div>
+`;
+document.body.appendChild(pdfModal);
+
+const closePdfModalBtn = pdfModal.querySelector('.close-pdf-modal');
+const pdfEmbedContainer = pdfModal.querySelector('.pdf-embed-container');
+const pdfDownloadLink = pdfModal.querySelector('.pdf-download-link');
+
+function showPdfModal(url) {
+    pdfEmbedContainer.innerHTML = '';
+    const iframe = document.createElement('iframe');
+    iframe.src = url;
+    iframe.style.width = '100%';
+    iframe.style.height = '100%';
+    iframe.style.border = 'none';
+    pdfEmbedContainer.appendChild(iframe);
+    pdfDownloadLink.href = url;
+    pdfModal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+}
+
+function hidePdfModal() {
+    pdfModal.style.display = 'none';
+    pdfEmbedContainer.innerHTML = '';
+    document.body.style.overflow = '';
+}
+
+closePdfModalBtn.onclick = hidePdfModal;
+pdfModal.onclick = function(e) {
+    if (e.target === pdfModal) hidePdfModal();
+};
+
 verifyButton.onclick = function() {
     const code = codeInput.value.trim();
     attempts++;
@@ -181,14 +233,8 @@ verifyButton.onclick = function() {
             // Instead of window.open, show modal
             showVideoModal(currentContentUrl);
         } else {
-            // For files, open in new tab and trigger download
-            window.open(currentContentUrl, '_blank');
-            const link = document.createElement('a');
-            link.href = currentContentUrl;
-            link.download = '';
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
+            // For files, show PDF modal with viewer and download
+            showPdfModal(currentContentUrl);
         }
     } else {
         errorMessage.textContent = 'كود غير صحيح';
