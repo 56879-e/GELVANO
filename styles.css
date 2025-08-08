@@ -10,8 +10,8 @@
 }
 
 :root {
-    --primary-red: #e31837;
-    --light-red: #ff4d6d;
+    --primary-red: #d5472f;
+    --light-red: #ea7863;
     --white: #ffffff;
     --light-gray: #f5f5f5;
     --dark-gray: #333333;
@@ -106,7 +106,7 @@ body {
 
 /* Banner Section */
 .banner {
-    background: linear-gradient(360deg, #a1241d 0%, #380c07 100%);
+    background: linear-gradient(360deg, #d5472f 0%, #662317 100%);
     padding: clamp(2rem, 5vw, 4rem) var(--container-padding);
     position: relative;
     color: var(--white);
@@ -205,7 +205,7 @@ body {
 }
 
 .profile-section h2 {
-    color: #9a231c;
+    color: #d5472f;
     margin-bottom: 2rem;
     font-size: clamp(1.5rem, 3vw, 2rem);
 }
@@ -221,7 +221,7 @@ body {
 
 /* Footer */
 .footer {
-    background: linear-gradient(180deg, #9a231c 0%, #7a1b15 100%);
+    background: linear-gradient(180deg, #d5472f 0%, #662317 100%);
     color: var(--white);
     padding: clamp(1rem, 5vw, 4rem) var(--container-padding) 2rem;
     margin-top: 4rem;
@@ -517,7 +517,7 @@ select:focus {
     transform: translate(-50%, -50%);
     width: 64px;
     height: 64px;
-    background-color: rgba(227, 24, 55, 0.9);
+    background-color: #d5472f;
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -614,7 +614,7 @@ select:focus {
     left: 0;
     width: 100%;
     height: 3px;
-    background: linear-gradient(90deg, #e7a53c, #ff2d2d);
+    background: linear-gradient(90deg, #e7a53c, #d5472f);
     animation: underline 2s ease-in-out infinite;
     border-radius: 2px;
 }
@@ -671,7 +671,7 @@ select:focus {
     top: 10px;
     right: 16px;
     font-size: 1.5rem;
-    color: #e31837;
+    color: #d5472f;
     background: none;
     border: none;
     cursor: pointer;
@@ -687,7 +687,7 @@ select:focus {
     letter-spacing: 0.2em;
 }
 .access-code-popup .verify-button {
-    background: #e31837;
+    background: #d5472f;
     color: #fff;
     border: none;
     border-radius: 8px;
