@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>gelvano</title>
+    <link rel="icon" type="image/png" href="assets\6546847867645351321321354564687654545343.png">
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -42,7 +43,7 @@
         .moving-underline {
             position: relative;
             font-weight: 800;
-            color: #e31837;
+            color: #d5472f;
             display: inline-block;
             padding-bottom: 5px;
         }
@@ -53,7 +54,7 @@
             left: 0;
             width: 100%;
             height: 3px;
-            background: linear-gradient(90deg, #e31837, #ff4d6d);
+            background: linear-gradient(90deg, #d5472f, #ff8671);
             animation: moveLine 2s ease-in-out infinite;
             border-radius: 2px;
         }
@@ -134,7 +135,7 @@
 
         .service-icon i {
             font-size: 3rem;
-            color: #e31837;
+            color: #d5472f;
             margin-bottom: 1rem;
         }
 
@@ -147,6 +148,78 @@
         .service-card p {
             color: #666;
             line-height: 1.6;
+        }
+
+        /* Login Overlay Styles */
+        .login-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(245, 245, 245, 0.98);
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.3s;
+        }
+        .login-overlay.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+        .login-box {
+            background: #fff;
+            border-radius: 18px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+            padding: 2.5rem 2rem 2rem 2rem;
+            min-width: 320px;
+            max-width: 90vw;
+            text-align: center;
+            animation: fadeInDown 0.7s;
+        }
+        .login-box h2 {
+            margin-bottom: 1.5rem;
+            color: #d5472f;
+            font-weight: 800;
+            font-size: 2rem;
+            letter-spacing: 1px;
+        }
+        .login-box input {
+            width: 90%;
+            padding: 0.8rem;
+            margin: 0.5rem 0;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            outline: none;
+            transition: border 0.2s;
+        }
+        .login-box input:focus {
+            border: 1.5px solid #d5472f;
+        }
+        .login-box button {
+            width: 95%;
+            padding: 0.9rem;
+            margin-top: 1.2rem;
+            background: linear-gradient(90deg, #d5472f, #ff8671);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .login-box button:hover {
+            background: linear-gradient(90deg, #ff8671, #d5472f);
+        }
+        .login-error {
+            color: #d5472f;
+            font-size: 1rem;
+            margin-top: 0.5rem;
+            min-height: 1.2em;
+        }
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-40px);}
+            to { opacity: 1; transform: translateY(0);}
         }
 
         @media (max-width: 768px) {
@@ -162,8 +235,22 @@
     </style>
 </head>
 <body>
+    <!-- Student Name Display -->
+    <div id="studentNameDisplay" style="display:none; text-align:center; font-size:1.3rem; font-weight:bold; color:#d5472f; margin-top:0.5rem;"></div>
+    <!-- Login Overlay -->
+    <div class="login-overlay" id="loginOverlay">
+        <form class="login-box" id="loginForm" autocomplete="off" onsubmit="return false;">
+            <h2>تسجيل الدخول</h2>
+            <input type="text" id="studentName" placeholder="اسم الطالب (بالعربية)" autocomplete="off" required style="direction:rtl;">
+            <input type="text" id="username" placeholder="اسم المستخدم" autocomplete="off" required>
+            <input type="password" id="password" placeholder="كلمة المرور" autocomplete="off" required>
+            <button type="submit" id="loginBtn">دخول</button>
+            <div class="login-error" id="loginError"></div>
+        </form>
+    </div>
+
     <!-- WhatsApp Button -->
-    <a href="https://wa.me/201558450550" class="whatsapp-button animate__animated animate__fadeInLeft" target="_blank">
+    <a href="https://wa.me/message/NI47K5DKEZUIE1" class="whatsapp-button animate__animated animate__fadeInLeft" target="_blank">
         <i class="fab fa-whatsapp"></i>
     </a>
 
@@ -171,7 +258,7 @@
     <header class="header">
         <div class="logo-container">
             <a href="index.html">
-                <img src="assets\65465465.png" alt="شعار الموقع" class="logo animate__animated animate__fadeIn">
+                <img src="assets/logo.png" alt="شعار الموقع" class="logo animate__animated animate__fadeIn">
             </a>
         </div>
     </header>
@@ -184,7 +271,7 @@
                 كل مشاكلك في الفيزياااا</span> محلولة مع <span class="highlight">جلڤانو </span> !!
             </h1>
             <div class="banner-image">
-                <img src="assets\78876786786.png" alt="صورة ترحيبية" class="animate__animated animate__fadeIn">
+                <img src="assets/6546847867645351321321354564687654545343.png" alt="صورة ترحيبية" class="animate__animated animate__fadeIn">
             </div>
         </div>
     </section>
@@ -198,7 +285,7 @@
     <!-- Medium Image Section -->
     <section class="medium-image-section">
         <div class="image-container animate__animated animate__fadeIn">
-            <img src="assets\5645654654654.png" alt="صورة توضيحية" class="medium-image">
+            <img src="assets/22 logo .png" alt="صورة توضيحية" class="medium-image">
         </div>
     </section>
 
@@ -215,7 +302,7 @@
 
     <!-- Services Section -->
     <section class="services-section">
-        <h2 class="moving-underline">خدماتنا</h2>
+        <h2 class="moving-underline">ما نقدمة لك </h2>
         <div class="services-container">
             <div class="service-card animate__animated animate__fadeInUp">
                 <div class="service-icon">
@@ -268,7 +355,7 @@
             </div>
             <div class="footer-section">
                 <h3>تواصل مع تيم GELVANO</h3>
-                <p><i class="fab fa-whatsapp"></i> واتساب: 01558450550</p>  
+                <p><i class="fab fa-whatsapp"></i> واتساب: 01070425779</p>  
             </div>
         </div>
         <div class="footer-bottom">
@@ -279,5 +366,101 @@
     </footer>
 
     <script src="script.js"></script>
+    <script>
+    // Example password: A1234567890
+    // To add more passwords, add them to the allowedPasswords array below.
+    document.addEventListener('DOMContentLoaded', function() {
+        const overlay = document.getElementById('loginOverlay');
+        const form = document.getElementById('loginForm');
+        const studentNameInput = document.getElementById('studentName');
+        const usernameInput = document.getElementById('username');
+        const passwordInput = document.getElementById('password');
+        const errorDiv = document.getElementById('loginError');
+        const loginBtn = document.getElementById('loginBtn');
+        const studentNameDisplay = document.getElementById('studentNameDisplay');
+
+        // List of allowed passwords (add one per student)
+        const allowedPasswords = [
+            'A1234567890',
+            'C1234567890',
+            // Add more passwords here, e.g.:
+            // 'B0987654321',
+            // 'C1122334455'
+        ];
+
+        // Auto-fill username, password, and student name if saved
+        const savedUsername = localStorage.getItem('gelvano_username');
+        const savedPassword = localStorage.getItem('gelvano_password');
+        const savedStudentName = localStorage.getItem('gelvano_student_name');
+        if (savedStudentName) {
+            studentNameDisplay.textContent = '👤 الدكتور/ة : ' + savedStudentName;
+            studentNameDisplay.style.display = 'block';
+        }
+        if (savedUsername && savedPassword && savedStudentName) {
+            usernameInput.value = savedUsername;
+            passwordInput.value = savedPassword;
+            studentNameInput.value = savedStudentName;
+            // Optionally, auto-login if all are present and valid
+            if (
+                savedUsername === 'GELVANOST' &&
+                /^[A-Za-z][0-9]{10}$/.test(savedPassword) &&
+                allowedPasswords.includes(savedPassword)
+            ) {
+                overlay.classList.add('hidden');
+                setTimeout(() => { overlay.style.display = 'none'; }, 400);
+                studentNameDisplay.textContent = '👤 الدكتور/ة : ' + savedStudentName;
+                studentNameDisplay.style.display = 'block';
+            }
+        }
+
+        function validateLogin() {
+            const studentName = studentNameInput.value.trim();
+            const username = usernameInput.value.trim();
+            const password = passwordInput.value.trim();
+            if (!studentName) {
+                errorDiv.textContent = 'يرجى إدخال اسم الطالب بالعربية';
+                return false;
+            }
+            if (username !== 'GELVANOST') {
+                errorDiv.textContent = 'اسم المستخدم غير صحيح';
+                return false;
+            }
+            if (!/^[A-Za-z][0-9]{10}$/.test(password)) {
+                errorDiv.textContent = 'كلمة المرور يجب أن تبدأ بحرف ثم 10 أرقام';
+                return false;
+            }
+            if (!allowedPasswords.includes(password)) {
+                errorDiv.textContent = 'كلمة المرور غير صحيحة أو غير مسجلة';
+                return false;
+            }
+            errorDiv.textContent = '';
+            return true;
+        }
+
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            if (validateLogin()) {
+                // Save username, password, and student name to localStorage
+                localStorage.setItem('gelvano_username', usernameInput.value.trim());
+                localStorage.setItem('gelvano_password', passwordInput.value.trim());
+                localStorage.setItem('gelvano_student_name', studentNameInput.value.trim());
+                overlay.classList.add('hidden');
+                setTimeout(() => { overlay.style.display = 'none'; }, 400);
+                studentNameDisplay.textContent = '👤 الطالب: ' + studentNameInput.value.trim();
+                studentNameDisplay.style.display = 'block';
+            }
+        });
+
+        loginBtn.addEventListener('click', function() {
+            form.dispatchEvent(new Event('submit'));
+        });
+
+        form.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                form.dispatchEvent(new Event('submit'));
+            }
+        });
+    });
+    </script>
 </body>
-</html> 
+</html>
