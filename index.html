@@ -258,7 +258,7 @@
     <header class="header">
         <div class="logo-container">
             <a href="index.html">
-                <img src="assets/logo.png" alt="شعار الموقع" class="logo animate__animated animate__fadeIn">
+                <img loading="lazy" src="assets/logo.png" alt="شعار الموقع" class="logo animate__animated animate__fadeIn">
             </a>
         </div>
     </header>
@@ -271,7 +271,7 @@
                 كل مشاكلك في الفيزياااا</span> محلولة مع <span class="highlight">جلڤانو </span> !!
             </h1>
             <div class="banner-image">
-                <img src="assets/6546847867645351321321354564687654545343.png" alt="صورة ترحيبية" class="animate__animated animate__fadeIn">
+                <img loading="lazy" src="assets/6546847867645351321321354564687654545343.png" alt="صورة ترحيبية" class="animate__animated animate__fadeIn">
             </div>
         </div>
     </section>
@@ -446,7 +446,7 @@
                 localStorage.setItem('gelvano_student_name', studentNameInput.value.trim());
                 overlay.classList.add('hidden');
                 setTimeout(() => { overlay.style.display = 'none'; }, 400);
-                studentNameDisplay.textContent = '👤 الطالب: ' + studentNameInput.value.trim();
+                studentNameDisplay.textContent = '👤 الدكتور/ة : ' + studentNameInput.value.trim();
                 studentNameDisplay.style.display = 'block';
             }
         });
