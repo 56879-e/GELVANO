@@ -146,7 +146,29 @@ function showVideoModal(url) {
     iframe.style.border = 'none';
     // For Google Drive, try to block context menu and drag
     iframe.setAttribute('sandbox', 'allow-scripts allow-same-origin allow-presentation');
-    videoEmbedContainer.appendChild(iframe);
+    // Create overlay to block YouTube share button (top right corner)
+    const overlay = document.createElement('div');
+    overlay.style.position = 'absolute';
+    overlay.style.top = '0';
+    overlay.style.right = '0';
+    overlay.style.width = '80px';
+    overlay.style.height = '60px';
+    overlay.style.zIndex = '10';
+    overlay.style.cursor = 'pointer';
+    overlay.style.background = 'rgba(0,0,0,0)'; // transparent
+    overlay.title = 'تم تعطيل زر المشاركة';
+    overlay.onclick = function() {
+        // Stop video and hide modal
+        hideVideoModal();
+    };
+    // Container for positioning overlay and iframe
+    const container = document.createElement('div');
+    container.style.position = 'relative';
+    container.style.width = '100%';
+    container.style.height = '100%';
+    container.appendChild(iframe);
+    container.appendChild(overlay);
+    videoEmbedContainer.appendChild(container);
     videoModal.style.display = 'flex';
     document.body.style.overflow = 'hidden';
 }
