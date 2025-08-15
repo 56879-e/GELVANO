@@ -46,6 +46,35 @@ const errorMessage = popup.querySelector('.error-message');
 const attemptsLeft = popup.querySelector('.attempts-left');
 const closeButton = popup.querySelector('.close-popup');
 
+// Map each password to allowed content IDs and their codes
+const studentAccess = {
+    // Example structure:
+    // 'A1234567890': {
+    //     'first-grade-video-1': ['AB123'],
+    //     'first-grade-file-1': ['3719'],
+    //     ...
+    // }
+    'A1234567890': {
+        'first-grade-video-1': ['AB123'],
+        'first-grade-video-2': ['EF789'],
+        'first-grade-file-1': ['3719'],
+        'first-grade-file-2': ['5021']
+    },
+    'B1238759874': {
+        'second-grade-video-1': ['IJ345'],
+        'second-grade-video-2': ['MN901'],
+        'second-grade-file-1': ['3719'],
+        'second-grade-file-2': ['5021']
+    },
+    'C1234787890': {
+        'third-grade-video-1': ['QR567'],
+        'third-grade-video-2': ['UV123'],
+        'third-grade-file-1': ['0000'],
+        'third-grade-file-2': ['2468']
+    }
+    // ...add more passwords and their allowed content here...
+};
+
 function showPopup(contentId, url) {
     currentContentId = contentId;
     currentContentUrl = url;
@@ -56,6 +85,7 @@ function showPopup(contentId, url) {
     popup.style.display = 'flex';
     codeInput.disabled = false;
     verifyButton.disabled = false;
+
     // Set maxlength and placeholder based on content type
     if (contentId && contentId.includes('video')) {
         codeInput.maxLength = 5;
@@ -240,32 +270,34 @@ verifyButton.onclick = function() {
     const code = codeInput.value.trim();
     attempts++;
 
-    const allowedCodes = accessCodes[currentContentId];
-    // If it's a video, require two letters + three numbers
+    // Get logged-in password from localStorage
+    const studentPassword = localStorage.getItem('gelvano_password');
+    const allowedContent = studentAccess[studentPassword] || {};
+    const allowedCodes = allowedContent[currentContentId];
+
     let isValid = false;
-    if (currentContentId && currentContentId.includes('video')) {
-        // Validate format: two letters followed by three digits
-        const videoCodePattern = /^[A-Za-z]{2}\d{3}$/;
-        if (videoCodePattern.test(code)) {
+    if (allowedCodes) {
+        if (currentContentId && currentContentId.includes('video')) {
+            const videoCodePattern = /^[A-Za-z]{2}\d{3}$/;
+            if (videoCodePattern.test(code)) {
+                isValid = Array.isArray(allowedCodes) ? allowedCodes.includes(code) : code === allowedCodes;
+            }
+        } else {
             isValid = Array.isArray(allowedCodes) ? allowedCodes.includes(code) : code === allowedCodes;
         }
-    } else {
-        // For files, keep old logic (4-digit code)
-        isValid = Array.isArray(allowedCodes) ? allowedCodes.includes(code) : code === allowedCodes;
     }
 
     if (isValid) {
         hidePopup();
-        // Check if it's a video or file
         if (currentContentId && currentContentId.includes('video')) {
-            // Instead of window.open, show modal
             showVideoModal(currentContentUrl);
         } else {
-            // For files, show PDF modal with viewer and download
             showPdfModal(currentContentUrl);
         }
     } else {
-        errorMessage.textContent = 'كود غير صحيح';
+        errorMessage.textContent = allowedCodes
+            ? 'كود غير صحيح او ليس هذا الكود المخصص بالدخول تأكد من الكود من خلال فريق الدعم ثم اعد ادخاله '
+            : 'هذا الملف أو الفيديو غير متاح لك';
         errorMessage.style.display = 'block';
         if (attempts >= MAX_ATTEMPTS) {
             codeInput.disabled = true;
