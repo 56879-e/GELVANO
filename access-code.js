@@ -15,6 +15,7 @@ const accessCodes = {
     // Third grade
     'third-grade-video-1': ['QR567', 'ST890'],
     'third-grade-video-2': ['UV123', 'WX456'],
+    'third-grade-video-1.1': ['UV123', 'WX456'],
     'third-grade-file-1': ['3719', '0000'],
     'third-grade-file-2': ['2468']
 };
@@ -54,24 +55,28 @@ const studentAccess = {
     //     'first-grade-file-1': ['3719'],
     //     ...
     // }
-    'A1234567890': {
-        'first-grade-video-1': ['AB123'],
-        'first-grade-video-2': ['EF789'],
-        'first-grade-file-1': ['3719'],
-        'first-grade-file-2': ['5021']
+    'A1583525803': {
+    'third-grade-video-1.1': ['VV152'],
     },
-    'B1238759874': {
-        'second-grade-video-1': ['IJ345'],
-        'second-grade-video-2': ['MN901'],
-        'second-grade-file-1': ['3719'],
-        'second-grade-file-2': ['5021']
+    'A3504453679': {
+    'third-grade-video-1.1': ['RA950'],
     },
-    'C1234787890': {
-        'third-grade-video-1': ['QR567'],
-        'third-grade-video-2': ['UV123'],
-        'third-grade-file-1': ['0000'],
-        'third-grade-file-2': ['2468']
-    }
+    'A1519164378': {
+    'third-grade-video-1.1': ['RA950'],
+    },
+    'A3588946817': {
+    'third-grade-video-1.1': ['VP105'],
+    },
+    'A6561930117': {
+    'third-grade-video-1.1': ['QJ838'],
+    },
+    'A5803009750': {
+    'third-grade-video-1.1': ['TK961'],
+    },
+   'A9123415549': {
+    'third-grade-video-1.1': ['KG884'],
+    },
+
     // ...add more passwords and their allowed content here...
 };
 
@@ -164,9 +169,7 @@ function getEmbedUrl(url) {
 function showVideoModal(url) {
     const embedUrl = getEmbedUrl(url);
     if (!embedUrl) return;
-    // Remove previous iframe
     videoEmbedContainer.innerHTML = '';
-    // Create iframe
     const iframe = document.createElement('iframe');
     iframe.src = embedUrl;
     iframe.allow = 'autoplay; encrypted-media';
@@ -174,24 +177,31 @@ function showVideoModal(url) {
     iframe.style.width = '100%';
     iframe.style.height = '100%';
     iframe.style.border = 'none';
-    // For Google Drive, try to block context menu and drag
     iframe.setAttribute('sandbox', 'allow-scripts allow-same-origin allow-presentation');
-    // Create overlay to block YouTube share button (top right corner)
+    // Overlay to block share button
     const overlay = document.createElement('div');
     overlay.style.position = 'absolute';
     overlay.style.top = '0';
     overlay.style.right = '0';
-    overlay.style.width = '80px';
-    overlay.style.height = '60px';
+    overlay.style.width = '150px'; // Adjusted width to ensure full coverage of the share icon
+    overlay.style.height = '80px'; // Adjusted height for better coverage
     overlay.style.zIndex = '10';
     overlay.style.cursor = 'pointer';
-    overlay.style.background = 'rgba(0,0,0,0)'; // transparent
+    overlay.style.background = 'rgba(0,0,0,0)';
     overlay.title = 'تم تعطيل زر المشاركة';
     overlay.onclick = function() {
-        // Stop video and hide modal
+        // Pause video and hide modal
+        if (/youtu\.be|youtube\.com/.test(url)) {
+            // Pause YouTube video via postMessage
+            try {
+                iframe.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
+            } catch(e) {}
+        } else if (/drive\.google\.com/.test(url)) {
+            // Reload iframe to "pause" Google Drive preview
+            iframe.src = iframe.src;
+        }
         hideVideoModal();
     };
-    // Container for positioning overlay and iframe
     const container = document.createElement('div');
     container.style.position = 'relative';
     container.style.width = '100%';
