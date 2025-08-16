@@ -49,12 +49,7 @@ const closeButton = popup.querySelector('.close-popup');
 
 // Map each password to allowed content IDs and their codes
 const studentAccess = {
-    // Example structure:
-    // 'A1234567890': {
-    //     'first-grade-video-1': ['AB123'],
-    //     'first-grade-file-1': ['3719'],
-    //     ...
-    // }
+    //3333333333333333333     ...
     'A1583525803': {
     'third-grade-video-1.1': ['VV152'],
     },
@@ -62,7 +57,7 @@ const studentAccess = {
     'third-grade-video-1.1': ['RA950'],
     },
     'A1519164378': {
-    'third-grade-video-1.1': ['RA950'],
+    'third-grade-video-1.1': ['RS155'],
     },
     'A3588946817': {
     'third-grade-video-1.1': ['VP105'],
@@ -76,6 +71,12 @@ const studentAccess = {
    'A9123415549': {
     'third-grade-video-1.1': ['KG884'],
     },
+   'A0259858937': {
+    'third-grade-video-1.1': ['KG884'],
+    },
+    //22222222222222222222 
+
+    // 11111111111111111111111    ...
 
     // ...add more passwords and their allowed content here...
 };
