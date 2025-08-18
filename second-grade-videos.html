@@ -43,15 +43,16 @@
 
         .video-card {
             background-color: var(--white);
-            border-radius: 10px;
+            border-radius: 15px;
             overflow: hidden;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
         }
 
         .video-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
         }
 
         .video-thumbnail {
@@ -140,6 +141,19 @@
         .back-button:hover {
             background-color: var(--primary-red);
         }
+
+        .price-sticker {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: var(--primary-red);
+            color: white;
+            font-size: 0.9rem;
+            font-weight: bold;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
     </style>
 </head>
 <body>
@@ -178,6 +192,7 @@
                             </span>
                         </div>
                     </div>
+                    <div class="price-sticker">15LE</div>
                 </div>
             </div>
         </section>
@@ -200,6 +215,7 @@
                             <span>المشاهدات: 1.5k</span>
                         </div>
                     </div>
+                    <div class="price-sticker">20LE</div>
                 </div>
             </div>
         </section>

@@ -12,7 +12,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="access-code.js" defer></script>
     <style>
-  .videos-container {
+        .videos-container {
             max-width: 1200px;
             margin: 2rem auto;
             padding: 0 1rem;
@@ -43,15 +43,16 @@
 
         .video-card {
             background-color: var(--white);
-            border-radius: 10px;
+            border-radius: 15px;
             overflow: hidden;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
         }
 
         .video-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
         }
 
         .video-thumbnail {
@@ -140,6 +141,19 @@
         .back-button:hover {
             background-color: var(--primary-red);
         }
+
+        .price-sticker {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: var(--primary-red);
+            color: white;
+            font-size: 0.9rem;
+            font-weight: bold;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
     </style>
 </head>
 <body>
@@ -159,25 +173,20 @@
             <div class="videos-grid">
                 <div class="video-card">
                     <div class="video-thumbnail">
-                        <img loading="lazy" src="assets/placeholder.jpg" alt="الفصل الاول">
-                        <a href="https://drive.google.com/file/d/1D-vm4p6r7nxVgPbjTexFrvb38Ph2MgHH/view?usp=drivesdk" class="play-button" data-type="video" data-content-id="first-grade-video-1">
+                        <img loading="lazy" src="covers/1/1.png" alt="الفصل الاول">
+                        <a href="https://youtu.be/VjhkKvEabTQ" class="play-button" data-type="video" data-content-id="first-grade-video-1">
                             <i class="fas fa-play"></i>
                         </a>
                     </div>
                     <div class="video-info">
-                        <h3 class="video-title">الفصل الاول</h3>
+                        <h3 class="video-title">الحصه الاولي - قطبية الماء والاحماض والقلويات</h3>
                         <div class="video-meta">
-                            <span>
-                                <i class="far fa-clock"></i>
-                                المدة: 15:30
-                            </span>
-                            <span>
-                                <i class="far fa-eye"></i>
-                                المشاهدات: 1.2k
-                            </span>
+                            <span>المدة: 18:45</span>
                         </div>
                     </div>
+                    <div class="price-sticker">5LE</div>
                 </div>
+
             </div>
         </section>
 
@@ -187,18 +196,18 @@
             <div class="videos-grid">
                 <div class="video-card">
                     <div class="video-thumbnail">
-                        <img loading="lazy" src="assets/physics-thumbnail-1.jpg">
-                        <a href="https://youtu.be/example2" class="play-button" data-type="video" data-content-id="first-grade-video-2">
+                        <img loading="lazy" src="covers\1\2.png">
+                        <a href="https://youtu.be/lRNvGVE-AWc" class="play-button" data-type="video" data-content-id="first-grade-video-1.1">
                             <i class="fas fa-play"></i>
                         </a>
                     </div>
                     <div class="video-info">
-                        <h3 class="video-title">الوحدة الاولي</h3>
+                        <h3 class="video-title"> مراجعة شامله علي الدرس الاول  </h3>
                         <div class="video-meta">
-                            <span>المدة: 18:45</span>
-                            <span>المشاهدات: 1.5k</span>
+                            <span>المدة: ساعتان</span>
                         </div>
                     </div>
+                    <div class="price-sticker">10LE</div>
                 </div>
             </div>
         </section>
