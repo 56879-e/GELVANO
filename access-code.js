@@ -118,6 +118,10 @@ const studentAccess = {
     'first-grade-video-1': ['KJ719'],
     'first-grade-video-1.1': ['KJ719'],
     },
+   'C1233797810': {
+    'first-grade-video-1': ['TT121'],
+    'first-grade-video-1.1': ['TT121'],
+    },
     // ...add more passwords and their allowed content here...
 };
 
