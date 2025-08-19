@@ -94,6 +94,30 @@ const studentAccess = {
    'A7586809781': {
     'third-grade-video-1.1': ['KP336'],
     },
+   'C5984846556': {
+    'third-grade-video-1.1': ['JM585'],
+    'third-grade-video-1': ['JM585'],
+    'third-grade-video-2': ['JM585'],
+    },
+   'C4766716007': {
+    'third-grade-video-1.1': ['EU125'],
+    },
+   'C4766716007': {
+    'first-grade-video-1': ['TR472'],
+    'first-grade-video-1.1': ['TR472'],
+    },
+   'C5687224731': {
+    'first-grade-video-1': ['SY067'],
+    'first-grade-video-1.1': ['SY067'],
+    },
+   'C4948604275': {
+    'first-grade-video-1': ['SW063'],
+    'first-grade-video-1.1': ['SW063'],
+    },
+   'C3029831096': {
+    'first-grade-video-1': ['KJ719'],
+    'first-grade-video-1.1': ['KJ719'],
+    },
     // ...add more passwords and their allowed content here...
 };
 
