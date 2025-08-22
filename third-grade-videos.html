@@ -163,6 +163,27 @@
         .custom-video-close {
             position:absolute; top:18px; right:18px; background:#dc2626; color:#fff; border:none; border-radius:8px; padding:6px 12px; cursor:pointer;
         }
+
+        .buttons-container {
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        .download-button {
+            display: inline-block;
+            margin: 1rem;
+            padding: 1rem 2rem;
+            background-color: var(--primary-red);
+            color: var(--white);
+            text-decoration: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .download-button:hover {
+            background-color: #c0392b;
+        }
     </style>
     <script
   async
@@ -183,54 +204,16 @@
         </div>
     </header>
 
-
     <div class="videos-container">
-        <!-- الشرح Course -->
-        <section class="course-section animate__animated animate__fadeInUp" style="animation-delay: 0.2s">
-            <h2 class="course-title">الشرح </h2>
-            <div class="videos-grid">
-                <div class="video-card">
-                    <div class="video-thumbnail">
-                        <img loading="lazy" src="assets\الحصة الاولي.jpg">
-                        <!-- استخدم iframe لعرض فيديو يوتيوب بدون أيقونات أو علامات -->
-                        <a href="#" class="play-button" data-video="https://www.youtube.com/embed/ZAzRFfzM0GA">
-                            <i class="fas fa-play-circle"></i>
-                        </a>
-                    </div>
-                    <div class="video-info">
-                        <h3 class="video-title"> الحصه الاولي   </h3>
-                        <div class="video-meta">
-                            <span>المدة: 30 دقيقة </span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-                <!-- المراجعات Course -->
-        <section class="course-section animate__animated animate__fadeInUp" style="animation-delay: 0.2s">
-            <h2 class="course-title">المراجعات </h2>
-            <div class="videos-grid">
-                <div class="video-card">
-                    <div class="video-thumbnail">
-                        <img loading="lazy" src="assets\الحصة الاولي.jpg">
-                        <a href="#" class="play-button" data-video="https://www.youtube.com/embed/ZAzRFfzM0GA">
-                            <i class="fas fa-play-circle"></i>
-                        </a>
-                    </div>
-                    <div class="video-info">
-                        <h3 class="video-title"> الحصه الاولي   </h3>
-                        <div class="video-meta">
-                            <span>المدة: 30 دقيقة </span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+        <!-- Buttons Section -->
+        <div class="buttons-container">
+            <a href="third-grade-videos.html" class="download-button">Videos</a>
+            <a href="third-grade-files.html" class="download-button">Files</a>
+        </div>
     </div>
 
-    <!-- Footer -->
-    <footer class="footer">
+   <!-- Footer -->
+   <footer class="footer">
         <div class="footer-content">
             <div class="footer-section">
                 <h3>  social media  </h3>
@@ -259,7 +242,7 @@
             </div>
         </div>
     </footer>
-     </div>
+    </div>
     <script src="script.js"></script>
     <script src="login.js"></script>
     <script src="scriptblock.js"></script>
