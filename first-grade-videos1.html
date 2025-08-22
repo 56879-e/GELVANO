@@ -209,6 +209,23 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="video-card">
+                    <div class="video-thumbnail">
+                        <img loading="lazy" src="assets/physics-thumbnail-1.jpg">
+                        <a href="https://drive.google.com/file/d/example2" class="play-button" data-type="video" data-content-id="second-grade-video-2">
+                            <i class="fas fa-play"></i>
+                        </a>
+                    </div>
+                    <div class="video-info">
+                        <h3 class="video-title">الوحدة الاولي</h3>
+                        <div class="video-meta">
+                            <span>المدة: 18:45</span>
+                            <span>المشاهدات: 1.5k</span>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </section>
     </div>
@@ -444,5 +461,38 @@ function showVideoModal(videoUrl) {
   document.body.appendChild(modal);
 }
 </script>
+   <script>
+ window.difyChatbotConfig = {
+  token: 'mImOJlwEKCYVqEEz',
+  inputs: {
+    // You can define the inputs from the Start node here
+    // key is the variable name
+    // e.g.
+    // name: "NAME"
+  },
+  systemVariables: {
+    // user_id: 'YOU CAN DEFINE USER ID HERE',
+    // conversation_id: 'YOU CAN DEFINE CONVERSATION ID HERE, IT MUST BE A VALID UUID',
+  },
+  userVariables: {
+    // avatar_url: 'YOU CAN DEFINE USER AVATAR URL HERE',
+    // name: 'YOU CAN DEFINE USER NAME HERE',
+  },
+ }
+</script>
+<script
+ src="https://udify.app/embed.min.js"
+ id="mImOJlwEKCYVqEEz"
+ defer>
+</script>
+<style>
+  #dify-chatbot-bubble-button {
+    background-color: #1C64F2 !important;
+  }
+  #dify-chatbot-bubble-window {
+    width: 24rem !important;
+    height: 40rem !important;
+  }
+</style>
 </body>
 </html>

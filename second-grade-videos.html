@@ -10,7 +10,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="access-code.js" defer></script>
     <style>
         .videos-container {
             max-width: 1200px;
@@ -141,24 +140,46 @@
             background-color: var(--primary-red);
         }
 
-        .buttons-container {
-            text-align: center;
-            margin-top: 2rem;
+        /* Video Modal Styles */
+        .custom-video-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
         }
 
-        .download-button {
-            display: inline-block;
-            margin: 1rem;
-            padding: 0.5rem 1rem;
-            background-color: var(--dark-gray);
-            color: var(--white);
-            text-decoration: none;
-            border-radius: 20px;
-            transition: all 0.3s ease;
+        .custom-video-box {
+            position: relative;
+            width: 80%;
+            max-width: 800px;
+            background-color: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
         }
 
-        .download-button:hover {
+        .custom-video-close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
             background-color: var(--primary-red);
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .custom-video-close:hover {
+            background-color: darkred;
         }
     </style>
     <script
@@ -180,11 +201,64 @@
         </div>
     </header>
 
+ 
     <div class="videos-container">
-        <!-- Buttons Section -->
-        <div class="buttons-container" style="text-align: center; margin-top: 2rem;">
-            <a href="second-grade-videos.html" class="download-button" style="display: inline-block; margin: 1rem;">Videos</a>
-            <a href="second-grade-files.html" class="download-button" style="display: inline-block; margin: 1rem;">Files</a>
+        <!-- شرح Course -->
+        <section class="course-section animate__animated animate__fadeInUp">
+            <h2 class="course-title">الشرح</h2>
+            <div class="videos-grid">
+                <div class="video-card">
+                    <div class="video-thumbnail">
+                        <img loading="lazy" src="assets/placeholder.jpg" alt="الفصل الاول">
+                        <a href="#" class="play-button" data-video-url="https://youtu.be/example1">
+                            <i class="fas fa-play"></i>
+                        </a>
+                    </div>
+                    <div class="video-info">
+                        <h3 class="video-title">الفصل الاول</h3>
+                        <div class="video-meta">
+                            <span>
+                                <i class="far fa-clock"></i>
+                                المدة: 15:30
+                            </span>
+                            <span>
+                                <i class="far fa-eye"></i>
+                                المشاهدات: 1.2k
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- المراجعات Course -->
+        <section class="course-section animate__animated animate__fadeInUp" style="animation-delay: 0.2s">
+            <h2 class="course-title">المراجعات</h2>
+            <div class="videos-grid">
+                <div class="video-card">
+                    <div class="video-thumbnail">
+                        <img loading="lazy" src="assets/physics-thumbnail-1.jpg">
+                        <a href="#" class="play-button" data-video-url="https://drive.google.com/file/d/example2/preview">
+                            <i class="fas fa-play"></i>
+                        </a>
+                    </div>
+                    <div class="video-info">
+                        <h3 class="video-title">الوحدة الاولي</h3>
+                        <div class="video-meta">
+                            <span>المدة: 18:45</span>
+                            <span>المشاهدات: 1.5k</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Video Modal -->
+    <div id="video-modal" class="custom-video-modal" style="display:none;">
+        <div class="custom-video-box">
+            <iframe id="video-iframe" width="100%" height="315" frameborder="0" allowfullscreen></iframe>
+            <button class="custom-video-close" onclick="closeVideo()" style="top: 5px; right: 5px;">إغلاق</button>
         </div>
     </div>
 
@@ -222,5 +296,55 @@
     <script src="login.js"></script>
     <script src="scriptblock.js"></script>
     <script src="checkCode.js?v=3" defer></script>
+    <script>
+        document.querySelectorAll('.play-button').forEach(button => {
+            button.addEventListener('click', function(event) {
+                event.preventDefault();
+                const videoUrl = this.getAttribute('data-video-url');
+                const iframe = document.getElementById('video-iframe');
+                iframe.src = videoUrl;
+                document.getElementById('video-modal').style.display = 'flex';
+            });
+        });
+
+        function closeVideo() {
+            const iframe = document.getElementById('video-iframe');
+            iframe.src = '';
+            document.getElementById('video-modal').style.display = 'none';
+        }
+    </script>
+       <script>
+ window.difyChatbotConfig = {
+  token: 'mImOJlwEKCYVqEEz',
+  inputs: {
+    // You can define the inputs from the Start node here
+    // key is the variable name
+    // e.g.
+    // name: "NAME"
+  },
+  systemVariables: {
+    // user_id: 'YOU CAN DEFINE USER ID HERE',
+    // conversation_id: 'YOU CAN DEFINE CONVERSATION ID HERE, IT MUST BE A VALID UUID',
+  },
+  userVariables: {
+    // avatar_url: 'YOU CAN DEFINE USER AVATAR URL HERE',
+    // name: 'YOU CAN DEFINE USER NAME HERE',
+  },
+ }
+</script>
+<script
+ src="https://udify.app/embed.min.js"
+ id="mImOJlwEKCYVqEEz"
+ defer>
+</script>
+<style>
+  #dify-chatbot-bubble-button {
+    background-color: #1C64F2 !important;
+  }
+  #dify-chatbot-bubble-window {
+    width: 24rem !important;
+    height: 40rem !important;
+  }
+</style>
 </body>
 </html>

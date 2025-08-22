@@ -88,24 +88,6 @@ function setLastCheckOk() {
   localStorage.setItem("lastCodeCheck", Date.now().toString());
 }
 
-// 3. منع فتح أكثر من تبويب بنفس الكود (حماية من مشاركة الكود)
-function isAnotherTabActive() {
-  // استخدم localStorage event
-  const key = "studentCodeTabActive";
-  try {
-    localStorage.setItem(key, Date.now().toString());
-    window.addEventListener("storage", function(e){
-      if(e.key === key && !isEntryPage()) {
-        alert("تم فتح الكود في نافذة أخرى. سيتم تسجيل الخروج هنا.");
-        localStorage.removeItem("studentCode");
-        localStorage.removeItem("studentEmail");
-        localStorage.removeItem("studentUserId");
-        redirectToEntry();
-      }
-    });
-  } catch(e){}
-}
-
 // 4. عرض اسم المستخدم والإيميل في الكونسول (للمطور أو الدعم)
 function logUserInfo(){
   let code = localStorage.getItem("studentCode");
@@ -133,9 +115,6 @@ async function checkAccess(){
 
     // ميزة: سجل معلومات المستخدم في الكونسول
     logUserInfo();
-
-    // ميزة: منع فتح أكثر من تبويب بنفس الكود
-    isAnotherTabActive();
 
     // لو مفيش كود أو مفيش حساب مسجل الدخول → رجّع لصفحة إدخال الكود
     if(!savedCode || !currentEmail || !currentUserId){
