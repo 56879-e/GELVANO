@@ -137,7 +137,7 @@
 <script>
 const API_URL   = "https://68a25cb6c5a31eb7bb1ccafd.mockapi.io/codes";
 const NOTIF_URL = "https://68a25cb6c5a31eb7bb1ccafd.mockapi.io/notifications";
-const ADMIN_EMAIL="gelvano@gma  il.com";
+const ADMIN_EMAIL="gelvano@gmail.com";
 const ADMIN_PASS ="gelvano2468gelvano";
 const THIRTY_DAYS = 30*24*60*60*1000;
 
@@ -275,7 +275,7 @@ async function fetchMonthCodes(){
     // حذف الأكواد المنتهية تلقائياً من قاعدة البيانات
     const now = Date.now();
     for(const c of (Array.isArray(data)?data:[])){
-      if(c.createdAt && (now - new Date(c.createdAt).getTime()) >= 30*24*60*60*1000){
+      if(c.isUsed && c.createdAt && (now - new Date(c.createdAt).getTime()) >= 30*24*60*60*1000){
         await fetch(`${MONTH_API_URL}/${c.id}`,{method:"DELETE"});
       }
     }
@@ -283,7 +283,7 @@ async function fetchMonthCodes(){
     const res2 = await fetch(MONTH_API_URL);
     const data2 = await res2.json();
     monthCodes = Array.isArray(data2)
-      ? data2.filter(c => !c.createdAt || (now - new Date(c.createdAt).getTime()) < 30*24*60*60*1000)
+      ? data2.filter(c => !c.isUsed || (c.createdAt && (now - new Date(c.createdAt).getTime()) < 30*24*60*60*1000))
       : [];
     renderMonthCodes();
   }catch(e){ monthCodes = []; renderMonthCodes(); }

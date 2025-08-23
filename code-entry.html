@@ -166,7 +166,7 @@ async function verifyCode(){
   // لازم المستخدم يكون مسجل دخول
   if(getCurrentUserEmail() === "غير معروف" || getCurrentUserId() === "غير معروف"){
     msg.className="msg error";
-    msg.textContent="⚠️ يجب تسجيل الدخول أولاً.";
+    msg.textContent="⚠️ يجب  كتابة الكود أولاً.";
     return;
   }
 
