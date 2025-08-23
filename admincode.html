@@ -318,6 +318,8 @@ function renderMonthCodes(){
     const username = c.username || "غير معروف";
     const createdAt = c.createdAt ? new Date(c.createdAt).toLocaleString() : "-";
     const used = c.isUsed ? `<span class="ok">مستخدم</span>` : `<span style="color:#dc2626;font-weight:bold">غير مستخدم</span>`;
+    const remainingTime = c.isUsed && c.createdAt ? calculateRemainingTime(c.createdAt) : null;
+    const countdown = remainingTime ? `<span id="countdown-${c.id}" style="color:#2563eb;font-size:0.9rem;">${remainingTime}</span>` : '';
     list.innerHTML += `
       <div style="background:#fff;border-radius:12px;box-shadow:0 2px 8px #0001;padding:16px;margin-bottom:14px;display:flex;align-items:center;gap:18px;">
         <span style="background:#ffd700;color:#222;padding:6px 14px;border-radius:8px;font-weight:bold;font-size:1.1rem;">${c.code}</span>
@@ -325,12 +327,39 @@ function renderMonthCodes(){
           <div style="font-size:1rem;font-weight:bold;">${used}</div>
           <div style="color:#888;font-size:0.95rem;">${username} <span style="color:#3498db">${userEmail}</span></div>
           <div style="color:#aaa;font-size:0.9rem;">${createdAt}</div>
+          ${countdown}
         </div>
         <button class="copy-btn" onclick="copyCodeBtn(this,'${c.code}')" style="background:#e5e7eb;color:#111;border-radius:8px;padding:8px 12px;border:none;cursor:pointer;"><i class="fa-regular fa-copy"></i> نسخ</button>
         <button class="btn-danger" title="حذف" onclick="deleteMonthCode('${c.id}')" style="padding:8px 12px;"><i class="fa-solid fa-trash"></i></button>
       </div>
     `;
+    if (remainingTime) startCountdown(c.id, c.createdAt);
   });
+}
+
+function calculateRemainingTime(createdAt) {
+  const now = Date.now();
+  const expirationTime = new Date(createdAt).getTime() + 30 * 24 * 60 * 60 * 1000;
+  const diff = expirationTime - now;
+  if (diff <= 0) return "منتهي";
+  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+  const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+  return `${days} يوم ${hours} ساعة ${minutes} دقيقة`;
+}
+
+function startCountdown(id, createdAt) {
+  const countdownElement = document.getElementById(`countdown-${id}`);
+  if (!countdownElement) return;
+  const interval = setInterval(() => {
+    const remainingTime = calculateRemainingTime(createdAt);
+    if (remainingTime === "منتهي") {
+      clearInterval(interval);
+      countdownElement.textContent = "منتهي";
+    } else {
+      countdownElement.textContent = remainingTime;
+    }
+  }, 60000); // تحديث كل دقيقة
 }
 
 // أكواد الحصة (API الحصص)
