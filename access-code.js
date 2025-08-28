@@ -47,7 +47,8 @@ const closeButton = popup.querySelector('.close-popup');
 
 function showPopup(contentId, url) {
     currentContentId = contentId;
-    currentContentUrl = url;
+    // تطبيع المسار واستبدال الشرطة العكسية إلى مائلة للأمام
+    currentContentUrl = (url || '').replace(/\\/g, '/');
     attempts = 0;
     codeInput.value = '';
     errorMessage.style.display = 'none';
@@ -168,7 +169,15 @@ function getEmbedUrl(url) {
 }
 function showVideoModal(url) {
     const embedUrl = getEmbedUrl(url);
-    if (!embedUrl) return;
+    if (!embedUrl) {
+        // حل بديل: فتح الرابط الأصلي في تبويب جديد إذا كان صالحاً
+        if (url && url !== '#' && url !== 'about:blank') {
+            window.open(url, '_blank');
+        } else {
+            alert('رابط الفيديو غير متاح حالياً.');
+        }
+        return;
+    }
     videoEmbedContainer.innerHTML = '';
     const iframe = document.createElement('iframe');
     iframe.src = embedUrl;
@@ -177,19 +186,38 @@ function showVideoModal(url) {
     iframe.style.width = '100%';
     iframe.style.height = '100%';
     iframe.style.border = 'none';
+    // إذا فشل التضمين بسبب سياسات X-Frame، أظهر زر فتح في تبويب جديد
+    iframe.addEventListener('error', function() {
+        videoEmbedContainer.innerHTML = '';
+        const openBtn = document.createElement('a');
+        openBtn.textContent = 'فتح الفيديو في تبويب جديد';
+        openBtn.href = url;
+        openBtn.target = '_blank';
+        openBtn.style.background = '#e53935';
+        openBtn.style.color = '#fff';
+        openBtn.style.padding = '0.6rem 1rem';
+        openBtn.style.borderRadius = '8px';
+        openBtn.style.textDecoration = 'none';
+        videoEmbedContainer.appendChild(openBtn);
+    });
     videoEmbedContainer.appendChild(iframe);
     videoModal.style.display = 'flex';
     document.body.style.overflow = 'hidden';
 }
 function showPdfModal(url) {
+    const normalizedUrl = (url || '').replace(/\\/g, '/');
+    if (!normalizedUrl || normalizedUrl === '#') {
+        alert('رابط الملف غير متاح حالياً.');
+        return;
+    }
     pdfEmbedContainer.innerHTML = '';
     const iframe = document.createElement('iframe');
-    iframe.src = url;
+    iframe.src = normalizedUrl;
     iframe.style.width = '100%';
     iframe.style.height = '100%';
     iframe.style.border = 'none';
     pdfEmbedContainer.appendChild(iframe);
-    pdfDownloadLink.href = url;
+    pdfDownloadLink.href = normalizedUrl;
     pdfModal.style.display = 'flex';
     document.body.style.overflow = 'hidden';
 }
