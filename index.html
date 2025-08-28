@@ -366,9 +366,23 @@
 
     <script src="script.js"></script>
     <script>
-    // Example password: A1234567890
-    // To add more passwords, add them to the allowedPasswords array below.
-    document.addEventListener('DOMContentLoaded', function() {
+    // حذف القائمة الثابتة allowedPasswords
+    // const allowedPasswords = [ ... ];
+    let allowedPasswords = [];
+    // جلب كلمات السر المفعلة من السيرفر
+    async function fetchAllowedPasswords() {
+        try {
+            const res = await fetch('/api/passwords');
+            if (!res.ok) throw new Error('فشل في جلب كلمات السر');
+            allowedPasswords = await res.json();
+        } catch (e) {
+            allowedPasswords = [];
+        }
+    }
+
+    // عند تحميل الصفحة، جلب كلمات السر أولاً
+    document.addEventListener('DOMContentLoaded', async function() {
+        await fetchAllowedPasswords();
         const overlay = document.getElementById('loginOverlay');
         const form = document.getElementById('loginForm');
         const studentNameInput = document.getElementById('studentName');
@@ -376,68 +390,6 @@
         const errorDiv = document.getElementById('loginError');
         const loginBtn = document.getElementById('loginBtn');
         const studentNameDisplay = document.getElementById('studentNameDisplay');
-
-        // List of allowed passwords (add one per student)
-        // Format: F = First year (الصف الاول الثانوي), S = Second year (الصف الثاني الثانوي), T = Third year (الصف الثالث الثانوي)
-        // Each password should be: Letter (F/S/T) + 4 numbers (e.g., F1234, S5678, T9999)
-        
-        const allowedPasswords = [
-            // ===== الصف الاول الثانوي (First Year) - F + 4 numbers =====
-            'F1234',
-            'F5678',
-            'F9999',
-            'F1111',
-            'F2222',
-            'F3333',
-            'F4444',
-            'F5555',
-            'F6666',
-            'F7777',
-            'F8888',
-            'F0000',
-            'F1357',
-            'F2468',
-            'F1590',
-            
-            // ===== الصف الثاني الثانوي (Second Year) - S + 4 numbers =====
-            'S1234',
-            'S5678',
-            'S9999',
-            'S1111',
-            'S2222',
-            'S3333',
-            'S4444',
-            'S5555',
-            'S6666',
-            'S7777',
-            'S8888',
-            'S0000',
-            'S1357',
-            'S2468',
-            'S1590',
-            
-            // ===== الصف الثالث الثانوي (Third Year) - T + 4 numbers =====
-            'T1234',
-            'T5678',
-            'T9999',
-            'T1111',
-            'T2222',
-            'T3333',
-            'T4444',
-            'T5555',
-            'T6666',
-            'T7777',
-            'T8888',
-            'T0000',
-            'T1357',
-            'T2468',
-            'T1590',
-            
-            // Add more passwords here following the same format:
-            // First year: 'F' + 4 numbers (e.g., 'F1234')
-            // Second year: 'S' + 4 numbers (e.g., 'S5678')
-            // Third year: 'T' + 4 numbers (e.g., 'T9999')
-        ];
 
         // Auto-fill password and student name if saved
         const savedPassword = localStorage.getItem('gelvano_password');
