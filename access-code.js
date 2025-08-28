@@ -7,6 +7,22 @@ let currentContentId = null;
 let currentContentUrl = null;
 let attempts = 0;
 
+// تحديد أساس الـ API ديناميكياً مع دعم النشر الثابت
+const API_BASE = (location.hostname === 'localhost' || location.hostname === '127.0.0.1') ? 'http://localhost:7878/api' : '/api';
+
+async function fetchCodesWithFallback() {
+    // المحاولة عبر API ثم السقوط إلى الملف الثابت
+    try {
+        const res = await fetch(`${API_BASE}/codes`, { cache: 'no-store' });
+        if (!res.ok) throw new Error('API unavailable');
+        return await res.json();
+    } catch (_) {
+        const res2 = await fetch('codes.json', { cache: 'no-store' });
+        if (!res2.ok) throw new Error('codes.json not found');
+        return await res2.json();
+    }
+}
+
 // Create popup HTML
 const popup = document.createElement('div');
 popup.className = 'access-code-popup';
@@ -178,25 +194,31 @@ function showPdfModal(url) {
 verifyButton.onclick = async function() {
     const code = codeInput.value.trim();
     attempts++;
+    verifyButton.disabled = true;
+    codeInput.disabled = true;
     try {
-        const API = "http://localhost:7878/api";
-        const res = await fetch(`${API}/codes`);
-        const codes = await res.json();
+        const codes = await fetchCodesWithFallback();
         const isVideo = /^[FST]\d+$/.test(currentContentId);
         const isFile = /^F[FST]\d+$/.test(currentContentId);
         let found = null;
         if (isVideo) {
-            found = codes.find(c => c.videoId === currentContentId && c.code === code && !c.used);
+            found = codes.find(c => c.videoId === currentContentId && String(c.code).trim().toUpperCase() === code.toUpperCase());
         } else if (isFile) {
-            found = codes.find(c => c.fileId === currentContentId && c.code === code && !c.used);
+            found = codes.find(c => c.fileId === currentContentId && String(c.code).trim().toUpperCase() === code.toUpperCase());
         }
-        let isValid = !!found;
+        const alreadyUsed = found && (found.used === true);
+        const isValid = !!found && !alreadyUsed;
         if (isValid) {
-            await fetch(`${API}/codes/${found.id}`, {
-                method: 'PATCH',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ used: true })
-            });
+            // محاولة تعليم الكود كمستخدم فقط إذا كنا على API حقيقي
+            try {
+                if (found.id) {
+                    await fetch(`${API_BASE}/codes/${found.id}`, {
+                        method: 'PATCH',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ used: true })
+                    });
+                }
+            } catch (_) { /* تجاهل في وضع الملفات الثابتة */ }
             hidePopup();
             if (isVideo) {
                 showVideoModal(currentContentUrl);
@@ -207,15 +229,19 @@ verifyButton.onclick = async function() {
             errorMessage.textContent = isVideo ? 'كود غير صحيح أو مستخدم بالفعل لهذا الفيديو' : 'كود غير صحيح أو مستخدم بالفعل لهذا الملف';
             errorMessage.style.display = 'block';
             if (attempts >= MAX_ATTEMPTS) {
-                codeInput.disabled = true;
-                verifyButton.disabled = true;
                 attemptsLeft.textContent = 'تم استنفاد جميع المحاولات';
             } else {
                 attemptsLeft.textContent = `محاولات متبقية: ${MAX_ATTEMPTS - attempts}`;
             }
         }
     } catch (e) {
-        errorMessage.style.display = 'none';
+        errorMessage.textContent = 'تعذر الاتصال للتحقق من الكود. حاول لاحقاً.';
+        errorMessage.style.display = 'block';
+    } finally {
+        if (attempts < MAX_ATTEMPTS) {
+            verifyButton.disabled = false;
+            codeInput.disabled = false;
+        }
     }
 };
 
