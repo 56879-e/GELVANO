@@ -144,6 +144,9 @@ function getEmbedUrl(url) {
         } else if (url.includes('youtube.com/watch')) {
             const params = new URLSearchParams(url.split('?')[1]);
             videoId = params.get('v');
+        } else if (url.includes('/embed/')) {
+            // دعم روابط YouTube المضمنة مباشرة
+            videoId = url.split('/embed/')[1]?.split(/[?&]/)[0] || '';
         }
         if (videoId) {
             return `https://www.youtube.com/embed/${videoId}?rel=0&modestbranding=1&controls=1&fs=1`;
@@ -191,9 +194,11 @@ function showPdfModal(url) {
     document.body.style.overflow = 'hidden';
 }
 
-verifyButton.onclick = async function() {
+async function handleVerify() {
     const code = codeInput.value.trim();
     attempts++;
+    const originalText = verifyButton.textContent;
+    verifyButton.textContent = 'جاري التحقق...';
     verifyButton.disabled = true;
     codeInput.disabled = true;
     try {
@@ -242,8 +247,19 @@ verifyButton.onclick = async function() {
             verifyButton.disabled = false;
             codeInput.disabled = false;
         }
+        verifyButton.textContent = originalText;
     }
-};
+}
+
+verifyButton.onclick = handleVerify;
+codeInput.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') {
+        e.preventDefault();
+        if (!verifyButton.disabled) {
+            handleVerify();
+        }
+    }
+});
 
 document.addEventListener('DOMContentLoaded', function() {
     // Attach to all file and video links on page load
