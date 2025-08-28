@@ -424,7 +424,7 @@
                 errorDiv.textContent = 'كلمة المرور يجب أن تبدأ بحرف (F/S/T) ثم 4 أرقام';
                 return false;
             }
-            if (!allowedPasswords.includes(password)) {
+            if (!allowedPasswords.map(p => p.trim().toUpperCase()).includes(password.toUpperCase().trim())) {
                 errorDiv.textContent = 'كلمة المرور غير صحيحة أو غير مسجلة';
                 return false;
             }
