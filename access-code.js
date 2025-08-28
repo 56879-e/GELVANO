@@ -2,34 +2,35 @@
 // Each content (file/video) has a unique code
 // Codes are stored in the studentAccess object below
 
-const MAX_ATTEMPTS = 5;
-let currentContentId = null;
-let currentContentUrl = null;
-let attempts = 0;
+// 1. إنشاء نافذة كود الوصول (popup) إذا لم تكن موجودة
+if (!document.querySelector('.access-code-popup')) {
+    const popup = document.createElement('div');
+    popup.className = 'access-code-popup';
+    popup.innerHTML = `
+      <div class="popup-content">
+        <span class="close-popup" style="float:right;cursor:pointer;font-size:24px">&times;</span>
+        <h2>أدخل كود الوصول</h2>
+        <input type="text" class="code-input" maxlength="4" placeholder="أدخل الكودهنا ">
+        <button class="verify-button">تحقق</button>
+        <div class="error-message" style="color:red;display:none"></div>
+        <div class="attempts-left" style="margin-top:5px"></div>
+      </div>
+    `;
+    document.body.appendChild(popup);
+    popup.style.display = 'none';
+}
 
-// Create popup HTML
-const popup = document.createElement('div');
-popup.className = 'access-code-popup';
-popup.innerHTML = `
-  <div class="popup-content">
-    <span class="close-popup" style="float:right;cursor:pointer;font-size:24px">&times;</span>
-    <h2>أدخل كود الوصول</h2>
-    <input type="text" class="code-input" maxlength="4" placeholder="أدخل الكودهنا ">
-    <button class="verify-button">تحقق</button>
-    <div class="error-message" style="color:red;display:none"></div>
-    <div class="attempts-left" style="margin-top:5px"></div>
-  </div>
-`;
-document.body.appendChild(popup);
-popup.style.display = 'none';
-
+const popup = document.querySelector('.access-code-popup');
 const codeInput = popup.querySelector('.code-input');
 const verifyButton = popup.querySelector('.verify-button');
 const errorMessage = popup.querySelector('.error-message');
 const attemptsLeft = popup.querySelector('.attempts-left');
 const closeButton = popup.querySelector('.close-popup');
 
-// حذف studentAccess نهائياً
+let currentContentId = null;
+let currentContentUrl = null;
+let attempts = 0;
+const MAX_ATTEMPTS = 5;
 
 function showPopup(contentId, url) {
     currentContentId = contentId;
@@ -41,53 +42,51 @@ function showPopup(contentId, url) {
     popup.style.display = 'flex';
     codeInput.disabled = false;
     verifyButton.disabled = false;
-
-    // Set maxlength and placeholder based on content type
-    if (contentId && /^[FST]\d+$/.test(contentId)) {
-        codeInput.maxLength = 5;
-        codeInput.placeholder = "مثال: FF151";
-    } else if (contentId && /^F[FST]\d+$/.test(contentId)) {
-        codeInput.maxLength = 4;
-        codeInput.placeholder = "أدخل الكودهنا ";
-    } else {
-        codeInput.maxLength = 4;
-        codeInput.placeholder = "أدخل الكودهنا ";
-    }
     codeInput.focus();
 }
-
 function hidePopup() {
     popup.style.display = 'none';
 }
-
 closeButton.onclick = hidePopup;
 popup.onclick = function(e) { if (e.target === popup) hidePopup(); };
 
-// Video modal HTML
-const videoModal = document.createElement('div');
-videoModal.className = 'video-modal';
-videoModal.style.display = 'none';
-videoModal.style.position = 'fixed';
-videoModal.style.top = '0';
-videoModal.style.left = '0';
-videoModal.style.width = '100vw';
-videoModal.style.height = '100vh';
-videoModal.style.background = 'rgba(0,0,0,0.8)';
-videoModal.style.justifyContent = 'center';
-videoModal.style.alignItems = 'center';
-videoModal.style.zIndex = '9999';
-videoModal.innerHTML = `
-  <div class="video-modal-content" style="position:relative;max-width:90vw;max-height:90vh;">
-    <span class="close-video-modal" style="position:absolute;top:10px;left:10px;font-size:32px;color:#fff;cursor:pointer;z-index:2;">&times;</span>
-    <div class="video-embed-container" style="width:80vw;height:45vw;max-width:900px;max-height:506px;background:#000;display:flex;align-items:center;justify-content:center;">
-      <!-- Video iframe will be injected here -->
-    </div>
-  </div>
-`;
-document.body.appendChild(videoModal);
-
+// 2. إنشاء نافذة الفيديو (modal) إذا لم تكن موجودة
+if (!document.querySelector('.video-modal')) {
+    const videoModal = document.createElement('div');
+    videoModal.className = 'video-modal';
+    videoModal.style.display = 'none';
+    videoModal.style.position = 'fixed';
+    videoModal.style.top = '0';
+    videoModal.style.left = '0';
+    videoModal.style.width = '100vw';
+    videoModal.style.height = '100vh';
+    videoModal.style.background = 'rgba(0,0,0,0.8)';
+    videoModal.style.justifyContent = 'center';
+    videoModal.style.alignItems = 'center';
+    videoModal.style.zIndex = '9999';
+    videoModal.innerHTML = `
+      <div class="video-modal-content" style="position:relative;max-width:90vw;max-height:90vh;">
+        <span class="close-video-modal" style="position:absolute;top:10px;left:10px;font-size:32px;color:#fff;cursor:pointer;z-index:2;">&times;</span>
+        <div class="video-embed-container" style="width:80vw;height:45vw;max-width:900px;max-height:506px;background:#000;display:flex;align-items:center;justify-content:center;"></div>
+      </div>
+    `;
+    document.body.appendChild(videoModal);
+}
+const videoModal = document.querySelector('.video-modal');
 const closeVideoModalBtn = videoModal.querySelector('.close-video-modal');
 const videoEmbedContainer = videoModal.querySelector('.video-embed-container');
+closeVideoModalBtn.onclick = function() {
+    videoModal.style.display = 'none';
+    videoEmbedContainer.innerHTML = '';
+    document.body.style.overflow = '';
+};
+videoModal.onclick = function(e) {
+    if (e.target === videoModal) {
+        videoModal.style.display = 'none';
+        videoEmbedContainer.innerHTML = '';
+        document.body.style.overflow = '';
+    }
+};
 
 function getEmbedUrl(url) {
     // YouTube
@@ -100,12 +99,11 @@ function getEmbedUrl(url) {
             videoId = params.get('v');
         }
         if (videoId) {
-            return `https://www.youtube.com/embed/${videoId}?rel=0&modestbranding=1&controls=1&fs=1&disablekb=1&iv_load_policy=3&cc_load_policy=0&showinfo=0`;
+            return `https://www.youtube.com/embed/${videoId}?rel=0&modestbranding=1&controls=1&fs=1`;
         }
     }
     // Google Drive
     if (/drive\.google\.com/.test(url)) {
-        // Accept both /file/d/ID and /open?id=ID
         let match = url.match(/\/file\/d\/([^/]+)/);
         let id = match ? match[1] : null;
         if (!id) {
@@ -118,7 +116,6 @@ function getEmbedUrl(url) {
     }
     return null;
 }
-
 function showVideoModal(url) {
     const embedUrl = getEmbedUrl(url);
     if (!embedUrl) return;
@@ -130,63 +127,9 @@ function showVideoModal(url) {
     iframe.style.width = '100%';
     iframe.style.height = '100%';
     iframe.style.border = 'none';
-    iframe.setAttribute('sandbox', 'allow-scripts allow-same-origin allow-presentation');
-    
-    // Add overlay to block share buttons for all video types
-    const overlay = document.createElement('div');
-    overlay.style.position = 'absolute';
-    overlay.style.top = '0';
-    overlay.style.right = '0';
-    overlay.style.width = '200px';
-    overlay.style.height = '100px';
-    overlay.style.zIndex = '10';
-    overlay.style.cursor = 'pointer';
-    overlay.style.background = 'rgba(0,0,0,0)';
-    overlay.title = 'تم تعطيل زر المشاركة لحماية الملكية الفكرية';
-    
-    // Create container for iframe and overlay
-    const container = document.createElement('div');
-    container.style.position = 'relative';
-    container.style.width = '100%';
-    container.style.height = '100%';
-    
-    // Add click handler for overlay
-    overlay.onclick = function(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        // Show warning message
-        showWarningMessage('تم تعطيل زر المشاركة لحماية الملكية الفكرية');
-    };
-    
-    container.appendChild(iframe);
-    container.appendChild(overlay);
-    videoEmbedContainer.appendChild(container);
+    videoEmbedContainer.appendChild(iframe);
     videoModal.style.display = 'flex';
     document.body.style.overflow = 'hidden';
-    
-    // Add CSS to block share buttons for all video platforms
-    addShareButtonBlockingCSS();
-    
-    // Add event listener for iframe load
-    iframe.addEventListener('load', function() {
-        // Apply protection based on video platform
-        if (/youtu\.be|youtube\.com/.test(url)) {
-            // YouTube specific protection
-            setTimeout(() => {
-                addYouTubeShareProtection(iframe);
-            }, 2000);
-        } else if (/drive\.google\.com/.test(url)) {
-            // Google Drive specific protection
-            setTimeout(() => {
-                addGoogleDriveShareProtection(iframe);
-            }, 2000);
-        } else {
-            // Generic protection for other video platforms
-            setTimeout(() => {
-                addGenericShareProtection(iframe);
-            }, 2000);
-        }
-    });
 }
 
 // Function to show warning messages
@@ -375,17 +318,6 @@ function addGenericShareProtection(iframe) {
     }
 }
 
-function hideVideoModal() {
-    videoModal.style.display = 'none';
-    videoEmbedContainer.innerHTML = '';
-    document.body.style.overflow = '';
-}
-
-closeVideoModalBtn.onclick = hideVideoModal;
-videoModal.onclick = function(e) {
-    if (e.target === videoModal) hideVideoModal();
-};
-
 // PDF modal HTML
 const pdfModal = document.createElement('div');
 pdfModal.className = 'pdf-modal';
@@ -438,60 +370,30 @@ pdfModal.onclick = function(e) {
     if (e.target === pdfModal) hidePdfModal();
 };
 
-// تعديل زر التحقق ليعتمد على الأكواد من الباك اند
+// 3. ربط زر التحقق
 verifyButton.onclick = async function() {
     const code = codeInput.value.trim();
     attempts++;
-    // جلب الأكواد من الباك اند
     try {
         const API = "http://localhost:7878/api";
         const res = await fetch(`${API}/codes`);
         const codes = await res.json();
-        
-        // تحديد نوع المحتوى (فيديو أم ملف)
         const isVideo = /^[FST]\d+$/.test(currentContentId);
-        const isFile = /^F[FST]\d+$/.test(currentContentId);
-        
-        // البحث عن الكود المناسب حسب نوع المحتوى
         let found = null;
         if (isVideo) {
-            // البحث في أكواد الفيديوهات
             found = codes.find(c => c.videoId === currentContentId && c.code === code && !c.used);
-        } else if (isFile) {
-            // البحث في أكواد الملفات
-            found = codes.find(c => c.fileId === currentContentId && c.code === code && !c.used);
         }
-        
-        let isValid = false;
-        if (found) isValid = true;
-        
+        let isValid = !!found;
         if (isValid) {
-            // تحديث حالة الكود إلى مستخدم
             await fetch(`${API}/codes/${found.id}`, {
                 method: 'PATCH',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ used: true })
             });
             hidePopup();
-            
-            // عرض المحتوى المناسب حسب النوع
-            if (isVideo) {
-                showVideoModal(currentContentUrl);
-            } else if (isFile) {
-                showPdfModal(currentContentUrl);
-            } else {
-                showPdfModal(currentContentUrl);
-            }
+            showVideoModal(currentContentUrl);
         } else {
-            // رسالة خطأ مخصصة حسب نوع المحتوى
-            if (isVideo) {
-                errorMessage.textContent = 'كود غير صحيح أو مستخدم بالفعل لهذا الفيديو';
-            } else if (isFile) {
-                errorMessage.textContent = 'كود غير صحيح أو مستخدم بالفعل لهذا الملف';
-            } else {
-                errorMessage.textContent = 'كود غير صحيح أو مستخدم بالفعل لهذا المحتوى';
-            }
-            
+            errorMessage.textContent = 'كود غير صحيح أو مستخدم بالفعل لهذا الفيديو';
             errorMessage.style.display = 'block';
             if (attempts >= MAX_ATTEMPTS) {
                 codeInput.disabled = true;
@@ -502,39 +404,25 @@ verifyButton.onclick = async function() {
             }
         }
     } catch (e) {
-        // تم حذف رسالة الخطأ الخاصة بفشل الاتصال بالخادم بناءً على طلبك
         errorMessage.style.display = 'none';
     }
 };
 
-// Attach to all file and video links on page load
+// 4. ربط الأحداث على جميع روابط الفيديوهات
 function attachAccessCodeListeners() {
-    const selectors = ['a.download-button[data-content-id]', 'a.play-button[data-content-id]'];
-    let found = false;
-    selectors.forEach(sel => {
-        document.querySelectorAll(sel).forEach(link => {
-            if (!link._accessCodeListenerAttached) {
-                link.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const contentId = this.getAttribute('data-content-id');
-                    const url = this.getAttribute('href');
-                    showPopup(contentId, url);
-                });
-                link._accessCodeListenerAttached = true;
-                found = true;
-            }
-        });
+    document.querySelectorAll('a.play-button[data-content-id]').forEach(link => {
+        if (!link._accessCodeListenerAttached) {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const contentId = this.getAttribute('data-content-id');
+                const url = this.getAttribute('href');
+                showPopup(contentId, url);
+            });
+            link._accessCodeListenerAttached = true;
+        }
     });
-    if (!found) {
-        // Useful for debugging
-        console.warn('لم يتم العثور على روابط فيديو أو ملف مناسبة لربط نافذة الكود');
-    }
 }
-
-// إعادة الربط كل ثانية لضمان عمل الكود مع أي تغييرات ديناميكية
 setInterval(attachAccessCodeListeners, 1000);
-
-// ربط أولي عند تحميل الصفحة
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', attachAccessCodeListeners);
 } else {
