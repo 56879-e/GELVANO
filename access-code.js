@@ -502,22 +502,41 @@ verifyButton.onclick = async function() {
             }
         }
     } catch (e) {
-        errorMessage.textContent = 'حدث خطأ في الاتصال بالخادم. حاول لاحقاً.';
-        errorMessage.style.display = 'block';
+        // تم حذف رسالة الخطأ الخاصة بفشل الاتصال بالخادم بناءً على طلبك
+        errorMessage.style.display = 'none';
     }
 };
 
 // Attach to all file and video links on page load
-document.addEventListener('DOMContentLoaded', function() {
+function attachAccessCodeListeners() {
     const selectors = ['a.download-button[data-content-id]', 'a.play-button[data-content-id]'];
+    let found = false;
     selectors.forEach(sel => {
         document.querySelectorAll(sel).forEach(link => {
-            link.addEventListener('click', function(e) {
-                e.preventDefault();
-                const contentId = this.getAttribute('data-content-id');
-                const url = this.getAttribute('href');
-                showPopup(contentId, url);
-            });
+            if (!link._accessCodeListenerAttached) {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const contentId = this.getAttribute('data-content-id');
+                    const url = this.getAttribute('href');
+                    showPopup(contentId, url);
+                });
+                link._accessCodeListenerAttached = true;
+                found = true;
+            }
         });
     });
-});
+    if (!found) {
+        // Useful for debugging
+        console.warn('لم يتم العثور على روابط فيديو أو ملف مناسبة لربط نافذة الكود');
+    }
+}
+
+// إعادة الربط كل ثانية لضمان عمل الكود مع أي تغييرات ديناميكية
+setInterval(attachAccessCodeListeners, 1000);
+
+// ربط أولي عند تحميل الصفحة
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', attachAccessCodeListeners);
+} else {
+    attachAccessCodeListeners();
+}
