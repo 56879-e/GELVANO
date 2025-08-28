@@ -369,26 +369,43 @@
     // حذف القائمة الثابتة allowedPasswords
     // const allowedPasswords = [ ... ];
     let allowedPasswords = [];
-    // جلب كلمات السر المفعلة من السيرفر
+    let passwordsLoaded = false;
+    // جلب كلمات السر المفعلة من السيرفر أو الملف مباشرة عند النشر كصفحة ثابتة
     async function fetchAllowedPasswords() {
+        passwordsLoaded = false;
         try {
-            const res = await fetch('/api/passwords');
-            if (!res.ok) throw new Error('فشل في جلب كلمات السر');
-            allowedPasswords = await res.json();
-        } catch (e) {
-            allowedPasswords = [];
+            // المحاولة الأولى: عبر API
+            const apiRes = await fetch('/api/passwords', { cache: 'no-store' });
+            if (apiRes.ok) {
+                allowedPasswords = await apiRes.json();
+            } else {
+                throw new Error('API not available');
+            }
+        } catch (_) {
+            try {
+                // السقوط إلى الملف الثابت passwords.json عند النشر على GitHub Pages
+                const fileRes = await fetch('passwords.json', { cache: 'no-store' });
+                if (!fileRes.ok) throw new Error('passwords.json not found');
+                allowedPasswords = await fileRes.json();
+            } catch (_) {
+                allowedPasswords = [];
+            }
+        } finally {
+            passwordsLoaded = true;
         }
     }
 
     // عند تحميل الصفحة، جلب كلمات السر أولاً
     document.addEventListener('DOMContentLoaded', async function() {
+        const loginBtn = document.getElementById('loginBtn');
+        loginBtn.disabled = true;
         await fetchAllowedPasswords();
+        loginBtn.disabled = false;
         const overlay = document.getElementById('loginOverlay');
         const form = document.getElementById('loginForm');
         const studentNameInput = document.getElementById('studentName');
         const passwordInput = document.getElementById('password');
         const errorDiv = document.getElementById('loginError');
-        const loginBtn = document.getElementById('loginBtn');
         const studentNameDisplay = document.getElementById('studentNameDisplay');
 
         // Auto-fill password and student name if saved
@@ -398,14 +415,11 @@
             studentNameDisplay.textContent = '👤 الدكتور/ة : ' + savedStudentName;
             studentNameDisplay.style.display = 'block';
         }
-        if (savedPassword && savedStudentName) {
+        if (savedPassword && savedStudentName && passwordsLoaded) {
             passwordInput.value = savedPassword;
             studentNameInput.value = savedStudentName;
-            // Optionally, auto-login if all are present and valid
-            if (
-                /^[FST][0-9]{4}$/.test(savedPassword) &&
-                allowedPasswords.includes(savedPassword)
-            ) {
+            if (/^[FST][0-9]{4}$/.test(savedPassword) &&
+                allowedPasswords.map(p => p.trim().toUpperCase()).includes(savedPassword.toUpperCase().trim())) {
                 overlay.classList.add('hidden');
                 setTimeout(() => { overlay.style.display = 'none'; }, 400);
                 studentNameDisplay.textContent = '👤 الدكتور/ة : ' + savedStudentName;
@@ -414,6 +428,10 @@
         }
 
         function validateLogin() {
+            if (!passwordsLoaded) {
+                errorDiv.textContent = 'جاري تحميل كلمات السر...';
+                return false;
+            }
             const studentName = studentNameInput.value.trim();
             const password = passwordInput.value.trim();
             if (!studentName) {
