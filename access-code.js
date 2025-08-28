@@ -240,7 +240,18 @@ async function handleVerify() {
             found = codes.find(c => c.fileId === currentContentId && String(c.code).trim().toUpperCase() === code.toUpperCase());
         }
         const alreadyUsed = found && (found.used === true);
-        const isValid = !!found && !alreadyUsed;
+        const savedPassword = (localStorage.getItem('gelvano_password') || '').trim();
+        const passMatch = !!found && !!found.password && savedPassword && String(found.password).trim().toUpperCase() === savedPassword.toUpperCase();
+        const isValid = !!found && !alreadyUsed && passMatch;
+        if (!!found && !alreadyUsed && !passMatch) {
+            errorMessage.textContent = isVideo ? 'هذا الفيديو غير متاح لك' : 'هذا الملف غير متاح لك';
+            errorMessage.style.display = 'block';
+            if (attempts >= MAX_ATTEMPTS) {
+                attemptsLeft.textContent = 'تم استنفاد جميع المحاولات';
+            } else {
+                attemptsLeft.textContent = `محاولات متبقية: ${MAX_ATTEMPTS - attempts}`;
+            }
+        }
         if (isValid) {
             // محاولة تعليم الكود كمستخدم فقط إذا كنا على API حقيقي
             try {
