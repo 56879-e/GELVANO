@@ -89,6 +89,9 @@
     <!-- قسم إدارة الباسوردات - يأخذ العرض الكامل -->
     <div class="passwords-section">
       <div class="section-header">إدارة كلمات السر</div>
+      <div style="margin-bottom:10px;display:flex;justify-content:flex-end;">
+        <input type="text" id="searchPasswordInput" placeholder="بحث بكلمة السر..." style="max-width:300px;padding:8px;">
+      </div>
       <form class="add-form" id="addPasswordForm">
         <div style="display:flex;gap:8px;align-items:center;justify-content:center;">
           <button type="button" onclick="generateAndAddPassword()">توليد كلمة سر جديدة</button>
@@ -109,6 +112,9 @@
       <!-- قسم أكواد الفيديوهات -->
       <div class="codes-section">
         <div class="section-header">أكواد الفيديوهات</div>
+        <div style="margin-bottom:10px;display:flex;justify-content:flex-end;">
+          <input type="text" id="searchCodeInput" placeholder="بحث بكلمة السر..." style="max-width:300px;padding:8px;">
+        </div>
         <form class="add-form-code" id="addCodeForm">
           <div style="display:flex;flex-direction:column;gap:12px;">
             <div style="display:flex;gap:8px;flex-wrap:wrap;">
@@ -141,6 +147,9 @@
       <!-- قسم أكواد الملفات -->
       <div class="files-section">
         <div class="section-header">أكواد الملفات</div>
+        <div style="margin-bottom:10px;display:flex;justify-content:flex-end;">
+          <input type="text" id="searchFileCodeInput" placeholder="بحث بكلمة السر..." style="max-width:300px;padding:8px;">
+        </div>
         <form class="add-form-file" id="addFileCodeForm">
           <div style="display:flex;flex-direction:column;gap:12px;">
             <div style="display:flex;gap:8px;flex-wrap:wrap;">
@@ -225,9 +234,10 @@
     async function loadPasswords() {
       const res = await fetch(`${API}/passwords`);
       const passwords = await res.json();
+      const search = document.getElementById('searchPasswordInput').value.trim();
       const tbody = document.querySelector("#passwordsTable tbody");
       tbody.innerHTML = "";
-      passwords.forEach(password => {
+      passwords.filter(p => !search || p.includes(search)).forEach(password => {
         const tr = document.createElement("tr");
         tr.innerHTML = `<td>${password}</td>
           <td><button class='copy-btn' onclick='copyText("${password}")'>نسخ</button></td>
@@ -235,6 +245,7 @@
         tbody.appendChild(tr);
       });
     }
+    document.getElementById('searchPasswordInput').oninput = loadPasswords;
     async function generateAndAddPassword() {
       const password = generatePassword();
       await addPassword(password);
@@ -263,9 +274,10 @@
     async function loadCodes() {
       const res = await fetch(`${API}/codes`);
       const codes = await res.json();
+      const search = document.getElementById('searchCodeInput').value.trim();
       const tbody = document.querySelector("#codesTable tbody");
       tbody.innerHTML = "";
-      codes.filter(codeObj => codeObj.videoId && !codeObj.fileId).forEach(codeObj => {
+      codes.filter(codeObj => codeObj.videoId && !codeObj.fileId && (!search || (codeObj.password && codeObj.password.includes(search)))).forEach(codeObj => {
         const tr = document.createElement("tr");
         tr.className = codeObj.used ? 'used' : 'not-used';
         tr.innerHTML = `
@@ -280,6 +292,7 @@
         tbody.appendChild(tr);
       });
     }
+    document.getElementById('searchCodeInput').oninput = loadCodes;
     document.getElementById('addCodeForm').onsubmit = async function(e) {
       e.preventDefault();
       const password = document.getElementById('codePassword').value;
@@ -299,9 +312,10 @@
     async function loadFileCodes() {
       const res = await fetch(`${API}/codes`);
       const codes = await res.json();
+      const search = document.getElementById('searchFileCodeInput').value.trim();
       const tbody = document.querySelector("#fileCodesTable tbody");
       tbody.innerHTML = "";
-      codes.filter(codeObj => codeObj.fileId || (!codeObj.videoId && codeObj.code)).forEach(codeObj => {
+      codes.filter(codeObj => (codeObj.fileId || (!codeObj.videoId && codeObj.code)) && (!search || (codeObj.password && codeObj.password.includes(search)))).forEach(codeObj => {
         const tr = document.createElement("tr");
         tr.className = codeObj.used ? 'used' : 'not-used';
         tr.innerHTML = `
@@ -316,6 +330,7 @@
         tbody.appendChild(tr);
       });
     }
+    document.getElementById('searchFileCodeInput').oninput = loadFileCodes;
     document.getElementById('addFileCodeForm').onsubmit = async function(e) {
       e.preventDefault();
       const password = document.getElementById('fileCodePassword').value;
