@@ -200,7 +200,25 @@ function showVideoModal(url) {
         openBtn.style.textDecoration = 'none';
         videoEmbedContainer.appendChild(openBtn);
     });
+    // إضافة طبقة شفافة فوق الفيديو لمنع الضغط على زر المشاركة
+    const overlay = document.createElement('div');
+    overlay.style.position = 'absolute';
+    overlay.style.inset = '0';
+    overlay.style.width = '100%';
+    overlay.style.height = '100%';
+    overlay.style.zIndex = '2';
+    overlay.style.background = 'rgba(0,0,0,0)';
+    overlay.title = 'اضغط هنا لإغلاق الفيديو';
+    overlay.style.cursor = 'pointer';
+    overlay.onclick = function() {
+        videoModal.style.display = 'none';
+        videoEmbedContainer.innerHTML = '';
+        document.body.style.overflow = '';
+    };
+    // جعل videoEmbedContainer position:relative لضبط overlay فوق iframe
+    videoEmbedContainer.style.position = 'relative';
     videoEmbedContainer.appendChild(iframe);
+    videoEmbedContainer.appendChild(overlay);
     videoModal.style.display = 'flex';
     document.body.style.overflow = 'hidden';
 }

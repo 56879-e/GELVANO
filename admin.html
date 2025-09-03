@@ -191,6 +191,41 @@
       </div>
     </div>
   </div>
+  <div id="notes-icons-bar" style="position:fixed;bottom:32px;left:50%;transform:translateX(-50%);z-index:1000;display:flex;gap:28px;">
+    <div class="note-icon-circle" data-type="T" title="دفتر ملاحظات T">T</div>
+    <div class="note-icon-circle" data-type="S" title="دفتر ملاحظات S">S</div>
+    <div class="note-icon-circle" data-type="F" title="دفتر ملاحظات F">F</div>
+  </div>
+  <div id="notes-popups"></div>
+  <style>
+    .note-icon-circle {
+      width: 54px; height: 54px; border-radius: 50%; background: linear-gradient(135deg,#232946 60%,#5f4bb6 100%);
+      color: #fff; font-size: 2.1rem; font-weight: 900; display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 2px 12px #23294655; cursor: pointer; transition: box-shadow 0.2s, transform 0.1s;
+      border: 3px solid #e0e7ff; user-select: none;
+    }
+    .note-icon-circle:hover { box-shadow: 0 4px 24px #23294699; transform: scale(1.08); }
+    .note-popup {
+      position: fixed; bottom: 100px; left: 50%; transform: translateX(-50%);
+      min-width: 340px; max-width: 95vw; background: #fff; color: #232946; border-radius: 18px;
+      box-shadow: 0 8px 32px #23294644; padding: 28px 18px 18px 18px; z-index: 2000;
+      border: 2.5px solid #5f4bb6; display: none;
+      animation: popupIn 0.25s;
+    }
+    @keyframes popupIn { from { opacity:0; transform:translateY(40px) scale(0.95); } to { opacity:1; transform:translateY(0) scale(1); } }
+    .note-popup.active { display: block; }
+    .note-popup-close { position: absolute; top: 10px; right: 16px; font-size: 1.5em; color: #232946; cursor: pointer; font-weight: bold; }
+    .note-popup-form { display: flex; gap: 8px; margin-bottom: 18px; }
+    .note-popup-form input { flex: 1; padding: 10px; border-radius: 8px; border: 1.5px solid #5f4bb6; font-size: 1em; background: #f5f7fa; color: #232946; }
+    .note-popup-form button { padding: 10px 18px; border-radius: 8px; background: #232946; color: #fff; font-weight: 800; border: none; }
+    .note-popup-form button:hover { background: #5f4bb6; }
+    .note-popup-table { width: 100%; border-collapse: collapse; margin-top: 10px; background: #fff; border-radius: 10px; overflow: hidden; }
+    .note-popup-table th, .note-popup-table td { padding: 8px 6px; border: none; text-align: center; font-size: 1em; background: #fff; color: #232946; }
+    .note-popup-table th { background: #e0e7ff; color: #232946; font-weight: 900; }
+    .note-popup-table tr:nth-child(even), .note-popup-table tr:nth-child(odd) { background: #fff; }
+    .note-popup-table td:last-child { color: #5f4bb6; cursor: pointer; font-weight: bold; }
+    .note-popup-table td:last-child:hover { color: #232946; }
+  </style>
   <script>
     // بيانات الدخول (يمكنك تغييرها)
     const ADMIN_USER = "admin";
@@ -463,6 +498,60 @@
       navigator.clipboard.writeText(text);
       alert('تم النسخ!');
     }
+
+    // --- مذكرات المدير ---
+    const notesTypes = { T: 'دفتر T', S: 'دفتر S', F: 'دفتر F' };
+    const notesStorageKey = type => `admin_notes_${type}`;
+    function getNotes(type) {
+      try { return JSON.parse(localStorage.getItem(notesStorageKey(type))) || []; } catch { return []; }
+    }
+    function saveNotes(type, arr) {
+      localStorage.setItem(notesStorageKey(type), JSON.stringify(arr));
+    }
+    function renderNotesPopup(type) {
+      const notes = getNotes(type);
+      const popupId = `note-popup-${type}`;
+      let html = `<div class='note-popup' id='${popupId}'>
+        <span class='note-popup-close' onclick='document.getElementById("${popupId}").classList.remove("active")'>&times;</span>
+        <div style='font-weight:900;font-size:1.2em;margin-bottom:12px;text-align:center;'>${notesTypes[type]}</div>
+        <form class='note-popup-form' onsubmit='return false;'>
+          <input type='text' id='noteNameInput${type}' placeholder='اسم الحصة أو الملف'>
+          <input type='text' id='noteCodeInput${type}' placeholder='رمز الحصة أو الملف'>
+          <button type='button' onclick='addNoteRow("${type}")'>إضافة</button>
+        </form>
+        <table class='note-popup-table'><thead><tr><th>الاسم</th><th>الرمز</th><th>حذف</th></tr></thead><tbody id='noteTableBody${type}'>
+          ${notes.map((row,i)=>`<tr><td>${row.name}</td><td>${row.code}</td><td onclick='deleteNoteRow("${type}",${i})'>&#10006;</td></tr>`).join('')}
+        </tbody></table>
+      </div>`;
+      return html;
+    }
+    function showNotesPopup(type) {
+      let popups = document.getElementById('notes-popups');
+      popups.innerHTML = renderNotesPopup(type);
+      setTimeout(()=>{
+        document.getElementById(`note-popup-${type}`).classList.add('active');
+      }, 10);
+    }
+    function addNoteRow(type) {
+      const name = document.getElementById(`noteNameInput${type}`).value.trim();
+      const code = document.getElementById(`noteCodeInput${type}`).value.trim();
+      if (!name || !code) return;
+      const arr = getNotes(type);
+      arr.push({ name, code });
+      saveNotes(type, arr);
+      showNotesPopup(type);
+    }
+    function deleteNoteRow(type, idx) {
+      const arr = getNotes(type);
+      arr.splice(idx, 1);
+      saveNotes(type, arr);
+      showNotesPopup(type);
+    }
+    document.querySelectorAll('.note-icon-circle').forEach(icon => {
+      icon.onclick = e => {
+        showNotesPopup(icon.dataset.type);
+      };
+    });
   </script>
 </body>
 </html>
