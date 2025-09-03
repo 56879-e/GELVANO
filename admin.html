@@ -27,13 +27,14 @@
     .section-title { color: #2a3b4c; margin: 32px 0 8px 0; font-size: 1.2em; text-align: right; }
     
     /* تنسيق جديد للصفحة */
-    .passwords-section { 
-      width: 100%; 
-      margin-bottom: 40px; 
-      background: #fff; 
-      padding: 24px; 
-      border-radius: 10px; 
-      box-shadow: 0 2px 8px #0001; 
+    .scroll-table-container {
+      max-height: 350px;
+      overflow-y: auto;
+      margin-bottom: 16px;
+      border-radius: 8px;
+      border: 1px solid #eee;
+      box-shadow: 0 1px 4px #0001;
+      background: #fff;
     }
     
     .codes-files-container { 
@@ -99,12 +100,14 @@
           <button type="submit">إضافة</button>
         </div>
       </form>
-      <table id="passwordsTable">
-        <thead>
-          <tr><th>كلمة السر</th><th>نسخ</th><th>حذف</th></tr>
-        </thead>
-        <tbody></tbody>
-      </table>
+      <div class="scroll-table-container">
+        <table id="passwordsTable">
+          <thead>
+            <tr><th>كلمة السر</th><th>نسخ</th><th>حذف</th></tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
     </div>
     
     <!-- قسم الأكواد والملفات - بجانب بعضهما -->
@@ -117,9 +120,11 @@
         </div>
         <form class="add-form-code" id="addCodeForm">
           <div style="display:flex;flex-direction:column;gap:12px;">
-            <div style="display:flex;gap:8px;flex-wrap:wrap;">
+            <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
               <input type="text" id="codePassword" placeholder="كلمة سر الطالب" required style="flex:1;">
-              <input type="text" id="videoId" placeholder="رمز الفيديو (مثال: T1, S2, F3)" required style="flex:1;">
+              <select id="videoIdSelect" required style="flex:1;"></select>
+              <input type="text" id="newVideoIdInput" placeholder="رمز الحصة الجديد" style="max-width:120px;">
+              <button type="button" id="addVideoIdBtn">إضافة الرمز</button>
             </div>
             <div style="display:flex;gap:8px;align-items:center;">
               <input type="text" id="videoCode" placeholder="كود الفيديو (يُولد تلقائيًا أو يدوي)" required style="flex:1;">
@@ -128,20 +133,22 @@
             </div>
           </div>
         </form>
-        <table id="codesTable">
-          <thead>
-            <tr>
-              <th>كلمة السر</th>
-              <th>رمز الفيديو</th>
-              <th>كود الفيديو</th>
-              <th>نسخ</th>
-              <th>حذف</th>
-              <th>تم استخدامه؟</th>
-              <th>تغيير الحالة</th>
-            </tr>
-          </thead>
-          <tbody></tbody>
-        </table>
+        <div class="scroll-table-container">
+          <table id="codesTable">
+            <thead>
+              <tr>
+                <th>كلمة السر</th>
+                <th>رمز الفيديو</th>
+                <th>كود الفيديو</th>
+                <th>نسخ</th>
+                <th>حذف</th>
+                <th>تم استخدامه؟</th>
+                <th>تغيير الحالة</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
       </div>
       
       <!-- قسم أكواد الملفات -->
@@ -152,9 +159,11 @@
         </div>
         <form class="add-form-file" id="addFileCodeForm">
           <div style="display:flex;flex-direction:column;gap:12px;">
-            <div style="display:flex;gap:8px;flex-wrap:wrap;">
+            <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
               <input type="text" id="fileCodePassword" placeholder="كلمة سر الطالب" required style="flex:1;">
-              <input type="text" id="fileId" placeholder="رمز الملف (مثال: FT1, FS2, FF3)" required style="flex:1;">
+              <select id="fileIdSelect" required style="flex:1;"></select>
+              <input type="text" id="newFileIdInput" placeholder="رمز الحصة الجديد" style="max-width:120px;">
+              <button type="button" id="addFileIdBtn">إضافة الرمز</button>
             </div>
             <div style="display:flex;gap:8px;align-items:center;">
               <input type="text" id="fileCode" placeholder="كود الملف (يُولد تلقائيًا أو يدوي)" required style="flex:1;">
@@ -163,20 +172,22 @@
             </div>
           </div>
         </form>
-        <table id="fileCodesTable">
-          <thead>
-            <tr>
-              <th>كلمة السر</th>
-              <th>رمز الملف</th>
-              <th>كود الملف</th>
-              <th>نسخ</th>
-              <th>حذف</th>
-              <th>تم استخدامه؟</th>
-              <th>تغيير الحالة</th>
-            </tr>
-          </thead>
-          <tbody></tbody>
-        </table>
+        <div class="scroll-table-container">
+          <table id="fileCodesTable">
+            <thead>
+              <tr>
+                <th>كلمة السر</th>
+                <th>رمز الملف</th>
+                <th>كود الملف</th>
+                <th>نسخ</th>
+                <th>حذف</th>
+                <th>تم استخدامه؟</th>
+                <th>تغيير الحالة</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
       </div>
     </div>
   </div>
@@ -224,11 +235,19 @@
       for (let i = 0; i < length; i++) code += chars.charAt(Math.floor(Math.random() * chars.length));
       return code;
     }
+    // توليد كود فيديو: حرفان كابيتال + 3 أرقام
     function generateVideoCode() {
-      document.getElementById('videoCode').value = generateCode();
+      const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+      let code = '';
+      for (let i = 0; i < 2; i++) code += letters.charAt(Math.floor(Math.random() * letters.length));
+      for (let i = 0; i < 3; i++) code += Math.floor(Math.random() * 10);
+      document.getElementById('videoCode').value = code;
     }
+    // توليد كود ملف: 4 أرقام عشوائية
     function generateFileCode() {
-      document.getElementById('fileCode').value = generateCode();
+      let code = '';
+      for (let i = 0; i < 4; i++) code += Math.floor(Math.random() * 10);
+      document.getElementById('fileCode').value = code;
     }
     // إدارة الباسوردات
     async function loadPasswords() {
@@ -270,14 +289,89 @@
       addPassword(password);
     };
 
-    // إدارة أكواد الفيديوهات
+    // --- تعبئة وإدارة قائمة رموز الفيديوهات ---
+    let videoIds = [];
+    // متغيرات لتثبيت آخر اختيار
+    let lastSelectedVideoId = null;
+
+    function fillVideoIdSelect() {
+      const select = document.getElementById('videoIdSelect');
+      const prev = lastSelectedVideoId || select.value;
+      select.innerHTML = '';
+      videoIds.forEach(id => {
+        const option = document.createElement('option');
+        option.value = id;
+        option.textContent = id;
+        select.appendChild(option);
+      });
+      if (prev && videoIds.includes(prev)) select.value = prev;
+      else if (videoIds.length) select.value = videoIds[0];
+      lastSelectedVideoId = select.value;
+    }
+    document.getElementById('videoIdSelect').addEventListener('change', function() {
+      lastSelectedVideoId = this.value;
+    });
+
+    function updateVideoIdsFromCodes(codes) {
+      const ids = codes.filter(c => c.videoId && !c.fileId).map(c => c.videoId);
+      videoIds = Array.from(new Set(ids));
+      fillVideoIdSelect();
+    }
+    document.getElementById('addVideoIdBtn').onclick = function() {
+      const newId = document.getElementById('newVideoIdInput').value.trim();
+      if (newId && !videoIds.includes(newId)) {
+        videoIds.push(newId);
+        fillVideoIdSelect();
+        document.getElementById('videoIdSelect').value = newId;
+        document.getElementById('newVideoIdInput').value = '';
+      }
+    };
+    // --- تعبئة وإدارة قائمة رموز الملفات ---
+    let fileIds = [];
+    // متغيرات لتثبيت آخر اختيار
+    let lastSelectedFileId = null;
+
+    function fillFileIdSelect() {
+      const select = document.getElementById('fileIdSelect');
+      const prev = lastSelectedFileId || select.value;
+      select.innerHTML = '';
+      fileIds.forEach(id => {
+        const option = document.createElement('option');
+        option.value = id;
+        option.textContent = id;
+        select.appendChild(option);
+      });
+      if (prev && fileIds.includes(prev)) select.value = prev;
+      else if (fileIds.length) select.value = fileIds[0];
+      lastSelectedFileId = select.value;
+    }
+    document.getElementById('fileIdSelect').addEventListener('change', function() {
+      lastSelectedFileId = this.value;
+    });
+
+    function updateFileIdsFromCodes(codes) {
+      const ids = codes.filter(c => c.fileId && !c.videoId).map(c => c.fileId);
+      fileIds = Array.from(new Set(ids));
+      fillFileIdSelect();
+    }
+    document.getElementById('addFileIdBtn').onclick = function() {
+      const newId = document.getElementById('newFileIdInput').value.trim();
+      if (newId && !fileIds.includes(newId)) {
+        fileIds.push(newId);
+        fillFileIdSelect();
+        document.getElementById('fileIdSelect').value = newId;
+        document.getElementById('newFileIdInput').value = '';
+      }
+    };
+    // --- تحديث القوائم عند تحميل الأكواد ---
     async function loadCodes() {
       const res = await fetch(`${API}/codes`);
       const codes = await res.json();
       const search = document.getElementById('searchCodeInput').value.trim();
       const tbody = document.querySelector("#codesTable tbody");
       tbody.innerHTML = "";
-      codes.filter(codeObj => codeObj.videoId && !codeObj.fileId && (!search || (codeObj.password && codeObj.password.includes(search)))).forEach(codeObj => {
+      updateVideoIdsFromCodes(codes);
+      codes.filter(codeObj => codeObj.videoId && !codeObj.fileId && (!search || (codeObj.password && codeObj.password.includes(search)) || (codeObj.code && codeObj.code.includes(search)))).forEach(codeObj => {
         const tr = document.createElement("tr");
         tr.className = codeObj.used ? 'used' : 'not-used';
         tr.innerHTML = `
@@ -296,7 +390,7 @@
     document.getElementById('addCodeForm').onsubmit = async function(e) {
       e.preventDefault();
       const password = document.getElementById('codePassword').value;
-      const videoId = document.getElementById('videoId').value;
+      const videoId = document.getElementById('videoIdSelect').value;
       const code = document.getElementById('videoCode').value;
       if (!password || !videoId || !code) return;
       await fetch(`${API}/codes`, {
@@ -307,15 +401,17 @@
       loadCodes();
       loadFileCodes();
       this.reset();
+      // إعادة تثبيت آخر اختيار
+      document.getElementById('videoIdSelect').value = lastSelectedVideoId;
     };
-    // إدارة أكواد الملفات
     async function loadFileCodes() {
       const res = await fetch(`${API}/codes`);
       const codes = await res.json();
       const search = document.getElementById('searchFileCodeInput').value.trim();
       const tbody = document.querySelector("#fileCodesTable tbody");
       tbody.innerHTML = "";
-      codes.filter(codeObj => (codeObj.fileId || (!codeObj.videoId && codeObj.code)) && (!search || (codeObj.password && codeObj.password.includes(search)))).forEach(codeObj => {
+      updateFileIdsFromCodes(codes);
+      codes.filter(codeObj => (codeObj.fileId || (!codeObj.videoId && codeObj.code)) && (!search || (codeObj.password && codeObj.password.includes(search)) || (codeObj.code && codeObj.code.includes(search)))).forEach(codeObj => {
         const tr = document.createElement("tr");
         tr.className = codeObj.used ? 'used' : 'not-used';
         tr.innerHTML = `
@@ -334,7 +430,7 @@
     document.getElementById('addFileCodeForm').onsubmit = async function(e) {
       e.preventDefault();
       const password = document.getElementById('fileCodePassword').value;
-      const fileId = document.getElementById('fileId').value;
+      const fileId = document.getElementById('fileIdSelect').value;
       const code = document.getElementById('fileCode').value;
       if (!password || !fileId || !code) return;
       await fetch(`${API}/codes`, {
@@ -345,6 +441,8 @@
       loadCodes();
       loadFileCodes();
       this.reset();
+      // إعادة تثبيت آخر اختيار
+      document.getElementById('fileIdSelect').value = lastSelectedFileId;
     };
     async function deleteCode(id) {
       await fetch(`${API}/codes/${id}`, { method: 'DELETE' });
