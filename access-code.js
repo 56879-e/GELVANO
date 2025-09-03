@@ -200,33 +200,7 @@ function showVideoModal(url) {
         openBtn.style.textDecoration = 'none';
         videoEmbedContainer.appendChild(openBtn);
     });
-    // جعل videoEmbedContainer position:relative لضبط الزر فوق الفيديو
-    videoEmbedContainer.style.position = 'relative';
     videoEmbedContainer.appendChild(iframe);
-    // إضافة زر إغلاق فوق زر المشاركة
-    const closeOverShareBtn = document.createElement('span');
-    closeOverShareBtn.textContent = '✖';
-    closeOverShareBtn.style.position = 'absolute';
-    closeOverShareBtn.style.top = '10px';
-    closeOverShareBtn.style.left = '10px';
-    closeOverShareBtn.style.fontSize = '28px';
-    closeOverShareBtn.style.color = '#fff';
-    closeOverShareBtn.style.background = 'rgba(0,0,0,0.7)';
-    closeOverShareBtn.style.borderRadius = '50%';
-    closeOverShareBtn.style.width = '40px';
-    closeOverShareBtn.style.height = '40px';
-    closeOverShareBtn.style.display = 'flex';
-    closeOverShareBtn.style.alignItems = 'center';
-    closeOverShareBtn.style.justifyContent = 'center';
-    closeOverShareBtn.style.cursor = 'pointer';
-    closeOverShareBtn.style.zIndex = '3';
-    closeOverShareBtn.title = 'إغلاق الفيديو';
-    closeOverShareBtn.onclick = function() {
-        videoModal.style.display = 'none';
-        videoEmbedContainer.innerHTML = '';
-        document.body.style.overflow = '';
-    };
-    videoEmbedContainer.appendChild(closeOverShareBtn);
     videoModal.style.display = 'flex';
     document.body.style.overflow = 'hidden';
 }
