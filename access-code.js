@@ -300,6 +300,33 @@ codeInput.addEventListener('keydown', function(e) {
     }
 });
 
+// --- منع مشاركة الفيديوهات ---
+function blockShareButtons() {
+  // أي زر أو رابط فيه كلمة share أو مشاركة أو أيقونة مشاركة
+  const shareSelectors = [
+    'button', 'a', '[role="button"]', '[aria-label]', '[title]'
+  ];
+  shareSelectors.forEach(sel => {
+    document.querySelectorAll(sel).forEach(el => {
+      const txt = (el.innerText + ' ' + (el.title||'') + ' ' + (el.getAttribute('aria-label')||'')).toLowerCase();
+      if (txt.includes('share') || txt.includes('مشاركة')) {
+        el.onclick = function(e) {
+          e.preventDefault();
+          alert('يمنع مشاركة هذا الفيديو');
+          return false;
+        };
+        el.style.opacity = '0.6';
+        el.style.pointerEvents = 'auto';
+        el.style.cursor = 'not-allowed';
+      }
+    });
+  });
+}
+// نفذ عند تحميل الصفحة وأيضاً بعد أي تحديث ديناميكي
+setTimeout(blockShareButtons, 500);
+document.addEventListener('DOMContentLoaded', blockShareButtons);
+setInterval(blockShareButtons, 2000);
+
 document.addEventListener('DOMContentLoaded', function() {
     // Attach to all file and video links on page load
     const selectors = ['a.download-button[data-content-id]', 'a.play-button[data-content-id]'];
