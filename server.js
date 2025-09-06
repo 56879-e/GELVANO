@@ -139,6 +139,8 @@ app.post('/api/codes', (req, res) => {
             fileId: fileId || '',
             code,
             used: false,
+            useCount: 0,
+            maxUses: 2,
             createdAt: new Date().toISOString()
         };
         
@@ -155,7 +157,7 @@ app.post('/api/codes', (req, res) => {
 app.patch('/api/codes/:id', (req, res) => {
     try {
         const { id } = req.params;
-        const { used } = req.body;
+        const { used, useCount, maxUses } = req.body;
         
         ensureFiles();
         const codes = readCodes();
@@ -165,12 +167,58 @@ app.patch('/api/codes/:id', (req, res) => {
             return res.status(404).json({ error: 'الكود غير موجود' });
         }
         
-        codes[codeIndex].used = used;
+        if (used !== undefined) {
+            codes[codeIndex].used = used;
+        }
+        if (useCount !== undefined) {
+            codes[codeIndex].useCount = useCount;
+        }
+        if (maxUses !== undefined) {
+            codes[codeIndex].maxUses = maxUses;
+        }
+        
         codes[codeIndex].updatedAt = new Date().toISOString();
         
         writeCodes(codes);
         
         res.json({ message: 'تم تحديث حالة الكود بنجاح', code: codes[codeIndex] });
+    } catch (error) {
+        res.status(500).json({ error: 'خطأ في الخادم' });
+    }
+});
+
+// زيادة عدد مرات استخدام الكود
+app.post('/api/codes/:id/use', (req, res) => {
+    try {
+        const { id } = req.params;
+        
+        ensureFiles();
+        const codes = readCodes();
+        
+        const codeIndex = codes.findIndex(c => c.id === id);
+        if (codeIndex === -1) {
+            return res.status(404).json({ error: 'الكود غير موجود' });
+        }
+        
+        const code = codes[codeIndex];
+        
+        // زيادة عدد مرات الاستخدام
+        code.useCount = (code.useCount || 0) + 1;
+        
+        // إذا وصل للحد الأقصى، تعليمه كمستخدم
+        if (code.useCount >= (code.maxUses || 2)) {
+            code.used = true;
+        }
+        
+        code.updatedAt = new Date().toISOString();
+        
+        writeCodes(codes);
+        
+        res.json({ 
+            message: 'تم تحديث عدد مرات الاستخدام', 
+            code: code,
+            canUse: code.useCount < (code.maxUses || 2)
+        });
     } catch (error) {
         res.status(500).json({ error: 'خطأ في الخادم' });
     }

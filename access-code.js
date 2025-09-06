@@ -240,9 +240,10 @@ async function handleVerify() {
             found = codes.find(c => c.fileId === currentContentId && String(c.code).trim().toUpperCase() === code.toUpperCase());
         }
         const alreadyUsed = found && (found.used === true);
+        const useCountExceeded = found && found.useCount >= (found.maxUses || 2);
         const savedPassword = (localStorage.getItem('gelvano_password') || '').trim();
         const passMatch = !!found && !!found.password && savedPassword && String(found.password).trim().toUpperCase() === savedPassword.toUpperCase();
-        const isValid = !!found && !alreadyUsed && passMatch;
+        const isValid = !!found && !alreadyUsed && !useCountExceeded && passMatch;
         if (!!found && !alreadyUsed && !passMatch) {
             errorMessage.textContent = isVideo ? 'هذا الفيديو غير متاح لك' : 'هذا الملف غير متاح لك';
             errorMessage.style.display = 'block';
@@ -252,15 +253,32 @@ async function handleVerify() {
                 attemptsLeft.textContent = `محاولات متبقية: ${MAX_ATTEMPTS - attempts}`;
             }
         }
+        if (!!found && !alreadyUsed && passMatch && useCountExceeded) {
+            errorMessage.textContent = 'عدد مرات استخدام الكود تم استنفاذها. قم بالتواصل مع الدعم لتغيير حالة الكود.';
+            errorMessage.style.display = 'block';
+            if (attempts >= MAX_ATTEMPTS) {
+                attemptsLeft.textContent = 'تم استنفاد جميع المحاولات';
+            } else {
+                attemptsLeft.textContent = `محاولات متبقية: ${MAX_ATTEMPTS - attempts}`;
+            }
+        }
         if (isValid) {
-            // محاولة تعليم الكود كمستخدم فقط إذا كنا على API حقيقي
+            // محاولة زيادة عدد مرات الاستخدام إذا كنا على API حقيقي
             try {
                 if (found.id) {
-                    await fetch(`${API_BASE}/codes/${found.id}`, {
-                        method: 'PATCH',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ used: true })
+                    const useResponse = await fetch(`${API_BASE}/codes/${found.id}/use`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' }
                     });
+                    
+                    if (useResponse.ok) {
+                        const result = await useResponse.json();
+                        if (!result.canUse) {
+                            errorMessage.textContent = 'عدد مرات استخدام الكود تم استنفاذها. قم بالتواصل مع الدعم لتغيير حالة الكود.';
+                            errorMessage.style.display = 'block';
+                            return;
+                        }
+                    }
                 }
             } catch (_) { /* تجاهل في وضع الملفات الثابتة */ }
             hidePopup();
@@ -270,7 +288,13 @@ async function handleVerify() {
                 showPdfModal(currentContentUrl);
             }
         } else {
-            errorMessage.textContent = isVideo ? 'كود غير صحيح أو مستخدم بالفعل لهذا الفيديو' : 'كود غير صحيح أو مستخدم بالفعل لهذا الملف';
+            if (!!found && alreadyUsed) {
+                errorMessage.textContent = isVideo ? 'هذا الكود مستخدم بالفعل لهذا الفيديو' : 'هذا الكود مستخدم بالفعل لهذا الملف';
+            } else if (!!found && useCountExceeded) {
+                errorMessage.textContent = 'عدد مرات استخدام الكود تم استنفاذها. قم بالتواصل مع الدعم لتغيير حالة الكود.';
+            } else {
+                errorMessage.textContent = isVideo ? 'كود غير صحيح لهذا الفيديو' : 'كود غير صحيح لهذا الملف';
+            }
             errorMessage.style.display = 'block';
             if (attempts >= MAX_ATTEMPTS) {
                 attemptsLeft.textContent = 'تم استنفاد جميع المحاولات';

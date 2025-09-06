@@ -6,6 +6,8 @@
     "fileId": "",
     "code": "CR111",
     "used": false,
+    "useCount": 0,
+    "maxUses": 2,
     "createdAt": "2025-08-28T23:55:35.843Z"
   },
   {
@@ -15,7 +17,9 @@
     "fileId": "",
     "code": "CR112",
     "used": false,
-    "createdAt": "2025-08-29T01:01:05.486Z"
+    "createdAt": "2025-08-29T01:01:05.486Z",
+    "useCount": 0,
+    "maxUses": 2
   },
   {
     "id": "1756430305169",
@@ -24,7 +28,9 @@
     "fileId": "",
     "code": "CR113",
     "used": false,
-    "createdAt": "2025-08-29T01:18:25.169Z"
+    "createdAt": "2025-08-29T01:18:25.169Z",
+    "useCount": 0,
+    "maxUses": 2
   },
   {
     "id": "1756551537401",
@@ -33,7 +39,9 @@
     "fileId": "",
     "code": "EC497",
     "used": false,
-    "createdAt": "2025-08-30T10:58:57.406Z"
+    "createdAt": "2025-08-30T10:58:57.406Z",
+    "useCount": 0,
+    "maxUses": 2
   },
   {
     "id": "1756551956559",
@@ -42,7 +50,9 @@
     "fileId": "",
     "code": "CF751",
     "used": false,
-    "createdAt": "2025-08-30T11:05:56.559Z"
+    "createdAt": "2025-08-30T11:05:56.559Z",
+    "useCount": 0,
+    "maxUses": 2
   },
   {
     "id": "1756552213038",
@@ -51,7 +61,9 @@
     "fileId": "",
     "code": "GR149",
     "used": false,
-    "createdAt": "2025-08-30T11:10:13.038Z"
+    "createdAt": "2025-08-30T11:10:13.038Z",
+    "useCount": 0,
+    "maxUses": 2
   },
   {
     "id": "1756552433237",
@@ -60,7 +72,9 @@
     "fileId": "",
     "code": "GD958",
     "used": false,
-    "createdAt": "2025-08-30T11:13:53.237Z"
+    "createdAt": "2025-08-30T11:13:53.237Z",
+    "useCount": 0,
+    "maxUses": 2
   },
   {
     "id": "1756552617055",
@@ -69,7 +83,9 @@
     "fileId": "",
     "code": "PN584",
     "used": false,
-    "createdAt": "2025-08-30T11:16:57.055Z"
+    "createdAt": "2025-08-30T11:16:57.055Z",
+    "useCount": 0,
+    "maxUses": 2
   },
   {
     "id": "1756553650632",
@@ -78,7 +94,9 @@
     "fileId": "",
     "code": "CH495",
     "used": false,
-    "createdAt": "2025-08-30T11:34:10.632Z"
+    "createdAt": "2025-08-30T11:34:10.632Z",
+    "useCount": 0,
+    "maxUses": 2
   },
   {
     "id": "1756553859468",
@@ -87,7 +105,9 @@
     "fileId": "",
     "code": "MF632",
     "used": false,
-    "createdAt": "2025-08-30T11:37:39.468Z"
+    "createdAt": "2025-08-30T11:37:39.468Z",
+    "useCount": 0,
+    "maxUses": 2
   },
   {
     "id": "1756554205340",
@@ -96,7 +116,9 @@
     "fileId": "",
     "code": "DZ424",
     "used": false,
-    "createdAt": "2025-08-30T11:43:25.340Z"
+    "createdAt": "2025-08-30T11:43:25.340Z",
+    "useCount": 0,
+    "maxUses": 2
   },
   {
     "id": "1756554640782",
@@ -105,7 +127,9 @@
     "fileId": "",
     "code": "MK374",
     "used": false,
-    "createdAt": "2025-08-30T11:50:40.782Z"
+    "createdAt": "2025-08-30T11:50:40.782Z",
+    "useCount": 0,
+    "maxUses": 2
   },
   {
     "id": "1756554829774",
@@ -114,7 +138,9 @@
     "fileId": "",
     "code": "AE616",
     "used": false,
-    "createdAt": "2025-08-30T11:53:49.774Z"
+    "createdAt": "2025-08-30T11:53:49.774Z",
+    "useCount": 0,
+    "maxUses": 2
   },
   {
     "id": "1756612442733",
@@ -123,7 +149,9 @@
     "fileId": "",
     "code": "TB227",
     "used": false,
-    "createdAt": "2025-08-31T03:54:02.735Z"
+    "createdAt": "2025-08-31T03:54:02.735Z",
+    "useCount": 0,
+    "maxUses": 2
   },
   {
     "id": "1756612861063",
@@ -132,7 +160,9 @@
     "fileId": "",
     "code": "UV156",
     "used": false,
-    "createdAt": "2025-08-31T04:01:01.063Z"
+    "createdAt": "2025-08-31T04:01:01.063Z",
+    "useCount": 0,
+    "maxUses": 2
   },
   {
     "id": "1756612966352",
@@ -141,7 +171,9 @@
     "fileId": "",
     "code": "GG458",
     "used": false,
-    "createdAt": "2025-08-31T04:02:46.352Z"
+    "createdAt": "2025-08-31T04:02:46.352Z",
+    "useCount": 0,
+    "maxUses": 2
   },
   {
     "id": "1756613337022",
@@ -150,7 +182,9 @@
     "fileId": "",
     "code": "WR147",
     "used": false,
-    "createdAt": "2025-08-31T04:08:57.022Z"
+    "createdAt": "2025-08-31T04:08:57.022Z",
+    "useCount": 0,
+    "maxUses": 2
   },
   {
     "id": "1756613481832",
@@ -159,7 +193,9 @@
     "fileId": "",
     "code": "JZ434",
     "used": false,
-    "createdAt": "2025-08-31T04:11:21.832Z"
+    "createdAt": "2025-08-31T04:11:21.832Z",
+    "useCount": 0,
+    "maxUses": 2
   },
   {
     "id": "1756613749665",
@@ -168,7 +204,9 @@
     "fileId": "",
     "code": "FU454",
     "used": false,
-    "createdAt": "2025-08-31T04:15:49.665Z"
+    "createdAt": "2025-08-31T04:15:49.665Z",
+    "useCount": 0,
+    "maxUses": 2
   },
   {
     "id": "1756615524456",
@@ -177,7 +215,9 @@
     "fileId": "",
     "code": "WG188",
     "used": false,
-    "createdAt": "2025-08-31T04:45:24.456Z"
+    "createdAt": "2025-08-31T04:45:24.456Z",
+    "useCount": 0,
+    "maxUses": 2
   },
   {
     "id": "1756616320895",
@@ -186,7 +226,9 @@
     "fileId": "",
     "code": "HZ020",
     "used": false,
-    "createdAt": "2025-08-31T04:58:40.895Z"
+    "createdAt": "2025-08-31T04:58:40.895Z",
+    "useCount": 0,
+    "maxUses": 2
   },
   {
     "id": "1756616631600",
@@ -195,7 +237,9 @@
     "fileId": "",
     "code": "QN810",
     "used": false,
-    "createdAt": "2025-08-31T05:03:51.600Z"
+    "createdAt": "2025-08-31T05:03:51.600Z",
+    "useCount": 0,
+    "maxUses": 2
   },
   {
     "id": "1756621793918",
@@ -204,7 +248,9 @@
     "fileId": "",
     "code": "ZN067",
     "used": false,
-    "createdAt": "2025-08-31T06:29:53.918Z"
+    "createdAt": "2025-08-31T06:29:53.918Z",
+    "useCount": 0,
+    "maxUses": 2
   },
   {
     "id": "1756623348736",
@@ -213,7 +259,9 @@
     "fileId": "",
     "code": "UU461",
     "used": false,
-    "createdAt": "2025-08-31T06:55:48.736Z"
+    "createdAt": "2025-08-31T06:55:48.736Z",
+    "useCount": 0,
+    "maxUses": 2
   },
   {
     "id": "1756623547981",
@@ -222,7 +270,9 @@
     "fileId": "",
     "code": "SD124",
     "used": false,
-    "createdAt": "2025-08-31T06:59:07.981Z"
+    "createdAt": "2025-08-31T06:59:07.981Z",
+    "useCount": 0,
+    "maxUses": 2
   },
   {
     "id": "1756624248425",
@@ -231,7 +281,9 @@
     "fileId": "",
     "code": "OR893",
     "used": false,
-    "createdAt": "2025-08-31T07:10:48.426Z"
+    "createdAt": "2025-08-31T07:10:48.426Z",
+    "useCount": 0,
+    "maxUses": 2
   },
   {
     "id": "1756624815262",
@@ -240,7 +292,9 @@
     "fileId": "",
     "code": "WZ872",
     "used": false,
-    "createdAt": "2025-08-31T07:20:15.262Z"
+    "createdAt": "2025-08-31T07:20:15.262Z",
+    "useCount": 0,
+    "maxUses": 2
   },
   {
     "id": "1756624870650",
@@ -249,7 +303,9 @@
     "fileId": "",
     "code": "YP307",
     "used": false,
-    "createdAt": "2025-08-31T07:21:10.650Z"
+    "createdAt": "2025-08-31T07:21:10.650Z",
+    "useCount": 0,
+    "maxUses": 2
   },
   {
     "id": "1756624988902",
@@ -258,7 +314,9 @@
     "fileId": "",
     "code": "AA129",
     "used": false,
-    "createdAt": "2025-08-31T07:23:08.903Z"
+    "createdAt": "2025-08-31T07:23:08.903Z",
+    "useCount": 0,
+    "maxUses": 2
   },
   {
     "id": "1756660106842",
@@ -267,7 +325,9 @@
     "fileId": "",
     "code": "EP255",
     "used": false,
-    "createdAt": "2025-08-31T17:08:26.846Z"
+    "createdAt": "2025-08-31T17:08:26.846Z",
+    "useCount": 0,
+    "maxUses": 2
   },
   {
     "id": "1756660298497",
@@ -276,7 +336,9 @@
     "fileId": "",
     "code": "VR200",
     "used": false,
-    "createdAt": "2025-08-31T17:11:38.497Z"
+    "createdAt": "2025-08-31T17:11:38.497Z",
+    "useCount": 0,
+    "maxUses": 2
   },
   {
     "id": "1756660347096",
@@ -285,7 +347,9 @@
     "fileId": "",
     "code": "VO345",
     "used": false,
-    "createdAt": "2025-08-31T17:12:27.096Z"
+    "createdAt": "2025-08-31T17:12:27.096Z",
+    "useCount": 0,
+    "maxUses": 2
   },
   {
     "id": "1756671243074",
@@ -294,7 +358,9 @@
     "fileId": "",
     "code": "KA660",
     "used": false,
-    "createdAt": "2025-08-31T20:14:03.074Z"
+    "createdAt": "2025-08-31T20:14:03.074Z",
+    "useCount": 0,
+    "maxUses": 2
   },
   {
     "id": "1756673771810",
@@ -303,7 +369,9 @@
     "fileId": "",
     "code": "NF066",
     "used": false,
-    "createdAt": "2025-08-31T20:56:11.812Z"
+    "createdAt": "2025-08-31T20:56:11.812Z",
+    "useCount": 0,
+    "maxUses": 2
   },
   {
     "id": "1756785315070",
@@ -312,7 +380,9 @@
     "fileId": "",
     "code": "NF066",
     "used": false,
-    "createdAt": "2025-09-02T03:55:15.072Z"
+    "createdAt": "2025-09-02T03:55:15.072Z",
+    "useCount": 0,
+    "maxUses": 2
   },
   {
     "id": "1756785413474",
@@ -321,7 +391,9 @@
     "fileId": "",
     "code": "NF066",
     "used": false,
-    "createdAt": "2025-09-02T03:56:53.474Z"
+    "createdAt": "2025-09-02T03:56:53.474Z",
+    "useCount": 0,
+    "maxUses": 2
   },
   {
     "id": "1756789983276",
@@ -330,7 +402,9 @@
     "fileId": "",
     "code": "FQ803",
     "used": false,
-    "createdAt": "2025-09-02T05:13:03.276Z"
+    "createdAt": "2025-09-02T05:13:03.276Z",
+    "useCount": 0,
+    "maxUses": 2
   },
   {
     "id": "1756790349594",
@@ -339,7 +413,9 @@
     "fileId": "",
     "code": "OU734",
     "used": false,
-    "createdAt": "2025-09-02T05:19:09.594Z"
+    "createdAt": "2025-09-02T05:19:09.594Z",
+    "useCount": 0,
+    "maxUses": 2
   },
   {
     "id": "1756793927219",
@@ -348,7 +424,9 @@
     "fileId": "",
     "code": "WR387",
     "used": false,
-    "createdAt": "2025-09-02T06:18:47.219Z"
+    "createdAt": "2025-09-02T06:18:47.219Z",
+    "useCount": 0,
+    "maxUses": 2
   },
   {
     "id": "1756794078065",
@@ -357,7 +435,9 @@
     "fileId": "",
     "code": "DF702",
     "used": false,
-    "createdAt": "2025-09-02T06:21:18.065Z"
+    "createdAt": "2025-09-02T06:21:18.065Z",
+    "useCount": 0,
+    "maxUses": 2
   },
   {
     "id": "1756794570973",
@@ -366,7 +446,9 @@
     "fileId": "",
     "code": "FT124",
     "used": false,
-    "createdAt": "2025-09-02T06:29:30.973Z"
+    "createdAt": "2025-09-02T06:29:30.973Z",
+    "useCount": 0,
+    "maxUses": 2
   },
   {
     "id": "1756795145627",
@@ -375,7 +457,9 @@
     "fileId": "",
     "code": "GQ036",
     "used": false,
-    "createdAt": "2025-09-02T06:39:05.627Z"
+    "createdAt": "2025-09-02T06:39:05.627Z",
+    "useCount": 0,
+    "maxUses": 2
   },
   {
     "id": "1756795395574",
@@ -384,7 +468,9 @@
     "fileId": "",
     "code": "KL064",
     "used": false,
-    "createdAt": "2025-09-02T06:43:15.574Z"
+    "createdAt": "2025-09-02T06:43:15.574Z",
+    "useCount": 0,
+    "maxUses": 2
   },
   {
     "id": "1756795809728",
@@ -393,7 +479,9 @@
     "fileId": "",
     "code": "XJ244",
     "used": false,
-    "createdAt": "2025-09-02T06:50:09.728Z"
+    "createdAt": "2025-09-02T06:50:09.728Z",
+    "useCount": 0,
+    "maxUses": 2
   },
   {
     "id": "1756795921888",
@@ -402,7 +490,9 @@
     "fileId": "",
     "code": "AW979",
     "used": false,
-    "createdAt": "2025-09-02T06:52:01.888Z"
+    "createdAt": "2025-09-02T06:52:01.888Z",
+    "useCount": 0,
+    "maxUses": 2
   },
   {
     "id": "1756796088730",
@@ -411,7 +501,9 @@
     "fileId": "",
     "code": "EL244",
     "used": false,
-    "createdAt": "2025-09-02T06:54:48.730Z"
+    "createdAt": "2025-09-02T06:54:48.730Z",
+    "useCount": 0,
+    "maxUses": 2
   },
   {
     "id": "1756797451225",
@@ -420,7 +512,9 @@
     "fileId": "",
     "code": "YR454",
     "used": false,
-    "createdAt": "2025-09-02T07:17:31.225Z"
+    "createdAt": "2025-09-02T07:17:31.225Z",
+    "useCount": 0,
+    "maxUses": 2
   },
   {
     "id": "1756797588138",
@@ -429,7 +523,9 @@
     "fileId": "",
     "code": "CL162",
     "used": false,
-    "createdAt": "2025-09-02T07:19:48.138Z"
+    "createdAt": "2025-09-02T07:19:48.138Z",
+    "useCount": 0,
+    "maxUses": 2
   },
   {
     "id": "1756798683247",
@@ -438,7 +534,9 @@
     "fileId": "",
     "code": "EF832",
     "used": false,
-    "createdAt": "2025-09-02T07:38:03.247Z"
+    "createdAt": "2025-09-02T07:38:03.247Z",
+    "useCount": 0,
+    "maxUses": 2
   },
   {
     "id": "1756799907717",
@@ -447,7 +545,9 @@
     "fileId": "",
     "code": "XW797",
     "used": false,
-    "createdAt": "2025-09-02T07:58:27.717Z"
+    "createdAt": "2025-09-02T07:58:27.717Z",
+    "useCount": 0,
+    "maxUses": 2
   },
   {
     "id": "1756800078753",
@@ -456,7 +556,9 @@
     "fileId": "",
     "code": "NB226",
     "used": false,
-    "createdAt": "2025-09-02T08:01:18.753Z"
+    "createdAt": "2025-09-02T08:01:18.753Z",
+    "useCount": 0,
+    "maxUses": 2
   },
   {
     "id": "1756800238266",
@@ -465,7 +567,9 @@
     "fileId": "",
     "code": "CW369",
     "used": false,
-    "createdAt": "2025-09-02T08:03:58.266Z"
+    "createdAt": "2025-09-02T08:03:58.266Z",
+    "useCount": 0,
+    "maxUses": 2
   },
   {
     "id": "1756800409914",
@@ -474,7 +578,9 @@
     "fileId": "",
     "code": "YP048",
     "used": false,
-    "createdAt": "2025-09-02T08:06:49.914Z"
+    "createdAt": "2025-09-02T08:06:49.914Z",
+    "useCount": 0,
+    "maxUses": 2
   },
   {
     "id": "1756800520658",
@@ -483,7 +589,9 @@
     "fileId": "",
     "code": "KC398",
     "used": false,
-    "createdAt": "2025-09-02T08:08:40.658Z"
+    "createdAt": "2025-09-02T08:08:40.658Z",
+    "useCount": 0,
+    "maxUses": 2
   },
   {
     "id": "1756801402313",
@@ -492,7 +600,9 @@
     "fileId": "",
     "code": "YX440",
     "used": false,
-    "createdAt": "2025-09-02T08:23:22.313Z"
+    "createdAt": "2025-09-02T08:23:22.313Z",
+    "useCount": 0,
+    "maxUses": 2
   },
   {
     "id": "1756801693390",
@@ -501,7 +611,9 @@
     "fileId": "",
     "code": "MC193",
     "used": false,
-    "createdAt": "2025-09-02T08:28:13.390Z"
+    "createdAt": "2025-09-02T08:28:13.390Z",
+    "useCount": 0,
+    "maxUses": 2
   },
   {
     "id": "1756801821727",
@@ -510,7 +622,9 @@
     "fileId": "",
     "code": "HT829",
     "used": false,
-    "createdAt": "2025-09-02T08:30:21.727Z"
+    "createdAt": "2025-09-02T08:30:21.727Z",
+    "useCount": 0,
+    "maxUses": 2
   },
   {
     "id": "1756801927484",
@@ -519,7 +633,9 @@
     "fileId": "",
     "code": "TN800",
     "used": false,
-    "createdAt": "2025-09-02T08:32:07.484Z"
+    "createdAt": "2025-09-02T08:32:07.484Z",
+    "useCount": 0,
+    "maxUses": 2
   },
   {
     "id": "1756802067059",
@@ -528,7 +644,9 @@
     "fileId": "",
     "code": "ZV275",
     "used": false,
-    "createdAt": "2025-09-02T08:34:27.059Z"
+    "createdAt": "2025-09-02T08:34:27.059Z",
+    "useCount": 0,
+    "maxUses": 2
   },
   {
     "id": "1756802949939",
@@ -537,7 +655,9 @@
     "fileId": "",
     "code": "JQ614",
     "used": false,
-    "createdAt": "2025-09-02T08:49:09.939Z"
+    "createdAt": "2025-09-02T08:49:09.939Z",
+    "useCount": 0,
+    "maxUses": 2
   },
   {
     "id": "1756802974230",
@@ -546,7 +666,9 @@
     "fileId": "",
     "code": "YN896",
     "used": false,
-    "createdAt": "2025-09-02T08:49:34.230Z"
+    "createdAt": "2025-09-02T08:49:34.230Z",
+    "useCount": 0,
+    "maxUses": 2
   },
   {
     "id": "1756840639530",
@@ -555,7 +677,9 @@
     "fileId": "",
     "code": "MF635",
     "used": false,
-    "createdAt": "2025-09-02T19:17:19.530Z"
+    "createdAt": "2025-09-02T19:17:19.530Z",
+    "useCount": 0,
+    "maxUses": 2
   },
   {
     "id": "1756842665800",
@@ -564,7 +688,9 @@
     "fileId": "",
     "code": "GW109",
     "used": false,
-    "createdAt": "2025-09-02T19:51:05.801Z"
+    "createdAt": "2025-09-02T19:51:05.801Z",
+    "useCount": 0,
+    "maxUses": 2
   },
   {
     "id": "1756842782509",
@@ -573,7 +699,9 @@
     "fileId": "",
     "code": "HU280",
     "used": false,
-    "createdAt": "2025-09-02T19:53:02.509Z"
+    "createdAt": "2025-09-02T19:53:02.509Z",
+    "useCount": 0,
+    "maxUses": 2
   },
   {
     "id": "1756845080316",
@@ -582,7 +710,9 @@
     "fileId": "",
     "code": "WV190",
     "used": false,
-    "createdAt": "2025-09-02T20:31:20.316Z"
+    "createdAt": "2025-09-02T20:31:20.316Z",
+    "useCount": 0,
+    "maxUses": 2
   },
   {
     "id": "1756845300088",
@@ -591,7 +721,9 @@
     "fileId": "",
     "code": "NB201",
     "used": false,
-    "createdAt": "2025-09-02T20:35:00.088Z"
+    "createdAt": "2025-09-02T20:35:00.088Z",
+    "useCount": 0,
+    "maxUses": 2
   },
   {
     "id": "1756845377085",
@@ -600,7 +732,9 @@
     "fileId": "",
     "code": "RR578",
     "used": false,
-    "createdAt": "2025-09-02T20:36:17.085Z"
+    "createdAt": "2025-09-02T20:36:17.085Z",
+    "useCount": 0,
+    "maxUses": 2
   },
   {
     "id": "1756845497701",
@@ -609,7 +743,9 @@
     "fileId": "",
     "code": "TD061",
     "used": false,
-    "createdAt": "2025-09-02T20:38:17.701Z"
+    "createdAt": "2025-09-02T20:38:17.701Z",
+    "useCount": 0,
+    "maxUses": 2
   },
   {
     "id": "1756845610332",
@@ -618,7 +754,9 @@
     "fileId": "",
     "code": "ZV843",
     "used": false,
-    "createdAt": "2025-09-02T20:40:10.332Z"
+    "createdAt": "2025-09-02T20:40:10.332Z",
+    "useCount": 0,
+    "maxUses": 2
   },
   {
     "id": "1756850316169",
@@ -627,7 +765,9 @@
     "fileId": "",
     "code": "PP896",
     "used": false,
-    "createdAt": "2025-09-02T21:58:36.171Z"
+    "createdAt": "2025-09-02T21:58:36.171Z",
+    "useCount": 0,
+    "maxUses": 2
   },
   {
     "id": "1756869675927",
@@ -636,7 +776,9 @@
     "fileId": "",
     "code": "WE200",
     "used": false,
-    "createdAt": "2025-09-03T03:21:15.927Z"
+    "createdAt": "2025-09-03T03:21:15.927Z",
+    "useCount": 0,
+    "maxUses": 2
   },
   {
     "id": "1756869870107",
@@ -645,7 +787,9 @@
     "fileId": "",
     "code": "UL312",
     "used": false,
-    "createdAt": "2025-09-03T03:24:30.107Z"
+    "createdAt": "2025-09-03T03:24:30.107Z",
+    "useCount": 0,
+    "maxUses": 2
   },
   {
     "id": "1756869898314",
@@ -654,7 +798,9 @@
     "fileId": "",
     "code": "UL312",
     "used": false,
-    "createdAt": "2025-09-03T03:24:58.315Z"
+    "createdAt": "2025-09-03T03:24:58.315Z",
+    "useCount": 0,
+    "maxUses": 2
   },
   {
     "id": "1756870629736",
@@ -663,7 +809,9 @@
     "fileId": "",
     "code": "FX482",
     "used": false,
-    "createdAt": "2025-09-03T03:37:09.736Z"
+    "createdAt": "2025-09-03T03:37:09.736Z",
+    "useCount": 0,
+    "maxUses": 2
   },
   {
     "id": "1756968727435",
@@ -672,7 +820,9 @@
     "fileId": "",
     "code": "EO235",
     "used": false,
-    "createdAt": "2025-09-04T06:52:07.437Z"
+    "createdAt": "2025-09-04T06:52:07.437Z",
+    "useCount": 0,
+    "maxUses": 2
   },
   {
     "id": "1757017617709",
@@ -681,7 +831,9 @@
     "fileId": "",
     "code": "RE087",
     "used": false,
-    "createdAt": "2025-09-04T20:26:57.710Z"
+    "createdAt": "2025-09-04T20:26:57.710Z",
+    "useCount": 0,
+    "maxUses": 2
   },
   {
     "id": "1757017724693",
@@ -690,7 +842,9 @@
     "fileId": "",
     "code": "XB491",
     "used": false,
-    "createdAt": "2025-09-04T20:28:44.693Z"
+    "createdAt": "2025-09-04T20:28:44.693Z",
+    "useCount": 0,
+    "maxUses": 2
   },
   {
     "id": "1757017905094",
@@ -699,7 +853,9 @@
     "fileId": "",
     "code": "MR181",
     "used": false,
-    "createdAt": "2025-09-04T20:31:45.094Z"
+    "createdAt": "2025-09-04T20:31:45.094Z",
+    "useCount": 0,
+    "maxUses": 2
   },
   {
     "id": "1757018138692",
@@ -708,7 +864,9 @@
     "fileId": "",
     "code": "XA940",
     "used": false,
-    "createdAt": "2025-09-04T20:35:38.692Z"
+    "createdAt": "2025-09-04T20:35:38.692Z",
+    "useCount": 0,
+    "maxUses": 2
   },
   {
     "id": "1757018242402",
@@ -717,7 +875,9 @@
     "fileId": "",
     "code": "YQ924",
     "used": false,
-    "createdAt": "2025-09-04T20:37:22.402Z"
+    "createdAt": "2025-09-04T20:37:22.402Z",
+    "useCount": 0,
+    "maxUses": 2
   },
   {
     "id": "1757022409142",
@@ -726,7 +886,9 @@
     "fileId": "",
     "code": "XH510",
     "used": false,
-    "createdAt": "2025-09-04T21:46:49.147Z"
+    "createdAt": "2025-09-04T21:46:49.147Z",
+    "useCount": 0,
+    "maxUses": 2
   },
   {
     "id": "1757032120549",
@@ -735,7 +897,9 @@
     "fileId": "",
     "code": "VD248",
     "used": false,
-    "createdAt": "2025-09-05T00:28:40.559Z"
+    "createdAt": "2025-09-05T00:28:40.559Z",
+    "useCount": 0,
+    "maxUses": 2
   },
   {
     "id": "1757033242903",
@@ -744,7 +908,9 @@
     "fileId": "",
     "code": "JU424",
     "used": false,
-    "createdAt": "2025-09-05T00:47:22.904Z"
+    "createdAt": "2025-09-05T00:47:22.904Z",
+    "useCount": 0,
+    "maxUses": 2
   },
   {
     "id": "1757033258699",
@@ -753,7 +919,9 @@
     "fileId": "",
     "code": "JU424",
     "used": false,
-    "createdAt": "2025-09-05T00:47:38.699Z"
+    "createdAt": "2025-09-05T00:47:38.699Z",
+    "useCount": 0,
+    "maxUses": 2
   },
   {
     "id": "1757033442755",
@@ -762,7 +930,9 @@
     "fileId": "",
     "code": "UG285",
     "used": false,
-    "createdAt": "2025-09-05T00:50:42.755Z"
+    "createdAt": "2025-09-05T00:50:42.755Z",
+    "useCount": 0,
+    "maxUses": 2
   },
   {
     "id": "1757033947850",
@@ -771,7 +941,9 @@
     "fileId": "",
     "code": "CK802",
     "used": false,
-    "createdAt": "2025-09-05T00:59:07.850Z"
+    "createdAt": "2025-09-05T00:59:07.850Z",
+    "useCount": 0,
+    "maxUses": 2
   },
   {
     "id": "1757033970956",
@@ -780,7 +952,9 @@
     "fileId": "",
     "code": "CK802",
     "used": false,
-    "createdAt": "2025-09-05T00:59:30.957Z"
+    "createdAt": "2025-09-05T00:59:30.957Z",
+    "useCount": 0,
+    "maxUses": 2
   },
   {
     "id": "1757034077347",
@@ -789,7 +963,9 @@
     "fileId": "",
     "code": "BA758",
     "used": false,
-    "createdAt": "2025-09-05T01:01:17.347Z"
+    "createdAt": "2025-09-05T01:01:17.347Z",
+    "useCount": 0,
+    "maxUses": 2
   },
   {
     "id": "1757034090280",
@@ -798,7 +974,9 @@
     "fileId": "",
     "code": "BA758",
     "used": false,
-    "createdAt": "2025-09-05T01:01:30.280Z"
+    "createdAt": "2025-09-05T01:01:30.280Z",
+    "useCount": 0,
+    "maxUses": 2
   },
   {
     "id": "1757037228277",
@@ -807,7 +985,9 @@
     "fileId": "",
     "code": "XZ424",
     "used": false,
-    "createdAt": "2025-09-05T01:53:48.277Z"
+    "createdAt": "2025-09-05T01:53:48.277Z",
+    "useCount": 0,
+    "maxUses": 2
   },
   {
     "id": "1757037245691",
@@ -816,7 +996,9 @@
     "fileId": "",
     "code": "XZ424",
     "used": false,
-    "createdAt": "2025-09-05T01:54:05.691Z"
+    "createdAt": "2025-09-05T01:54:05.691Z",
+    "useCount": 0,
+    "maxUses": 2
   },
   {
     "id": "1757038437938",
@@ -825,7 +1007,9 @@
     "fileId": "",
     "code": "HA027",
     "used": false,
-    "createdAt": "2025-09-05T02:13:57.938Z"
+    "createdAt": "2025-09-05T02:13:57.938Z",
+    "useCount": 0,
+    "maxUses": 2
   },
   {
     "id": "1757038457016",
@@ -834,7 +1018,9 @@
     "fileId": "",
     "code": "HA027",
     "used": false,
-    "createdAt": "2025-09-05T02:14:17.016Z"
+    "createdAt": "2025-09-05T02:14:17.016Z",
+    "useCount": 0,
+    "maxUses": 2
   },
   {
     "id": "1757038755171",
@@ -843,7 +1029,9 @@
     "fileId": "",
     "code": "BG034",
     "used": false,
-    "createdAt": "2025-09-05T02:19:15.171Z"
+    "createdAt": "2025-09-05T02:19:15.171Z",
+    "useCount": 0,
+    "maxUses": 2
   },
   {
     "id": "1757038779165",
@@ -852,7 +1040,9 @@
     "fileId": "",
     "code": "BG034",
     "used": false,
-    "createdAt": "2025-09-05T02:19:39.165Z"
+    "createdAt": "2025-09-05T02:19:39.165Z",
+    "useCount": 0,
+    "maxUses": 2
   },
   {
     "id": "1757038793995",
@@ -861,7 +1051,9 @@
     "fileId": "",
     "code": "BG034",
     "used": false,
-    "createdAt": "2025-09-05T02:19:53.995Z"
+    "createdAt": "2025-09-05T02:19:53.995Z",
+    "useCount": 0,
+    "maxUses": 2
   },
   {
     "id": "1757038988454",
@@ -870,7 +1062,9 @@
     "fileId": "",
     "code": "FJ005",
     "used": false,
-    "createdAt": "2025-09-05T02:23:08.454Z"
+    "createdAt": "2025-09-05T02:23:08.454Z",
+    "useCount": 0,
+    "maxUses": 2
   },
   {
     "id": "1757039004752",
@@ -879,7 +1073,9 @@
     "fileId": "",
     "code": "FJ005",
     "used": false,
-    "createdAt": "2025-09-05T02:23:24.752Z"
+    "createdAt": "2025-09-05T02:23:24.752Z",
+    "useCount": 0,
+    "maxUses": 2
   },
   {
     "id": "1757039054736",
@@ -888,6 +1084,8 @@
     "fileId": "",
     "code": "FJ005",
     "used": false,
-    "createdAt": "2025-09-05T02:24:14.736Z"
+    "createdAt": "2025-09-05T02:24:14.736Z",
+    "useCount": 0,
+    "maxUses": 2
   }
 ]

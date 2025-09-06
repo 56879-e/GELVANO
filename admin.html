@@ -140,10 +140,13 @@
                 <th>كلمة السر</th>
                 <th>رمز الفيديو</th>
                 <th>كود الفيديو</th>
+                <th>عدد الاستخدام</th>
+                <th>الحد الأقصى</th>
                 <th>نسخ</th>
                 <th>حذف</th>
                 <th>تم استخدامه؟</th>
                 <th>تغيير الحالة</th>
+                <th>إعادة تعيين</th>
               </tr>
             </thead>
             <tbody></tbody>
@@ -179,10 +182,13 @@
                 <th>كلمة السر</th>
                 <th>رمز الملف</th>
                 <th>كود الملف</th>
+                <th>عدد الاستخدام</th>
+                <th>الحد الأقصى</th>
                 <th>نسخ</th>
                 <th>حذف</th>
                 <th>تم استخدامه؟</th>
                 <th>تغيير الحالة</th>
+                <th>إعادة تعيين</th>
               </tr>
             </thead>
             <tbody></tbody>
@@ -777,10 +783,13 @@
           <td>${codeObj.password}</td>
           <td>${codeObj.videoId}</td>
           <td>${codeObj.code}</td>
+          <td>${codeObj.useCount || 0}</td>
+          <td>${codeObj.maxUses || 2}</td>
           <td><button class='copy-btn' onclick='copyText("${codeObj.code}")'>نسخ</button></td>
           <td><button class='delete-btn' onclick='deleteCode("${codeObj.id}")'>حذف</button></td>
           <td>${codeObj.used ? 'نعم' : 'لا'}</td>
           <td><button class='toggle-btn' onclick='toggleUsed("${codeObj.id}", ${!codeObj.used})'>تغيير</button></td>
+          <td><button class='toggle-btn' onclick='resetUseCount("${codeObj.id}")' style='background:#ff9800;'>إعادة تعيين</button></td>
         `;
         tbody.appendChild(tr);
       });
@@ -817,10 +826,13 @@
           <td>${codeObj.password}</td>
           <td>${codeObj.fileId || codeObj.videoId || ''}</td>
           <td>${codeObj.code}</td>
+          <td>${codeObj.useCount || 0}</td>
+          <td>${codeObj.maxUses || 2}</td>
           <td><button class='copy-btn' onclick='copyText("${codeObj.code}")'>نسخ</button></td>
           <td><button class='delete-btn' onclick='deleteCode("${codeObj.id}")'>حذف</button></td>
           <td>${codeObj.used ? 'نعم' : 'لا'}</td>
           <td><button class='toggle-btn' onclick='toggleUsed("${codeObj.id}", ${!codeObj.used})'>تغيير</button></td>
+          <td><button class='toggle-btn' onclick='resetUseCount("${codeObj.id}")' style='background:#ff9800;'>إعادة تعيين</button></td>
         `;
         tbody.appendChild(tr);
       });
@@ -856,6 +868,18 @@
       });
       loadCodes();
       loadFileCodes();
+    }
+    
+    async function resetUseCount(id) {
+      if (confirm('هل أنت متأكد من إعادة تعيين عدد مرات الاستخدام؟')) {
+        await fetch(`${API}/codes/${id}`, {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ useCount: 0, used: false })
+        });
+        loadCodes();
+        loadFileCodes();
+      }
     }
     // نسخ للنص
     function copyText(text) {
