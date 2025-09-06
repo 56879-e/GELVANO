@@ -8,29 +8,8 @@
     "used": false,
     "useCount": 0,
     "maxUses": 2,
-    "createdAt": "2025-08-28T23:55:35.843Z"
-  },
-  {
-    "id": "1756429265486",
-    "password": "T1115",
-    "videoId": "T3",
-    "fileId": "",
-    "code": "CR112",
-    "used": false,
-    "createdAt": "2025-08-29T01:01:05.486Z",
-    "useCount": 0,
-    "maxUses": 2
-  },
-  {
-    "id": "1756430305169",
-    "password": "T1115",
-    "videoId": "T2",
-    "fileId": "",
-    "code": "CR113",
-    "used": false,
-    "createdAt": "2025-08-29T01:18:25.169Z",
-    "useCount": 0,
-    "maxUses": 2
+    "createdAt": "2025-08-28T23:55:35.843Z",
+    "updatedAt": "2025-09-06T21:53:13.516Z"
   },
   {
     "id": "1756551537401",

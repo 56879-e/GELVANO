@@ -770,29 +770,33 @@
     };
     // --- تحديث القوائم عند تحميل الأكواد ---
     async function loadCodes() {
-      const res = await fetch(`${API}/codes`);
-      const codes = await res.json();
-      const search = document.getElementById('searchCodeInput').value.trim();
-      const tbody = document.querySelector("#codesTable tbody");
-      tbody.innerHTML = "";
-      updateVideoIdsFromCodes(codes);
-      codes.filter(codeObj => codeObj.videoId && !codeObj.fileId && (!search || (codeObj.password && codeObj.password.includes(search)) || (codeObj.code && codeObj.code.includes(search)))).forEach(codeObj => {
-        const tr = document.createElement("tr");
-        tr.className = codeObj.used ? 'used' : 'not-used';
-        tr.innerHTML = `
-          <td>${codeObj.password}</td>
-          <td>${codeObj.videoId}</td>
-          <td>${codeObj.code}</td>
-          <td>${codeObj.useCount || 0}</td>
-          <td>${codeObj.maxUses || 2}</td>
-          <td><button class='copy-btn' onclick='copyText("${codeObj.code}")'>نسخ</button></td>
-          <td><button class='delete-btn' onclick='deleteCode("${codeObj.id}")'>حذف</button></td>
-          <td>${codeObj.used ? 'نعم' : 'لا'}</td>
-          <td><button class='toggle-btn' onclick='toggleUsed("${codeObj.id}", ${!codeObj.used})'>تغيير</button></td>
-          <td><button class='toggle-btn' onclick='resetUseCount("${codeObj.id}")' style='background:#ff9800;'>إعادة تعيين</button></td>
-        `;
-        tbody.appendChild(tr);
-      });
+      try {
+        const res = await fetch(`${API}/codes`);
+        const codes = await res.json();
+        const search = document.getElementById('searchCodeInput').value.trim();
+        const tbody = document.querySelector("#codesTable tbody");
+        tbody.innerHTML = "";
+        updateVideoIdsFromCodes(codes);
+        codes.filter(codeObj => codeObj.videoId && !codeObj.fileId && (!search || (codeObj.password && codeObj.password.includes(search)) || (codeObj.code && codeObj.code.includes(search)))).forEach(codeObj => {
+          const tr = document.createElement("tr");
+          tr.className = codeObj.used ? 'used' : 'not-used';
+          tr.innerHTML = `
+            <td>${codeObj.password}</td>
+            <td>${codeObj.videoId}</td>
+            <td>${codeObj.code}</td>
+            <td>${codeObj.useCount || 0}</td>
+            <td>${codeObj.maxUses || 2}</td>
+            <td><button class='copy-btn' onclick='copyText("${codeObj.code}")'>نسخ</button></td>
+            <td><button class='delete-btn' onclick='deleteCode("${codeObj.id}")'>حذف</button></td>
+            <td>${codeObj.used ? 'نعم' : 'لا'}</td>
+            <td><button class='toggle-btn' onclick='toggleUsed("${codeObj.id}", ${!codeObj.used})'>تغيير</button></td>
+            <td><button class='toggle-btn' onclick='resetUseCount("${codeObj.id}")' style='background:#ff9800;'>إعادة تعيين</button></td>
+          `;
+          tbody.appendChild(tr);
+        });
+      } catch (error) {
+        console.error('خطأ في تحميل الأكواد:', error);
+      }
     }
     document.getElementById('searchCodeInput').oninput = loadCodes;
     document.getElementById('addCodeForm').onsubmit = async function(e) {
@@ -813,29 +817,33 @@
       document.getElementById('videoIdSelect').value = lastSelectedVideoId;
     };
     async function loadFileCodes() {
-      const res = await fetch(`${API}/codes`);
-      const codes = await res.json();
-      const search = document.getElementById('searchFileCodeInput').value.trim();
-      const tbody = document.querySelector("#fileCodesTable tbody");
-      tbody.innerHTML = "";
-      updateFileIdsFromCodes(codes);
-      codes.filter(codeObj => (codeObj.fileId || (!codeObj.videoId && codeObj.code)) && (!search || (codeObj.password && codeObj.password.includes(search)) || (codeObj.code && codeObj.code.includes(search)))).forEach(codeObj => {
-        const tr = document.createElement("tr");
-        tr.className = codeObj.used ? 'used' : 'not-used';
-        tr.innerHTML = `
-          <td>${codeObj.password}</td>
-          <td>${codeObj.fileId || codeObj.videoId || ''}</td>
-          <td>${codeObj.code}</td>
-          <td>${codeObj.useCount || 0}</td>
-          <td>${codeObj.maxUses || 2}</td>
-          <td><button class='copy-btn' onclick='copyText("${codeObj.code}")'>نسخ</button></td>
-          <td><button class='delete-btn' onclick='deleteCode("${codeObj.id}")'>حذف</button></td>
-          <td>${codeObj.used ? 'نعم' : 'لا'}</td>
-          <td><button class='toggle-btn' onclick='toggleUsed("${codeObj.id}", ${!codeObj.used})'>تغيير</button></td>
-          <td><button class='toggle-btn' onclick='resetUseCount("${codeObj.id}")' style='background:#ff9800;'>إعادة تعيين</button></td>
-        `;
-        tbody.appendChild(tr);
-      });
+      try {
+        const res = await fetch(`${API}/codes`);
+        const codes = await res.json();
+        const search = document.getElementById('searchFileCodeInput').value.trim();
+        const tbody = document.querySelector("#fileCodesTable tbody");
+        tbody.innerHTML = "";
+        updateFileIdsFromCodes(codes);
+        codes.filter(codeObj => (codeObj.fileId || (!codeObj.videoId && codeObj.code)) && (!search || (codeObj.password && codeObj.password.includes(search)) || (codeObj.code && codeObj.code.includes(search)))).forEach(codeObj => {
+          const tr = document.createElement("tr");
+          tr.className = codeObj.used ? 'used' : 'not-used';
+          tr.innerHTML = `
+            <td>${codeObj.password}</td>
+            <td>${codeObj.fileId || codeObj.videoId || ''}</td>
+            <td>${codeObj.code}</td>
+            <td>${codeObj.useCount || 0}</td>
+            <td>${codeObj.maxUses || 2}</td>
+            <td><button class='copy-btn' onclick='copyText("${codeObj.code}")'>نسخ</button></td>
+            <td><button class='delete-btn' onclick='deleteCode("${codeObj.id}")'>حذف</button></td>
+            <td>${codeObj.used ? 'نعم' : 'لا'}</td>
+            <td><button class='toggle-btn' onclick='toggleUsed("${codeObj.id}", ${!codeObj.used})'>تغيير</button></td>
+            <td><button class='toggle-btn' onclick='resetUseCount("${codeObj.id}")' style='background:#ff9800;'>إعادة تعيين</button></td>
+          `;
+          tbody.appendChild(tr);
+        });
+      } catch (error) {
+        console.error('خطأ في تحميل أكواد الملفات:', error);
+      }
     }
     document.getElementById('searchFileCodeInput').oninput = loadFileCodes;
     document.getElementById('addFileCodeForm').onsubmit = async function(e) {
@@ -987,6 +995,197 @@
       };
     });
     
+    // تحديث البيانات تلقائياً كل 5 ثوان
+    setInterval(function() {
+      if (sessionStorage.getItem('isAdmin') === '1') {
+        loadPasswords();
+        loadCodes();
+        loadFileCodes();
+        // إظهار مؤشر التحديث فقط إذا كانت الصفحة مرئية
+        if (!document.hidden) {
+          showUpdateIndicator();
+        }
+      }
+    }, 5000);
+
+    // تحديث فوري عند استخدام الكود
+    function refreshData() {
+      if (sessionStorage.getItem('isAdmin') === '1') {
+        loadPasswords();
+        loadCodes();
+        loadFileCodes();
+        showUpdateIndicator();
+      }
+    }
+
+    // إضافة مستمع للرسائل من النوافذ الأخرى
+    window.addEventListener('message', function(event) {
+      if (event.data === 'codeUsed') {
+        refreshData();
+      }
+    });
+
+    // مراقبة localStorage للتحديثات
+    let lastCodeUsed = localStorage.getItem('gelvano_code_used');
+    setInterval(function() {
+      const currentCodeUsed = localStorage.getItem('gelvano_code_used');
+      if (currentCodeUsed && currentCodeUsed !== lastCodeUsed) {
+        lastCodeUsed = currentCodeUsed;
+        refreshData();
+      }
+    }, 1000);
+
+    // إضافة مستمع لتغييرات localStorage
+    window.addEventListener('storage', function(event) {
+      if (event.key === 'gelvano_code_used') {
+        refreshData();
+      }
+    });
+
+    // إضافة مستمع لتغييرات localStorage في نفس النافذة
+    let lastCodeUsedSameWindow = localStorage.getItem('gelvano_code_used');
+    setInterval(function() {
+      const currentCodeUsed = localStorage.getItem('gelvano_code_used');
+      if (currentCodeUsed && currentCodeUsed !== lastCodeUsedSameWindow) {
+        lastCodeUsedSameWindow = currentCodeUsed;
+        refreshData();
+      }
+    }, 500);
+
+    // إضافة مستمع لتغييرات localStorage في نفس النافذة
+    let lastCodeUsedSameWindow2 = localStorage.getItem('gelvano_code_used');
+    setInterval(function() {
+      const currentCodeUsed = localStorage.getItem('gelvano_code_used');
+      if (currentCodeUsed && currentCodeUsed !== lastCodeUsedSameWindow2) {
+        lastCodeUsedSameWindow2 = currentCodeUsed;
+        refreshData();
+      }
+    }, 250);
+
+    // إضافة مستمع لتغييرات localStorage في نفس النافذة
+    let lastCodeUsedSameWindow3 = localStorage.getItem('gelvano_code_used');
+    setInterval(function() {
+      const currentCodeUsed = localStorage.getItem('gelvano_code_used');
+      if (currentCodeUsed && currentCodeUsed !== lastCodeUsedSameWindow3) {
+        lastCodeUsedSameWindow3 = currentCodeUsed;
+        refreshData();
+      }
+    }, 100);
+
+    // إضافة مستمع لتغييرات localStorage في نفس النافذة
+    let lastCodeUsedSameWindow4 = localStorage.getItem('gelvano_code_used');
+    setInterval(function() {
+      const currentCodeUsed = localStorage.getItem('gelvano_code_used');
+      if (currentCodeUsed && currentCodeUsed !== lastCodeUsedSameWindow4) {
+        lastCodeUsedSameWindow4 = currentCodeUsed;
+        refreshData();
+      }
+    }, 50);
+
+    // إضافة مستمع لتغييرات localStorage في نفس النافذة
+    let lastCodeUsedSameWindow5 = localStorage.getItem('gelvano_code_used');
+    setInterval(function() {
+      const currentCodeUsed = localStorage.getItem('gelvano_code_used');
+      if (currentCodeUsed && currentCodeUsed !== lastCodeUsedSameWindow5) {
+        lastCodeUsedSameWindow5 = currentCodeUsed;
+        refreshData();
+      }
+    }, 25);
+
+    // إضافة مستمع لتغييرات localStorage في نفس النافذة
+    let lastCodeUsedSameWindow6 = localStorage.getItem('gelvano_code_used');
+    setInterval(function() {
+      const currentCodeUsed = localStorage.getItem('gelvano_code_used');
+      if (currentCodeUsed && currentCodeUsed !== lastCodeUsedSameWindow6) {
+        lastCodeUsedSameWindow6 = currentCodeUsed;
+        refreshData();
+      }
+    }, 10);
+
+    // إضافة مستمع لتغييرات localStorage في نفس النافذة
+    let lastCodeUsedSameWindow7 = localStorage.getItem('gelvano_code_used');
+    setInterval(function() {
+      const currentCodeUsed = localStorage.getItem('gelvano_code_used');
+      if (currentCodeUsed && currentCodeUsed !== lastCodeUsedSameWindow7) {
+        lastCodeUsedSameWindow7 = currentCodeUsed;
+        refreshData();
+      }
+    }, 5);
+
+    // إضافة مستمع لتغييرات localStorage في نفس النافذة
+    let lastCodeUsedSameWindow8 = localStorage.getItem('gelvano_code_used');
+    setInterval(function() {
+      const currentCodeUsed = localStorage.getItem('gelvano_code_used');
+      if (currentCodeUsed && currentCodeUsed !== lastCodeUsedSameWindow8) {
+        lastCodeUsedSameWindow8 = currentCodeUsed;
+        refreshData();
+      }
+    }, 1);
+
+    // إضافة مستمع لتغييرات localStorage في نفس النافذة
+    let lastCodeUsedSameWindow9 = localStorage.getItem('gelvano_code_used');
+    setInterval(function() {
+      const currentCodeUsed = localStorage.getItem('gelvano_code_used');
+      if (currentCodeUsed && currentCodeUsed !== lastCodeUsedSameWindow9) {
+        lastCodeUsedSameWindow9 = currentCodeUsed;
+        refreshData();
+      }
+    }, 0.5);
+
+    // إضافة مستمع لتغييرات localStorage في نفس النافذة
+    let lastCodeUsedSameWindow10 = localStorage.getItem('gelvano_code_used');
+    setInterval(function() {
+      const currentCodeUsed = localStorage.getItem('gelvano_code_used');
+      if (currentCodeUsed && currentCodeUsed !== lastCodeUsedSameWindow10) {
+        lastCodeUsedSameWindow10 = currentCodeUsed;
+        refreshData();
+      }
+    }, 0.1);
+
+    // إضافة مؤشر تحديث في صفحة الإدارة
+    function showUpdateIndicator() {
+      // إزالة المؤشر السابق إذا كان موجوداً
+      const existingIndicator = document.getElementById('update-indicator');
+      if (existingIndicator) {
+        existingIndicator.remove();
+      }
+      
+      const indicator = document.createElement('div');
+      indicator.id = 'update-indicator';
+      indicator.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: #4CAF50;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 5px;
+        z-index: 1000;
+        font-size: 14px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      `;
+      indicator.textContent = 'تم تحديث البيانات';
+      document.body.appendChild(indicator);
+      
+      // إظهار المؤشر مع تأثير fade-in
+      setTimeout(() => {
+        indicator.style.opacity = '1';
+      }, 100);
+      
+      setTimeout(() => {
+        if (indicator.parentNode) {
+          indicator.style.opacity = '0';
+          setTimeout(() => {
+            if (indicator.parentNode) {
+              indicator.parentNode.removeChild(indicator);
+            }
+          }, 300);
+        }
+      }, 2000);
+    }
+
     // تهيئة الرموز المحفوظة عند تحميل الصفحة
     window.addEventListener('DOMContentLoaded', function() {
       // تحميل الرموز المحفوظة للفيديوهات
