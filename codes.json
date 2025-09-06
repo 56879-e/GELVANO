@@ -5,11 +5,11 @@
     "videoId": "T3",
     "fileId": "",
     "code": "CR111",
-    "used": false,
+    "used": true,
     "useCount": 0,
     "maxUses": 2,
     "createdAt": "2025-08-28T23:55:35.843Z",
-    "updatedAt": "2025-09-06T22:08:53.480Z"
+    "updatedAt": "2025-09-06T23:27:18.270Z"
   },
   {
     "id": "1756551537401",
@@ -1066,5 +1066,16 @@
     "createdAt": "2025-09-05T02:24:14.736Z",
     "useCount": 0,
     "maxUses": 2
+  },
+  {
+    "id": "1757202744363",
+    "password": "T1111",
+    "videoId": "F4",
+    "fileId": "",
+    "code": "QP854",
+    "used": false,
+    "useCount": 0,
+    "maxUses": 2,
+    "createdAt": "2025-09-06T23:52:24.366Z"
   }
 ]

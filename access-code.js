@@ -232,7 +232,7 @@ async function handleVerify() {
     try {
         const codes = await fetchCodesWithFallback();
         const isVideo = /^[FST]\d+$/.test(currentContentId);
-        const isFile = /^F[FST]\d+$/.test(currentContentId);
+        const isFile = /^F[FST]\d+$/.test(currentContentId) || /^FF\d+$/.test(currentContentId);
         let found = null;
         if (isVideo) {
             found = codes.find(c => c.videoId === currentContentId && String(c.code).trim().toUpperCase() === code.toUpperCase());
@@ -267,22 +267,15 @@ async function handleVerify() {
         }
 
         // التحقق من حالة الاستخدام
-        const alreadyUsed = found.used === true;
-        const useCountExceeded = found.useCount >= (found.maxUses || 2);
+        const useCountExceeded = (found.useCount || 0) >= (found.maxUses || 2);
+        const alreadyUsed = found.used === true || useCountExceeded;
         
         if (alreadyUsed) {
-            errorMessage.textContent = isVideo ? 'هذا الكود مستخدم بالفعل لهذا الفيديو' : 'هذا الكود مستخدم بالفعل لهذا الملف';
-            errorMessage.style.display = 'block';
-            if (attempts >= MAX_ATTEMPTS) {
-                attemptsLeft.textContent = 'تم استنفاد جميع المحاولات';
+            if (useCountExceeded) {
+                errorMessage.textContent = 'تم استخدام الكود بالفعل. يرجى التواصل مع الدعم لتغيير حالة الكود لإمكانية الاستخدام مرة أخرى.';
             } else {
-                attemptsLeft.textContent = `محاولات متبقية: ${MAX_ATTEMPTS - attempts}`;
+                errorMessage.textContent = isVideo ? 'هذا الكود مستخدم بالفعل لهذا الفيديو' : 'هذا الكود مستخدم بالفعل لهذا الملف';
             }
-            return;
-        }
-
-        if (useCountExceeded) {
-            errorMessage.textContent = 'عدد مرات استخدام الكود تم استنفاذها. قم بالتواصل مع الدعم لتغيير حالة الكود.';
             errorMessage.style.display = 'block';
             if (attempts >= MAX_ATTEMPTS) {
                 attemptsLeft.textContent = 'تم استنفاد جميع المحاولات';
@@ -305,13 +298,20 @@ async function handleVerify() {
                 if (useResponse.ok) {
                     const result = await useResponse.json();
                     if (!result.canUse) {
-                        errorMessage.textContent = 'عدد مرات استخدام الكود تم استنفاذها. قم بالتواصل مع الدعم لتغيير حالة الكود.';
+                        errorMessage.textContent = 'تم استخدام الكود بالفعل. يرجى التواصل مع الدعم لتغيير حالة الكود لإمكانية الاستخدام مرة أخرى.';
                         errorMessage.style.display = 'block';
+                        if (attempts >= MAX_ATTEMPTS) {
+                            attemptsLeft.textContent = 'تم استنفاد جميع المحاولات';
+                        } else {
+                            attemptsLeft.textContent = `محاولات متبقية: ${MAX_ATTEMPTS - attempts}`;
+                        }
                         return;
                     }
                     useSuccess = true;
                 } else {
                     console.error('فشل في تحديث عدد مرات الاستخدام');
+                    // في حالة فشل التحديث، نعتبر الاستخدام ناجح لتجنب منع المستخدم
+                    useSuccess = true;
                 }
             } else {
                 // في حالة عدم وجود ID (وضع الملفات الثابتة)، نعتبر الاستخدام ناجح

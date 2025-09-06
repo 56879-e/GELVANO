@@ -1,982 +1,1127 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <title>لوحة تحكم الأكواد والباسوردات</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="styles.css">
-  <style>
-    body { font-family: 'Cairo', Arial, sans-serif; background: #f7f7fa; }
-    .login-container, .dashboard-container { max-width: 400px; margin: 60px auto; background: #fff; border-radius: 10px; box-shadow: 0 2px 8px #0001; padding: 32px 24px; }
-    .dashboard-container { max-width: 1400px; }
-    h2 { text-align: center; color: #2a3b4c; margin-bottom: 24px; }
-    form { display: flex; flex-direction: column; gap: 16px; }
-    input[type="text"], input[type="password"] { padding: 10px; border: 1px solid #bbb; border-radius: 6px; font-size: 1rem; }
-    button { background: #2a3b4c; color: #fff; border: none; border-radius: 6px; padding: 10px; font-size: 1rem; cursor: pointer; transition: background 0.2s; }
-    button:hover { background: #1a2533; }
-    table { border-collapse: collapse; width: 100%; margin: 24px 0; background: #fff; }
-    th, td { border: 1px solid #e0e0e0; padding: 10px; text-align: center; }
-    th { background: #f0f4f8; color: #2a3b4c; }
-    tr:nth-child(even) { background: #f9f9fb; }
-    .add-form { margin: 0 auto 24px auto; width: 100%; }
-    .add-form-code, .add-form-file { margin: 0 auto 24px auto; width: 100%; }
-    .logout-btn { float: left; background: #e74c3c; margin-bottom: 16px; }
-    .copy-btn, .delete-btn, .toggle-btn { margin: 0 2px; padding: 4px 8px; font-size: 0.9em; }
-    .used { background: #d1ffd1; }
-    .not-used { background: #ffd1d1; }
-    .section-title { color: #2a3b4c; margin: 32px 0 8px 0; font-size: 1.2em; text-align: right; }
-    
-    /* تنسيق جديد للصفحة */
-    .scroll-table-container {
-      max-height: 350px;
-      overflow-y: auto;
-      margin-bottom: 16px;
-      border-radius: 8px;
-      border: 1px solid #eee;
-      box-shadow: 0 1px 4px #0001;
-      background: #fff;
-    }
-    
-    .codes-files-container { 
-      display: flex; 
-      gap: 24px; 
-      margin-bottom: 40px; 
-    }
-    
-    .codes-section, .files-section { 
-      flex: 1; 
-      background: #fff; 
-      padding: 24px; 
-      border-radius: 10px; 
-      box-shadow: 0 2px 8px #0001; 
-    }
-    
-    .section-header { 
-      color: #2a3b4c; 
-      margin-bottom: 20px; 
-      font-size: 1.3em; 
-      text-align: center; 
-      border-bottom: 2px solid #e0e0e0; 
-      padding-bottom: 10px; 
-    }
-    
-    @media (max-width: 1200px) { 
-      .codes-files-container { flex-direction: column; }
-      .dashboard-container { padding: 16px; } 
-    }
-    
-    @media (max-width: 600px) { 
-      .dashboard-container { padding: 8px; } 
-      table, th, td { font-size: 0.9rem; } 
-      .passwords-section, .codes-section, .files-section { padding: 16px; }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة الأدمن - جلفانو</title>
+    <link rel="icon" type="image/png" href="assets/6546847867645351321321354564687654545343.png">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .admin-container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 2rem;
+            background: #f8f9fa;
+            min-height: 100vh;
+        }
+
+        .admin-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            background: linear-gradient(135deg, #2c3e50, #34495e);
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+        }
+
+        .admin-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            font-weight: 800;
+        }
+
+        .admin-header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .admin-sections {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .passwords-section {
+            width: 100%;
+        }
+
+        .codes-sections {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .admin-section {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            border: 1px solid #e9ecef;
+        }
+
+        .admin-section h2 {
+            color: #2c3e50;
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+            font-weight: 700;
+            border-bottom: 3px solid #2c3e50;
+            padding-bottom: 0.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 3px solid #bdc3c7;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: #fff;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .form-group input:focus, .form-group select:focus {
+            outline: none;
+            border-color: #2c3e50;
+            box-shadow: 0 0 0 4px rgba(44, 62, 80, 0.15), 0 4px 8px rgba(0,0,0,0.15);
+            transform: translateY(-1px);
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #2c3e50, #34495e);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(44, 62, 80, 0.3);
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, #dc3545, #ff6b7a);
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #28a745, #6bcf7f);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, #6c757d, #adb5bd);
+        }
+
+        .list-container {
+            max-height: 400px;
+            overflow-y: auto;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            padding: 1rem;
+            background: #f8f9fa;
+        }
+
+        .list-item {
+            background: white;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            border-radius: 12px;
+            border: 2px solid #e9ecef;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            min-height: 100px;
+        }
+
+        .list-item:hover {
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+            transform: translateY(-2px);
+            border-color: #2c3e50;
+        }
+
+        .list-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .item-info {
+            flex: 1;
+            margin-left: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+
+        .item-info strong {
+            color: #2c3e50;
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .item-info small {
+            color: #666;
+            font-size: 1rem;
+            line-height: 1.5;
+            margin-bottom: 0.5rem;
+        }
+
+        .item-details {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 0.5rem;
+        }
+
+        .detail-item {
+            background: #f8f9fa;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            color: #495057;
+            border: 1px solid #e9ecef;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .item-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+            align-items: flex-end;
+            min-width: 250px;
+        }
+
+        .action-row {
+            display: flex;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+        }
+
+        .btn-copy {
+            background: linear-gradient(135deg, #17a2b8, #20c997);
+            padding: 0.6rem 1rem;
+            font-size: 0.9rem;
+            border-radius: 8px;
+        }
+
+        .btn-copy:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(23, 162, 184, 0.3);
+        }
+
+        .status-badge {
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: inline-block;
+            text-align: center;
+            min-width: 70px;
+        }
+
+        .status-active {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-used {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .alert {
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            font-weight: 500;
+        }
+
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .alert-danger {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .alert-info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            border-left: 4px solid #2c3e50;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #2c3e50;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: #666;
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            .codes-sections {
+                grid-template-columns: 1fr;
+            }
+            
+            .admin-container {
+                padding: 1rem;
+            }
+            
+            .admin-header h1 {
+                font-size: 2rem;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 <body>
-  <div class="login-container" id="loginBox">
-    <h2>تسجيل الدخول</h2>
-    <form id="loginForm">
-      <input type="text" id="username" placeholder="اسم المستخدم" required>
-      <input type="password" id="password" placeholder="كلمة السر" required>
-      <button type="submit">دخول</button>
-    </form>
-    <div id="loginError" style="color:red; text-align:center; margin-top:10px; display:none;">بيانات الدخول غير صحيحة</div>
-  </div>
-  
-  <div class="dashboard-container" id="dashboard" style="display:none;">
-    <button class="logout-btn" onclick="logout()">تسجيل الخروج</button>
-    <h2>لوحة تحكم الأكواد والباسوردات</h2>
-    
-    <!-- قسم إدارة الباسوردات - يأخذ العرض الكامل -->
-    <div class="passwords-section">
-      <div class="section-header">إدارة كلمات السر</div>
-      <div style="margin-bottom:10px;display:flex;justify-content:flex-end;">
-        <input type="text" id="searchPasswordInput" placeholder="بحث بكلمة السر..." style="max-width:300px;padding:8px;">
-      </div>
-      <form class="add-form" id="addPasswordForm">
-        <div style="display:flex;gap:8px;align-items:center;justify-content:center;">
-          <button type="button" onclick="generateAndAddPassword()">توليد كلمة سر جديدة</button>
-          <input type="text" id="manualPassword" placeholder="أو أدخل كلمة سر يدويًا" style="flex:1;max-width:300px;">
-          <button type="submit">إضافة</button>
+    <div class="admin-container">
+        <!-- Admin Header -->
+        <div class="admin-header animate__animated animate__fadeInDown">
+            <h1><i class="fas fa-shield-alt"></i> لوحة الأدمن</h1>
+            <p>إدارة كلمات السر والأكواد - منصة جلفانو</p>
         </div>
-      </form>
-      <div class="scroll-table-container">
-        <table id="passwordsTable">
-          <thead>
-            <tr><th>كلمة السر</th><th>نسخ</th><th>حذف</th></tr>
-          </thead>
-          <tbody></tbody>
-        </table>
-      </div>
+
+        <!-- Statistics -->
+        <div class="stats-grid animate__animated animate__fadeInUp">
+            <div class="stat-card">
+                <div class="stat-number" id="totalPasswords">0</div>
+                <div class="stat-label">إجمالي كلمات السر</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="totalCodes">0</div>
+                <div class="stat-label">إجمالي الأكواد</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="activeCodes">0</div>
+                <div class="stat-label">الأكواد النشطة</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="usedCodes">0</div>
+                <div class="stat-label">الأكواد المستخدمة</div>
+            </div>
+        </div>
+
+        <!-- Alert Container -->
+        <div id="alertContainer"></div>
+
+        <!-- Admin Sections -->
+        <div class="admin-sections animate__animated animate__fadeInUp" style="animation-delay: 0.2s">
+            <!-- Passwords Management - Full Width -->
+            <div class="admin-section passwords-section">
+                <h2><i class="fas fa-key"></i> إدارة كلمات السر</h2>
+                
+                <div class="form-group">
+                    <label for="passwordSearch">البحث في كلمات السر:</label>
+                    <input type="text" id="passwordSearch" placeholder="ابحث بكلمة السر..." onkeyup="searchPasswords()">
+                </div>
+                
+                <div class="form-group">
+                    <label for="newPassword">كلمة سر جديدة:</label>
+                    <input type="text" id="newPassword" placeholder="مثال: F1234" pattern="[FST][0-9]{4}">
+                </div>
+                
+                <button class="btn" onclick="addPassword()">
+                    <i class="fas fa-plus"></i> إضافة كلمة سر
+                </button>
+                
+                <div class="list-container">
+                    <div id="passwordsList">
+                        <div style="text-align: center; color: #666; padding: 2rem;">
+                            <i class="fas fa-spinner fa-spin"></i> جاري التحميل...
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Codes Management - Two Columns -->
+            <div class="codes-sections">
+                <!-- Video Codes Management -->
+            <div class="admin-section">
+                    <h2><i class="fas fa-video"></i> إدارة أكواد الفيديوهات</h2>
+                
+                <div class="form-group">
+                        <label for="videoCodeSearch">البحث في أكواد الفيديوهات:</label>
+                        <input type="text" id="videoCodeSearch" placeholder="ابحث بكلمة السر أو الكود..." onkeyup="searchVideoCodes()">
+                </div>
+                
+                <div class="form-group">
+                        <label for="videoCodePassword">كلمة السر:</label>
+                        <input type="text" id="videoCodePassword" placeholder="مثال: F1234">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="videoIdSelect">معرف الفيديو:</label>
+                        <div style="display: flex; gap: 0.5rem;">
+                            <select id="videoIdSelect" style="flex: 1; border: 3px solid #bdc3c7; border-radius: 8px; padding: 0.8rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                                <option value="">اختر معرف الفيديو</option>
+                            </select>
+                            <input type="text" id="newVideoId" placeholder="إضافة معرف جديد" style="flex: 1; border: 3px solid #bdc3c7; border-radius: 8px; padding: 0.8rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                            <button class="btn" onclick="addVideoId()" style="margin: 0;">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </div>
+                </div>
+                
+                    <div class="form-group">
+                        <label for="videoCode">الكود:</label>
+                        <div style="display: flex; gap: 0.5rem;">
+                            <input type="text" id="videoCode" placeholder="مثال: AB123" style="flex: 1; border: 3px solid #bdc3c7; border-radius: 8px; padding: 0.8rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                            <button class="btn" onclick="generateVideoCode()" style="margin: 0;">
+                                <i class="fas fa-magic"></i> توليد
+                            </button>
+                        </div>
+                </div>
+                
+                    <div class="form-group">
+                        <label for="videoMaxUses">الحد الأقصى للاستخدام:</label>
+                        <input type="number" id="videoMaxUses" value="2" min="1" max="10">
+                </div>
+                    
+                    <button class="btn" onclick="addVideoCode()">
+                        <i class="fas fa-plus"></i> إضافة كود فيديو
+                    </button>
+                    
+                    <div class="list-container">
+                        <div id="videoCodesList">
+                            <div style="text-align: center; color: #666; padding: 2rem;">
+                                <i class="fas fa-spinner fa-spin"></i> جاري التحميل...
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- File Codes Management -->
+                <div class="admin-section">
+                    <h2><i class="fas fa-file"></i> إدارة أكواد الملفات</h2>
+                
+                <div class="form-group">
+                        <label for="fileCodeSearch">البحث في أكواد الملفات:</label>
+                        <input type="text" id="fileCodeSearch" placeholder="ابحث بكلمة السر أو الكود..." onkeyup="searchFileCodes()">
+                </div>
+                
+                <div class="form-group">
+                        <label for="fileCodePassword">كلمة السر:</label>
+                        <input type="text" id="fileCodePassword" placeholder="مثال: F1234">
+                </div>
+                
+                    <div class="form-group">
+                        <label for="fileIdSelect">معرف الملف:</label>
+                        <div style="display: flex; gap: 0.5rem;">
+                            <select id="fileIdSelect" style="flex: 1; border: 3px solid #bdc3c7; border-radius: 8px; padding: 0.8rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                                <option value="">اختر معرف الملف</option>
+                            </select>
+                            <input type="text" id="newFileId" placeholder="إضافة معرف جديد" style="flex: 1; border: 3px solid #bdc3c7; border-radius: 8px; padding: 0.8rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                            <button class="btn" onclick="addFileId()" style="margin: 0;">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="fileCode">الكود:</label>
+                        <div style="display: flex; gap: 0.5rem;">
+                            <input type="text" id="fileCode" placeholder="مثال: 1234" style="flex: 1; border: 3px solid #bdc3c7; border-radius: 8px; padding: 0.8rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                            <button class="btn" onclick="generateFileCode()" style="margin: 0;">
+                                <i class="fas fa-magic"></i> توليد
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="fileMaxUses">الحد الأقصى للاستخدام:</label>
+                        <input type="number" id="fileMaxUses" value="2" min="1" max="10">
+                    </div>
+                    
+                    <button class="btn" onclick="addFileCode()">
+                        <i class="fas fa-plus"></i> إضافة كود ملف
+                </button>
+                
+                <div class="list-container">
+                        <div id="fileCodesList">
+                        <div style="text-align: center; color: #666; padding: 2rem;">
+                            <i class="fas fa-spinner fa-spin"></i> جاري التحميل...
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Back to Home -->
+        <div class="text-center animate__animated animate__fadeInUp" style="animation-delay: 0.4s">
+            <a href="index.html" class="btn btn-secondary">
+                <i class="fas fa-home"></i> العودة للصفحة الرئيسية
+            </a>
+        </div>
     </div>
-    
-    <!-- قسم الأكواد والملفات - بجانب بعضهما -->
-    <div class="codes-files-container">
-      <!-- قسم أكواد الفيديوهات -->
-      <div class="codes-section">
-        <div class="section-header">أكواد الفيديوهات</div>
-        <div style="margin-bottom:10px;display:flex;justify-content:flex-end;">
-          <input type="text" id="searchCodeInput" placeholder="بحث بكلمة السر..." style="max-width:300px;padding:8px;">
-        </div>
-        <form class="add-form-code" id="addCodeForm">
-          <div style="display:flex;flex-direction:column;gap:12px;">
-            <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
-              <input type="text" id="codePassword" placeholder="كلمة سر الطالب" required style="flex:1;">
-              <select id="videoIdSelect" required style="flex:1;"></select>
-              <input type="text" id="newVideoIdInput" placeholder="رمز الحصة الجديد" style="max-width:120px;">
-              <button type="button" id="addVideoIdBtn">إضافة الرمز</button>
-            </div>
-            <div style="display:flex;gap:8px;align-items:center;">
-              <input type="text" id="videoCode" placeholder="كود الفيديو (يُولد تلقائيًا أو يدوي)" required style="flex:1;">
-              <button type="button" onclick="generateVideoCode()">توليد كود تلقائي</button>
-              <button type="submit">إضافة الكود</button>
-            </div>
-          </div>
-        </form>
-        <div class="scroll-table-container">
-          <table id="codesTable">
-            <thead>
-              <tr>
-                <th>كلمة السر</th>
-                <th>رمز الفيديو</th>
-                <th>كود الفيديو</th>
-                <th>نسخ</th>
-                <th>حذف</th>
-                <th>تم استخدامه؟</th>
-                <th>تغيير الحالة</th>
-              </tr>
-            </thead>
-            <tbody></tbody>
-          </table>
-        </div>
-      </div>
-      
-      <!-- قسم أكواد الملفات -->
-      <div class="files-section">
-        <div class="section-header">أكواد الملفات</div>
-        <div style="margin-bottom:10px;display:flex;justify-content:flex-end;">
-          <input type="text" id="searchFileCodeInput" placeholder="بحث بكلمة السر..." style="max-width:300px;padding:8px;">
-        </div>
-        <form class="add-form-file" id="addFileCodeForm">
-          <div style="display:flex;flex-direction:column;gap:12px;">
-            <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
-              <input type="text" id="fileCodePassword" placeholder="كلمة سر الطالب" required style="flex:1;">
-              <select id="fileIdSelect" required style="flex:1;"></select>
-              <input type="text" id="newFileIdInput" placeholder="رمز الحصة الجديد" style="max-width:120px;">
-              <button type="button" id="addFileIdBtn">إضافة الرمز</button>
-            </div>
-            <div style="display:flex;gap:8px;align-items:center;">
-              <input type="text" id="fileCode" placeholder="كود الملف (يُولد تلقائيًا أو يدوي)" required style="flex:1;">
-              <button type="button" onclick="generateFileCode()">توليد كود تلقائي</button>
-              <button type="submit">إضافة الكود</button>
-            </div>
-          </div>
-        </form>
-        <div class="scroll-table-container">
-          <table id="fileCodesTable">
-            <thead>
-              <tr>
-                <th>كلمة السر</th>
-                <th>رمز الملف</th>
-                <th>كود الملف</th>
-                <th>نسخ</th>
-                <th>حذف</th>
-                <th>تم استخدامه؟</th>
-                <th>تغيير الحالة</th>
-              </tr>
-            </thead>
-            <tbody></tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div id="notes-icons-bar" style="position:fixed;bottom:32px;left:50%;transform:translateX(-50%);z-index:1000;display:flex;gap:28px;">
-    <div class="note-icon-circle" data-type="T" title="T - دفتر">T</div>
-    <div class="note-icon-circle" data-type="S" title="S - دفتر">S</div>
-    <div class="note-icon-circle" data-type="F" title="F - دفتر">F</div>
-  </div>
-  <div id="notes-popups"></div>
-  <div id="popup-overlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 1500; backdrop-filter: blur(5px);"></div>
-  <style>
-    .note-icon-circle {
-      width: 54px; height: 54px; border-radius: 50%; background: linear-gradient(135deg,#232946 60%,#5f4bb6 100%);
-      color: #fff; font-size: 2.1rem; font-weight: 900; display: flex; align-items: center; justify-content: center;
-      box-shadow: 0 2px 12px #23294655; cursor: pointer; transition: box-shadow 0.2s, transform 0.1s;
-      border: 3px solid #e0e7ff; user-select: none;
-    }
-    .note-icon-circle:hover { box-shadow: 0 4px 24px #23294699; transform: scale(1.08); }
-    .note-popup {
-      position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
-      width: 95vw; max-width: 1200px; min-width: 600px; 
-      max-height: 80vh; background: #fff; color: #232946; border-radius: 20px;
-      box-shadow: 0 20px 60px rgba(35, 41, 70, 0.4); padding: 25px 20px 20px 20px; z-index: 2000;
-      border: 3px solid #5f4bb6; display: none;
-      animation: popupIn 0.4s ease-out;
-      backdrop-filter: blur(20px);
-      overflow-y: auto;
-    }
-    @keyframes popupIn { from { opacity:0; transform:translateY(40px) scale(0.95); } to { opacity:1; transform:translateY(0) scale(1); } }
-    .note-popup.active { display: block; }
-    .note-popup-close { 
-      position: absolute; 
-      top: 15px; 
-      right: 20px; 
-      font-size: 2em; 
-      color: #232946; 
-      cursor: pointer; 
-      font-weight: bold; 
-      width: 40px;
-      height: 40px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.95);
-      box-shadow: 0 4px 15px rgba(35, 41, 70, 0.3);
-      transition: all 0.3s ease;
-      z-index: 10;
-    }
-    
-    .note-popup-close:hover {
-      background: #ff6b6b;
-      color: white;
-      transform: scale(1.2);
-      box-shadow: 0 6px 20px rgba(255, 107, 107, 0.6);
-    }
-    .note-popup-form { 
-      display: flex; 
-      gap: 10px; 
-      margin-bottom: 15px; 
-      background: linear-gradient(135deg, #f8f9ff, #e8f0ff);
-      padding: 15px;
-      border-radius: 12px;
-      border: 2px solid #e0e7ff;
-      box-shadow: 0 8px 25px rgba(35, 41, 70, 0.1);
-      align-items: center;
-      flex-wrap: nowrap;
-    }
-    
-    .note-popup-form input { 
-      flex: 1; 
-      padding: 8px 12px; 
-      border-radius: 8px; 
-      border: 2px solid #5f4bb6; 
-      font-size: 0.9em; 
-      background: #fff; 
-      color: #232946; 
-      transition: all 0.3s ease;
-      font-weight: 500;
-      box-shadow: 0 3px 10px rgba(35, 41, 70, 0.1);
-      min-width: 0;
-    }
-    
-    .note-popup-form input:first-child {
-      flex: 1;
-    }
-    
-    .note-popup-form input:last-of-type {
-      flex: 1;
-    }
-    
-    .note-popup-form input:focus {
-      outline: none;
-      border-color: #232946;
-      box-shadow: 0 0 0 4px rgba(35, 41, 70, 0.15);
-      transform: translateY(-2px);
-    }
-    
-    .note-popup-form button { 
-      padding: 8px 15px; 
-      border-radius: 8px; 
-      background: linear-gradient(135deg, #232946, #5f4bb6); 
-      color: #fff; 
-      font-weight: 800; 
-      border: none; 
-      cursor: pointer;
-      transition: all 0.3s ease;
-      box-shadow: 0 5px 15px rgba(35, 41, 70, 0.3);
-      font-size: 0.9em;
-      white-space: nowrap;
-      min-width: 80px;
-      flex: 0 0 auto;
-    }
-    
-    .note-popup-form button:hover { 
-      background: linear-gradient(135deg, #5f4bb6, #232946); 
-      transform: translateY(-3px);
-      box-shadow: 0 8px 25px rgba(35, 41, 70, 0.4);
-    }
-    
-    /* Responsive design for mobile devices */
-    @media (max-width: 768px) {
-      .note-popup {
-        width: 95vw;
-        min-width: 320px;
-        max-width: 95vw;
-        padding: 20px 15px 15px 15px;
-        max-height: 85vh;
-      }
-      
-      .note-popup-form {
-        gap: 6px;
-        padding: 12px;
-        flex-wrap: nowrap;
-      }
-      
-      .note-popup-form input {
-        padding: 6px 8px;
-        font-size: 0.8em;
-        min-width: 0;
-        flex: 1;
-      }
-      
-      .note-popup-form button {
-        padding: 6px 12px;
-        font-size: 0.8em;
-        min-width: 70px;
-        flex: 0 0 auto;
-      }
-    }
-    
-    @media (max-width: 480px) {
-      .note-popup {
-        width: 98vw;
-        min-width: 300px;
-        padding: 15px 10px 10px 10px;
-      }
-      
-      .note-popup-form {
-        padding: 10px;
-        gap: 4px;
-      }
-      
-      .note-popup-form input {
-        padding: 5px 6px;
-        font-size: 0.75em;
-        flex: 1;
-      }
-      
-      .note-popup-form button {
-        padding: 5px 10px;
-        font-size: 0.75em;
-        min-width: 60px;
-        flex: 0 0 auto;
-      }
-    }
-    .note-popup-table { 
-      width: 100%; 
-      border-collapse: collapse; 
-      margin-top: 20px; 
-      background: #fff; 
-      border-radius: 20px; 
-      overflow: hidden; 
-      box-shadow: 0 8px 25px rgba(35, 41, 70, 0.15);
-    }
-    
-    .note-popup-table th, .note-popup-table td { 
-      padding: 18px 15px; 
-      border: none; 
-      text-align: center; 
-      font-size: 1.1em; 
-      background: #fff; 
-      color: #232946; 
-      font-weight: 500;
-    }
-    
-    .note-popup-table th { 
-      background: linear-gradient(135deg, #e0e7ff, #f0f4ff); 
-      color: #232946; 
-      font-weight: 900; 
-      font-size: 1.2em;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-    
-    .note-popup-table tr:nth-child(even) { background: #f8f9ff; }
-    .note-popup-table tr:nth-child(odd) { background: #fff; }
-    
-    .note-popup-table td:last-child { 
-      color: #5f4bb6; 
-      cursor: pointer; 
-      font-weight: bold; 
-      font-size: 1.4em;
-      transition: all 0.3s ease;
-      border-radius: 10px;
-    }
-    
-    .note-popup-table td:last-child:hover { 
-      color: #fff; 
-      background: #ff6b6b;
-      transform: scale(1.3);
-    }
-    
-    /* إضافة خاصية التمرير لسجلات الدفاتر */
-    .note-popup-table-container {
-      max-height: 250px; /* ارتفاع أكبر للعرض الأفضل */
-      overflow-y: auto;
-      border-radius: 20px;
-      border: 2px solid #e0e7ff;
-      margin-top: 20px;
-      background: #fff;
-      box-shadow: 0 4px 15px rgba(35, 41, 70, 0.1);
-    }
-    
-    /* تخصيص شريط التمرير */
-    .note-popup-table-container::-webkit-scrollbar {
-      width: 8px;
-    }
-    
-    .note-popup-table-container::-webkit-scrollbar-track {
-      background: #f1f1f1;
-      border-radius: 4px;
-    }
-    
-    .note-popup-table-container::-webkit-scrollbar-thumb {
-      background: #5f4bb6;
-      border-radius: 4px;
-      transition: background 0.3s ease;
-    }
-    
-    .note-popup-table-container::-webkit-scrollbar-thumb:hover {
-      background: #232946;
-    }
-    
-    /* إخفاء شريط التمرير في Firefox */
-    .note-popup-table-container {
-      scrollbar-width: thin;
-      scrollbar-color: #5f4bb6 #f1f1f1;
-    }
-    
-    /* تحسين مظهر الجدول داخل الحاوية */
-    .note-popup-table-container .note-popup-table {
-      margin-top: 0;
-      border-radius: 0;
-    }
-    
-    /* إضافة ظل للحاوية عند التمرير */
-    .note-popup-table-container.scrolling {
-      box-shadow: 0 2px 8px rgba(35, 41, 70, 0.1);
-    }
-    
-    /* تحسين مظهر الصفوف */
-    .note-popup-table tbody tr {
-      transition: all 0.2s ease;
-      cursor: pointer;
-    }
-    
-    .note-popup-table tbody tr:hover {
-      background-color: #f8f9ff !important;
-      transform: scale(1.02);
-      box-shadow: 0 2px 4px rgba(35, 41, 70, 0.1);
-    }
-    
-    /* تحسين مظهر أزرار الحذف */
-    .note-popup-table td:last-child {
-      transition: all 0.2s ease;
-      border-radius: 4px;
-    }
-    
-    .note-popup-table td:last-child:hover {
-      background-color: #ff6b6b;
-      color: white !important;
-      transform: scale(1.1);
-    }
-    
-    /* إضافة مؤشر التمرير */
-    .note-popup-table-container::before {
-      content: "📋";
-      position: absolute;
-      top: 5px;
-      right: 5px;
-      font-size: 12px;
-      opacity: 0.5;
-      z-index: 1;
-    }
-    
-    /* تحسين مظهر العنوان */
-    .note-popup > div:first-of-type {
-      background: linear-gradient(135deg, #5f4bb6, #232946);
-      color: white;
-      padding: 20px 70px 20px 30px;
-      border-radius: 20px;
-      margin-bottom: 30px;
-      text-shadow: 0 2px 4px rgba(0,0,0,0.3);
-      font-weight: 900;
-      font-size: 1.5em;
-      text-align: center;
-      letter-spacing: 1px;
-      box-shadow: 0 8px 25px rgba(35, 41, 70, 0.4);
-      border: 2px solid rgba(255, 255, 255, 0.1);
-      position: relative;
-      overflow: hidden;
-    }
-    
-    /* إضافة تأثير لامع للعنوان */
-    .note-popup > div:first-of-type::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-      transition: left 0.8s;
-    }
-    
-    .note-popup > div:first-of-type:hover::before {
-      left: 100%;
-    }
-  </style>
-  <script>
-    // بيانات الدخول (يمكنك تغييرها)
-    const ADMIN_USER = "admin";
-    const ADMIN_PASS = "gelvano2026";
-    const API = "http://localhost:7878/api";
 
-    function showDashboard() {
-      document.getElementById('loginBox').style.display = 'none';
-      document.getElementById('dashboard').style.display = 'block';
-      loadPasswords();
-      loadCodes();
-      loadFileCodes();
-    }
-    function logout() {
-      sessionStorage.removeItem('isAdmin');
-      location.reload();
-    }
-    document.getElementById('loginForm').onsubmit = function(e) {
-      e.preventDefault();
-      const user = document.getElementById('username').value;
-      const pass = document.getElementById('password').value;
-      if (user === ADMIN_USER && pass === ADMIN_PASS) {
-        sessionStorage.setItem('isAdmin', '1');
-        showDashboard();
-      } else {
-        document.getElementById('loginError').style.display = 'block';
-      }
-    };
-    if (sessionStorage.getItem('isAdmin') === '1') showDashboard();
+    <script>
+        // Global variables
+        let passwords = [];
+        let codes = [];
+        let videoIds = [];
+        let fileIds = [];
 
-    // توليد كلمة سر عشوائية
-    function generatePassword(length = 8) {
-      const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-      let pass = "";
-      for (let i = 0; i < length; i++) pass += chars.charAt(Math.floor(Math.random() * chars.length));
-      return pass;
-    }
-    // توليد كود عشوائي
-    function generateCode(length = 6) {
-      const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-      let code = "";
-      for (let i = 0; i < length; i++) code += chars.charAt(Math.floor(Math.random() * chars.length));
-      return code;
-    }
-    // توليد كود فيديو: حرفان كابيتال + 3 أرقام
-    function generateVideoCode() {
-      const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-      let code = '';
-      for (let i = 0; i < 2; i++) code += letters.charAt(Math.floor(Math.random() * letters.length));
-      for (let i = 0; i < 3; i++) code += Math.floor(Math.random() * 10);
-      document.getElementById('videoCode').value = code;
-    }
-    // توليد كود ملف: 4 أرقام عشوائية
-    function generateFileCode() {
-      let code = '';
-      for (let i = 0; i < 4; i++) code += Math.floor(Math.random() * 10);
-      document.getElementById('fileCode').value = code;
-    }
-    // إدارة الباسوردات
-    async function loadPasswords() {
-      const res = await fetch(`${API}/passwords`);
-      const passwords = await res.json();
-      const search = document.getElementById('searchPasswordInput').value.trim();
-      const tbody = document.querySelector("#passwordsTable tbody");
-      tbody.innerHTML = "";
-      passwords.filter(p => !search || p.includes(search)).forEach(password => {
-        const tr = document.createElement("tr");
-        tr.innerHTML = `<td>${password}</td>
-          <td><button class='copy-btn' onclick='copyText("${password}")'>نسخ</button></td>
-          <td><button class='delete-btn' onclick='deletePassword("${password}")'>حذف</button></td>`;
-        tbody.appendChild(tr);
-      });
-    }
-    document.getElementById('searchPasswordInput').oninput = loadPasswords;
-    async function generateAndAddPassword() {
-      const password = generatePassword();
-      await addPassword(password);
-    }
-    async function addPassword(password) {
-      if (!password) return;
-      await fetch(`${API}/passwords`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ password })
-      });
-      loadPasswords();
-      document.getElementById('manualPassword').value = '';
-    }
-    async function deletePassword(password) {
-      await fetch(`${API}/passwords/${encodeURIComponent(password)}`, { method: 'DELETE' });
-      loadPasswords();
-    }
-    document.getElementById('addPasswordForm').onsubmit = function(e) {
-      e.preventDefault();
-      const password = document.getElementById('manualPassword').value;
-      addPassword(password);
-    };
-
-    // --- تعبئة وإدارة قائمة رموز الفيديوهات ---
-    let videoIds = [];
-    // متغيرات لتثبيت آخر اختيار
-    let lastSelectedVideoId = null;
-    
-    // دوال لحفظ واسترجاع رموز الفيديوهات
-    function getVideoIds() {
-      try {
-        const saved = localStorage.getItem('admin_video_ids');
-        return saved ? JSON.parse(saved) : [];
-      } catch {
-        return [];
-      }
-    }
-    
-    function saveVideoIds(ids) {
-      localStorage.setItem('admin_video_ids', JSON.stringify(ids));
-    }
-
-    function fillVideoIdSelect() {
-      const select = document.getElementById('videoIdSelect');
-      const prev = lastSelectedVideoId || select.value;
-      select.innerHTML = '';
-      
-      // دمج الرموز المحفوظة مع الرموز الموجودة
-      const savedIds = getVideoIds();
-      const allIds = Array.from(new Set([...videoIds, ...savedIds]));
-      
-      allIds.forEach(id => {
-        const option = document.createElement('option');
-        option.value = id;
-        option.textContent = id;
-        select.appendChild(option);
-      });
-      
-      if (prev && allIds.includes(prev)) select.value = prev;
-      else if (allIds.length) select.value = allIds[0];
-      lastSelectedVideoId = select.value;
-    }
-    document.getElementById('videoIdSelect').addEventListener('change', function() {
-      lastSelectedVideoId = this.value;
-    });
-
-    function updateVideoIdsFromCodes(codes) {
-      const ids = codes.filter(c => c.videoId && !c.fileId).map(c => c.videoId);
-      videoIds = Array.from(new Set(ids));
-      fillVideoIdSelect();
-    }
-    document.getElementById('addVideoIdBtn').onclick = function() {
-      const newId = document.getElementById('newVideoIdInput').value.trim();
-      if (newId) {
-        // إضافة إلى القائمة المحلية
-        if (!videoIds.includes(newId)) {
-          videoIds.push(newId);
-        }
-        
-        // حفظ في localStorage
-        const savedIds = getVideoIds();
-        if (!savedIds.includes(newId)) {
-          savedIds.push(newId);
-          saveVideoIds(savedIds);
-        }
-        
-        fillVideoIdSelect();
-        document.getElementById('videoIdSelect').value = newId;
-        document.getElementById('newVideoIdInput').value = '';
-      }
-    };
-    // --- تعبئة وإدارة قائمة رموز الملفات ---
-    let fileIds = [];
-    // متغيرات لتثبيت آخر اختيار
-    let lastSelectedFileId = null;
-    
-    // دوال لحفظ واسترجاع رموز الملفات
-    function getFileIds() {
-      try {
-        const saved = localStorage.getItem('admin_file_ids');
-        return saved ? JSON.parse(saved) : [];
-      } catch {
-        return [];
-      }
-    }
-    
-    function saveFileIds(ids) {
-      localStorage.setItem('admin_file_ids', JSON.stringify(ids));
-    }
-
-    function fillFileIdSelect() {
-      const select = document.getElementById('fileIdSelect');
-      const prev = lastSelectedFileId || select.value;
-      select.innerHTML = '';
-      
-      // دمج الرموز المحفوظة مع الرموز الموجودة
-      const savedIds = getFileIds();
-      const allIds = Array.from(new Set([...fileIds, ...savedIds]));
-      
-      allIds.forEach(id => {
-        const option = document.createElement('option');
-        option.value = id;
-        option.textContent = id;
-        select.appendChild(option);
-      });
-      
-      if (prev && allIds.includes(prev)) select.value = prev;
-      else if (allIds.length) select.value = allIds[0];
-      lastSelectedFileId = select.value;
-    }
-    document.getElementById('fileIdSelect').addEventListener('change', function() {
-      lastSelectedFileId = this.value;
-    });
-
-    function updateFileIdsFromCodes(codes) {
-      const ids = codes.filter(c => c.fileId && !c.videoId).map(c => c.fileId);
-      fileIds = Array.from(new Set(ids));
-      fillFileIdSelect();
-    }
-    document.getElementById('addFileIdBtn').onclick = function() {
-      const newId = document.getElementById('newFileIdInput').value.trim();
-      if (newId) {
-        // إضافة إلى القائمة المحلية
-        if (!fileIds.includes(newId)) {
-          fileIds.push(newId);
-        }
-        
-        // حفظ في localStorage
-        const savedIds = getFileIds();
-        if (!savedIds.includes(newId)) {
-          savedIds.push(newId);
-          saveFileIds(savedIds);
-        }
-        
-        fillFileIdSelect();
-        document.getElementById('fileIdSelect').value = newId;
-        document.getElementById('newFileIdInput').value = '';
-      }
-    };
-    // --- تحديث القوائم عند تحميل الأكواد ---
-    async function loadCodes() {
-      const res = await fetch(`${API}/codes`);
-      const codes = await res.json();
-      const search = document.getElementById('searchCodeInput').value.trim();
-      const tbody = document.querySelector("#codesTable tbody");
-      tbody.innerHTML = "";
-      updateVideoIdsFromCodes(codes);
-      codes.filter(codeObj => codeObj.videoId && !codeObj.fileId && (!search || (codeObj.password && codeObj.password.includes(search)) || (codeObj.code && codeObj.code.includes(search)))).forEach(codeObj => {
-        const tr = document.createElement("tr");
-        tr.className = codeObj.used ? 'used' : 'not-used';
-        tr.innerHTML = `
-          <td>${codeObj.password}</td>
-          <td>${codeObj.videoId}</td>
-          <td>${codeObj.code}</td>
-          <td><button class='copy-btn' onclick='copyText("${codeObj.code}")'>نسخ</button></td>
-          <td><button class='delete-btn' onclick='deleteCode("${codeObj.id}")'>حذف</button></td>
-          <td>${codeObj.used ? 'نعم' : 'لا'}</td>
-          <td><button class='toggle-btn' onclick='toggleUsed("${codeObj.id}", ${!codeObj.used})'>تغيير</button></td>
-        `;
-        tbody.appendChild(tr);
-      });
-    }
-    document.getElementById('searchCodeInput').oninput = loadCodes;
-    document.getElementById('addCodeForm').onsubmit = async function(e) {
-      e.preventDefault();
-      const password = document.getElementById('codePassword').value;
-      const videoId = document.getElementById('videoIdSelect').value;
-      const code = document.getElementById('videoCode').value;
-      if (!password || !videoId || !code) return;
-      await fetch(`${API}/codes`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ password, videoId, code, fileId: "" })
-      });
-      loadCodes();
-      loadFileCodes();
-      this.reset();
-      // إعادة تثبيت آخر اختيار
-      document.getElementById('videoIdSelect').value = lastSelectedVideoId;
-    };
-    async function loadFileCodes() {
-      const res = await fetch(`${API}/codes`);
-      const codes = await res.json();
-      const search = document.getElementById('searchFileCodeInput').value.trim();
-      const tbody = document.querySelector("#fileCodesTable tbody");
-      tbody.innerHTML = "";
-      updateFileIdsFromCodes(codes);
-      codes.filter(codeObj => (codeObj.fileId || (!codeObj.videoId && codeObj.code)) && (!search || (codeObj.password && codeObj.password.includes(search)) || (codeObj.code && codeObj.code.includes(search)))).forEach(codeObj => {
-        const tr = document.createElement("tr");
-        tr.className = codeObj.used ? 'used' : 'not-used';
-        tr.innerHTML = `
-          <td>${codeObj.password}</td>
-          <td>${codeObj.fileId || codeObj.videoId || ''}</td>
-          <td>${codeObj.code}</td>
-          <td><button class='copy-btn' onclick='copyText("${codeObj.code}")'>نسخ</button></td>
-          <td><button class='delete-btn' onclick='deleteCode("${codeObj.id}")'>حذف</button></td>
-          <td>${codeObj.used ? 'نعم' : 'لا'}</td>
-          <td><button class='toggle-btn' onclick='toggleUsed("${codeObj.id}", ${!codeObj.used})'>تغيير</button></td>
-        `;
-        tbody.appendChild(tr);
-      });
-    }
-    document.getElementById('searchFileCodeInput').oninput = loadFileCodes;
-    document.getElementById('addFileCodeForm').onsubmit = async function(e) {
-      e.preventDefault();
-      const password = document.getElementById('fileCodePassword').value;
-      const fileId = document.getElementById('fileIdSelect').value;
-      const code = document.getElementById('fileCode').value;
-      if (!password || !fileId || !code) return;
-      await fetch(`${API}/codes`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ password, fileId, code, videoId: "" })
-      });
-      loadCodes();
-      loadFileCodes();
-      this.reset();
-      // إعادة تثبيت آخر اختيار
-      document.getElementById('fileIdSelect').value = lastSelectedFileId;
-    };
-    async function deleteCode(id) {
-      await fetch(`${API}/codes/${id}`, { method: 'DELETE' });
-      loadCodes();
-      loadFileCodes();
-    }
-    async function toggleUsed(id, used) {
-      await fetch(`${API}/codes/${id}`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ used })
-      });
-      loadCodes();
-      loadFileCodes();
-    }
-    // نسخ للنص
-    function copyText(text) {
-      navigator.clipboard.writeText(text);
-      alert('تم النسخ!');
-    }
-
-    // --- مذكرات المدير ---
-    const notesTypes = { 
-      T: 'T - دفتر', 
-      S: 'S - دفتر', 
-      F: 'F - دفتر' 
-    };
-    const notesStorageKey = type => `admin_notes_${type}`;
-    function getNotes(type) {
-      try { return JSON.parse(localStorage.getItem(notesStorageKey(type))) || []; } catch { return []; }
-    }
-    function saveNotes(type, arr) {
-      localStorage.setItem(notesStorageKey(type), JSON.stringify(arr));
-    }
-    function renderNotesPopup(type) {
-      const notes = getNotes(type);
-      const popupId = `note-popup-${type}`;
-      let html = `<div class='note-popup' id='${popupId}'>
-        <span class='note-popup-close' onclick='closeNotesPopup("${popupId}")' title='إغلاق النافذة'>✕</span>
-        <div style='font-weight:900;font-size:1.2em;margin-bottom:12px;text-align:center;'>${notesTypes[type]} (${notes.length} سجل)</div>
-        <form class='note-popup-form' onsubmit='return false;'>
-          <input type='text' id='noteNameInput${type}' placeholder='اسم الحصة أو الملف'>
-          <input type='text' id='noteCodeInput${type}' placeholder='رمز الحصة أو الملف'>
-          <button type='button' onclick='addNoteRow("${type}")'>إضافة</button>
-        </form>
-
-        <div class='note-popup-table-container' id='noteTableContainer${type}'>
-          <table class='note-popup-table'><thead><tr><th>الاسم</th><th>الرمز</th><th>حذف</th></tr></thead><tbody id='noteTableBody${type}'>
-            ${notes.map((row,i)=>`<tr><td>${row.name}</td><td>${row.code}</td><td onclick='deleteNoteRow("${type}",${i})'>&#10006;</td></tr>`).join('')}
-          </tbody></table>
-        </div>
-      </div>`;
-      return html;
-    }
-    function closeNotesPopup(popupId) {
-      document.getElementById(popupId).classList.remove('active');
-      document.getElementById('popup-overlay').style.display = 'none';
-    }
-    
-    function showNotesPopup(type) {
-      let popups = document.getElementById('notes-popups');
-      let overlay = document.getElementById('popup-overlay');
-      popups.innerHTML = renderNotesPopup(type);
-      overlay.style.display = 'block';
-      setTimeout(()=>{
-        document.getElementById(`note-popup-${type}`).classList.add('active');
-        
-        // إضافة تأثيرات التمرير للحاوية
-        const container = document.getElementById(`noteTableContainer${type}`);
-        if (container) {
-          // إضافة مستمع للتمرير
-          container.addEventListener('scroll', function() {
-            if (this.scrollTop > 0) {
-              this.classList.add('scrolling');
-            } else {
-              this.classList.remove('scrolling');
-            }
-          });
-          
-          // إضافة تأثير hover للصفوف
-          const rows = container.querySelectorAll('tbody tr');
-          rows.forEach(row => {
-            row.addEventListener('mouseenter', function() {
-              this.style.backgroundColor = '#f8f9ff';
-              this.style.transform = 'scale(1.02)';
-              this.style.transition = 'all 0.2s ease';
+        // Initialize admin page
+        document.addEventListener('DOMContentLoaded', function() {
+            loadPasswords();
+            loadCodes();
+            loadVideoIds();
+            loadFileIds();
+            
+            // Listen for code usage updates
+            window.addEventListener('message', function(event) {
+                if (event.data === 'codeUsed') {
+                    loadCodes();
+                }
             });
             
-            row.addEventListener('mouseleave', function() {
-              this.style.backgroundColor = '';
-              this.style.transform = 'scale(1)';
+            // Listen for localStorage changes (fallback)
+            window.addEventListener('storage', function(event) {
+                if (event.key === 'gelvano_code_used') {
+                    loadCodes();
+                }
             });
-          });
+            
+            // Periodic refresh every 30 seconds
+            setInterval(loadCodes, 30000);
+        });
+
+        // Load passwords from server
+        async function loadPasswords() {
+            try {
+                const response = await fetch('/api/passwords');
+                if (response.ok) {
+                    passwords = await response.json();
+                    displayPasswords();
+                    updateStats();
+                } else {
+                    showAlert('خطأ في تحميل كلمات السر', 'danger');
+                }
+            } catch (error) {
+                showAlert('خطأ في الاتصال بالخادم', 'danger');
+            }
         }
-      }, 10);
-    }
-    function addNoteRow(type) {
-      const name = document.getElementById(`noteNameInput${type}`).value.trim();
-      const code = document.getElementById(`noteCodeInput${type}`).value.trim();
-      if (!name || !code) return;
-      const arr = getNotes(type);
-      arr.push({ name, code });
-      saveNotes(type, arr);
-      showNotesPopup(type);
-    }
-    function deleteNoteRow(type, idx) {
-      const arr = getNotes(type);
-      const note = arr[idx];
-      if (confirm(`هل أنت متأكد من حذف السجل "${note.name}"؟`)) {
-        arr.splice(idx, 1);
-        saveNotes(type, arr);
-        showNotesPopup(type);
-      }
-    }
-    
-    document.querySelectorAll('.note-icon-circle').forEach(icon => {
-      icon.onclick = e => {
-        showNotesPopup(icon.dataset.type);
-      };
-    });
-    
-    // تهيئة الرموز المحفوظة عند تحميل الصفحة
-    window.addEventListener('DOMContentLoaded', function() {
-      // تحميل الرموز المحفوظة للفيديوهات
-      const savedVideoIds = getVideoIds();
-      videoIds = Array.from(new Set([...videoIds, ...savedVideoIds]));
-      
-      // تحميل الرموز المحفوظة للملفات
-      const savedFileIds = getFileIds();
-      fileIds = Array.from(new Set([...fileIds, ...savedFileIds]));
-      
-      // تحديث القوائم
-      fillVideoIdSelect();
-      fillFileIdSelect();
-    });
-  </script>
+
+        // Load codes from server
+        async function loadCodes() {
+            try {
+                const response = await fetch('/api/codes');
+                if (response.ok) {
+                    codes = await response.json();
+                    loadVideoIds();
+                    loadFileIds();
+                    displayVideoCodes();
+                    displayFileCodes();
+                    updateStats();
+                } else {
+                    showAlert('خطأ في تحميل الأكواد', 'danger');
+                }
+            } catch (error) {
+                showAlert('خطأ في الاتصال بالخادم', 'danger');
+            }
+        }
+
+        // Load video IDs from codes
+        function loadVideoIds() {
+            videoIds = [...new Set(codes.filter(code => code.videoId).map(code => code.videoId))];
+            updateVideoIdSelect();
+        }
+
+        // Load file IDs from codes
+        function loadFileIds() {
+            fileIds = [...new Set(codes.filter(code => code.fileId).map(code => code.fileId))];
+            updateFileIdSelect();
+        }
+
+        // Display passwords in the list
+        function displayPasswords(filteredPasswords = null) {
+            const container = document.getElementById('passwordsList');
+            const passwordsToShow = filteredPasswords || passwords;
+            
+            if (passwordsToShow.length === 0) {
+                container.innerHTML = '<div style="text-align: center; color: #666; padding: 2rem;">لا توجد كلمات سر</div>';
+                return;
+            }
+
+            container.innerHTML = passwordsToShow.map(password => `
+                <div class="list-item">
+                    <div class="item-info">
+                        <strong>${password}</strong>
+                        <small>كلمة سر مسجلة في النظام</small>
+                        <div class="item-details">
+                            <div class="detail-item">
+                                <i class="fas fa-key"></i> كلمة سر
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item-actions">
+                        <div class="action-row">
+                            <button class="btn btn-copy" onclick="copyToClipboard('${password}', 'كلمة السر')" title="نسخ كلمة السر">
+                                <i class="fas fa-copy"></i> نسخ
+                            </button>
+                            <button class="btn btn-danger" onclick="deletePassword('${password}')" title="حذف كلمة السر">
+                                <i class="fas fa-trash"></i> حذف
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Search passwords
+        function searchPasswords() {
+            const searchTerm = document.getElementById('passwordSearch').value.toLowerCase();
+            const filteredPasswords = passwords.filter(password => 
+                password.toLowerCase().includes(searchTerm)
+            );
+            displayPasswords(filteredPasswords);
+        }
+
+        // Display video codes in the list
+        function displayVideoCodes(filteredCodes = null) {
+            const container = document.getElementById('videoCodesList');
+            const videoCodes = codes.filter(code => code.videoId);
+            const codesToShow = filteredCodes || videoCodes;
+            
+            if (codesToShow.length === 0) {
+                container.innerHTML = '<div style="text-align: center; color: #666; padding: 2rem;">لا توجد أكواد فيديوهات</div>';
+                return;
+            }
+
+            container.innerHTML = codesToShow.map(code => `
+                <div class="list-item">
+                    <div class="item-info">
+                        <strong>${code.code}</strong>
+                        <small>كود فيديو مسجل في النظام</small>
+                        <div class="item-details">
+                            <div class="detail-item">
+                                <i class="fas fa-key"></i> ${code.password}
+                            </div>
+                            <div class="detail-item">
+                                <i class="fas fa-video"></i> ${code.videoId}
+                            </div>
+                            <div class="detail-item">
+                                <i class="fas fa-chart-bar"></i> ${code.useCount || 0}/${code.maxUses || 2}
+                            </div>
+                            <span class="status-badge ${code.used || (code.useCount || 0) >= (code.maxUses || 2) ? 'status-used' : 'status-active'}">
+                                ${code.used || (code.useCount || 0) >= (code.maxUses || 2) ? 'مستخدم' : 'نشط'}
+                            </span>
+                        </div>
+                    </div>
+                    <div class="item-actions">
+                        <div class="action-row">
+                            <button class="btn btn-copy" onclick="copyToClipboard('${code.code}', 'كود الفيديو')" title="نسخ الكود">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                            <button class="btn btn-copy" onclick="copyToClipboard('${code.password}', 'كلمة السر')" title="نسخ كلمة السر">
+                                <i class="fas fa-key"></i>
+                            </button>
+                        </div>
+                        <div class="action-row">
+                            <button class="btn btn-success" onclick="toggleCodeStatus('${code.id}', ${!(code.used || (code.useCount || 0) >= (code.maxUses || 2))})" title="${code.used || (code.useCount || 0) >= (code.maxUses || 2) ? 'تفعيل الكود' : 'إيقاف الكود'}">
+                                <i class="fas fa-${code.used || (code.useCount || 0) >= (code.maxUses || 2) ? 'play' : 'pause'}"></i> 
+                                ${code.used || (code.useCount || 0) >= (code.maxUses || 2) ? 'تفعيل' : 'إيقاف'}
+                            </button>
+                            <button class="btn btn-danger" onclick="deleteCode('${code.id}')" title="حذف الكود">
+                                <i class="fas fa-trash"></i> حذف
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Display file codes in the list
+        function displayFileCodes(filteredCodes = null) {
+            const container = document.getElementById('fileCodesList');
+            const fileCodes = codes.filter(code => code.fileId);
+            const codesToShow = filteredCodes || fileCodes;
+            
+            if (codesToShow.length === 0) {
+                container.innerHTML = '<div style="text-align: center; color: #666; padding: 2rem;">لا توجد أكواد ملفات</div>';
+                return;
+            }
+
+            container.innerHTML = codesToShow.map(code => `
+                <div class="list-item">
+                    <div class="item-info">
+                        <strong>${code.code}</strong>
+                        <small>كود ملف مسجل في النظام</small>
+                        <div class="item-details">
+                            <div class="detail-item">
+                                <i class="fas fa-key"></i> ${code.password}
+                            </div>
+                            <div class="detail-item">
+                                <i class="fas fa-file"></i> ${code.fileId}
+                            </div>
+                            <div class="detail-item">
+                                <i class="fas fa-chart-bar"></i> ${code.useCount || 0}/${code.maxUses || 2}
+                            </div>
+                            <span class="status-badge ${code.used || (code.useCount || 0) >= (code.maxUses || 2) ? 'status-used' : 'status-active'}">
+                                ${code.used || (code.useCount || 0) >= (code.maxUses || 2) ? 'مستخدم' : 'نشط'}
+                            </span>
+                        </div>
+                    </div>
+                    <div class="item-actions">
+                        <div class="action-row">
+                            <button class="btn btn-copy" onclick="copyToClipboard('${code.code}', 'كود الملف')" title="نسخ الكود">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                            <button class="btn btn-copy" onclick="copyToClipboard('${code.password}', 'كلمة السر')" title="نسخ كلمة السر">
+                                <i class="fas fa-key"></i>
+                            </button>
+                        </div>
+                        <div class="action-row">
+                            <button class="btn btn-success" onclick="toggleCodeStatus('${code.id}', ${!(code.used || (code.useCount || 0) >= (code.maxUses || 2))})" title="${code.used || (code.useCount || 0) >= (code.maxUses || 2) ? 'تفعيل الكود' : 'إيقاف الكود'}">
+                                <i class="fas fa-${code.used || (code.useCount || 0) >= (code.maxUses || 2) ? 'play' : 'pause'}"></i> 
+                                ${code.used || (code.useCount || 0) >= (code.maxUses || 2) ? 'تفعيل' : 'إيقاف'}
+                            </button>
+                            <button class="btn btn-danger" onclick="deleteCode('${code.id}')" title="حذف الكود">
+                                <i class="fas fa-trash"></i> حذف
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Search video codes
+        function searchVideoCodes() {
+            const searchTerm = document.getElementById('videoCodeSearch').value.toLowerCase();
+            const videoCodes = codes.filter(code => code.videoId);
+            const filteredCodes = videoCodes.filter(code => 
+                code.password.toLowerCase().includes(searchTerm) || 
+                code.code.toLowerCase().includes(searchTerm)
+            );
+            displayVideoCodes(filteredCodes);
+        }
+
+        // Search file codes
+        function searchFileCodes() {
+            const searchTerm = document.getElementById('fileCodeSearch').value.toLowerCase();
+            const fileCodes = codes.filter(code => code.fileId);
+            const filteredCodes = fileCodes.filter(code => 
+                code.password.toLowerCase().includes(searchTerm) || 
+                code.code.toLowerCase().includes(searchTerm)
+            );
+            displayFileCodes(filteredCodes);
+        }
+
+        // Update video ID select dropdown
+        function updateVideoIdSelect() {
+            const select = document.getElementById('videoIdSelect');
+            select.innerHTML = '<option value="">اختر معرف الفيديو</option>';
+            videoIds.forEach(id => {
+                select.innerHTML += `<option value="${id}">${id}</option>`;
+            });
+        }
+
+        // Update file ID select dropdown
+        function updateFileIdSelect() {
+            const select = document.getElementById('fileIdSelect');
+            select.innerHTML = '<option value="">اختر معرف الملف</option>';
+            fileIds.forEach(id => {
+                select.innerHTML += `<option value="${id}">${id}</option>`;
+            });
+        }
+
+        // Add new video ID
+        function addVideoId() {
+            const newId = document.getElementById('newVideoId').value.trim();
+            if (!newId) {
+                showAlert('يرجى إدخال معرف الفيديو', 'danger');
+                return;
+            }
+            
+            if (!videoIds.includes(newId)) {
+                videoIds.push(newId);
+                updateVideoIdSelect();
+                document.getElementById('videoIdSelect').value = newId;
+                document.getElementById('newVideoId').value = '';
+                showAlert('تم إضافة معرف الفيديو بنجاح', 'success');
+            } else {
+                showAlert('معرف الفيديو موجود بالفعل', 'danger');
+            }
+        }
+
+        // Add new file ID
+        function addFileId() {
+            const newId = document.getElementById('newFileId').value.trim();
+            if (!newId) {
+                showAlert('يرجى إدخال معرف الملف', 'danger');
+                return;
+            }
+            
+            if (!fileIds.includes(newId)) {
+                fileIds.push(newId);
+                updateFileIdSelect();
+                document.getElementById('fileIdSelect').value = newId;
+                document.getElementById('newFileId').value = '';
+                showAlert('تم إضافة معرف الملف بنجاح', 'success');
+            } else {
+                showAlert('معرف الملف موجود بالفعل', 'danger');
+            }
+        }
+
+        // Generate video code (2 letters + 3 numbers)
+        function generateVideoCode() {
+            const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            const numbers = '0123456789';
+            
+            let code = '';
+            // Generate 2 random letters
+            for (let i = 0; i < 2; i++) {
+                code += letters.charAt(Math.floor(Math.random() * letters.length));
+            }
+            // Generate 3 random numbers
+            for (let i = 0; i < 3; i++) {
+                code += numbers.charAt(Math.floor(Math.random() * numbers.length));
+            }
+            
+            document.getElementById('videoCode').value = code;
+        }
+
+        // Generate file code (4 numbers)
+        function generateFileCode() {
+            const numbers = '0123456789';
+            let code = '';
+            
+            // Generate 4 random numbers
+            for (let i = 0; i < 4; i++) {
+                code += numbers.charAt(Math.floor(Math.random() * numbers.length));
+            }
+            
+            document.getElementById('fileCode').value = code;
+        }
+
+        // Add new password
+        async function addPassword() {
+            const password = document.getElementById('newPassword').value.trim();
+            
+            if (!password) {
+                showAlert('يرجى إدخال كلمة سر', 'danger');
+                return;
+            }
+            
+            if (!/^[FST][0-9]{4}$/.test(password)) {
+                showAlert('كلمة السر يجب أن تبدأ بحرف (F/S/T) ثم 4 أرقام', 'danger');
+                return;
+            }
+
+            try {
+                const response = await fetch('/api/passwords', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ password })
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    showAlert(result.message, 'success');
+                    document.getElementById('newPassword').value = '';
+                    loadPasswords();
+                } else {
+                    showAlert(result.error, 'danger');
+                }
+            } catch (error) {
+                showAlert('خطأ في الاتصال بالخادم', 'danger');
+            }
+        }
+
+        // Add new video code
+        async function addVideoCode() {
+            const password = document.getElementById('videoCodePassword').value.trim();
+            const videoId = document.getElementById('videoIdSelect').value;
+            const code = document.getElementById('videoCode').value.trim();
+            const maxUses = parseInt(document.getElementById('videoMaxUses').value);
+
+            if (!password) {
+                showAlert('يرجى إدخال كلمة سر', 'danger');
+                return;
+            }
+
+            if (!videoId) {
+                showAlert('يرجى اختيار معرف الفيديو', 'danger');
+                return;
+            }
+
+            if (!code) {
+                showAlert('يرجى إدخال الكود', 'danger');
+                return;
+            }
+
+            try {
+                const response = await fetch('/api/codes', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        password,
+                        videoId,
+                        fileId: '',
+                        code,
+                        maxUses
+                    })
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    showAlert(result.message, 'success');
+                    // Clear form
+                    document.getElementById('videoCodePassword').value = '';
+                    document.getElementById('videoIdSelect').value = '';
+                    document.getElementById('videoCode').value = '';
+                    document.getElementById('videoMaxUses').value = '2';
+                    loadCodes();
+                } else {
+                    showAlert(result.error, 'danger');
+                }
+            } catch (error) {
+                showAlert('خطأ في الاتصال بالخادم', 'danger');
+            }
+        }
+
+        // Add new file code
+        async function addFileCode() {
+            const password = document.getElementById('fileCodePassword').value.trim();
+            const fileId = document.getElementById('fileIdSelect').value;
+            const code = document.getElementById('fileCode').value.trim();
+            const maxUses = parseInt(document.getElementById('fileMaxUses').value);
+
+            if (!password) {
+                showAlert('يرجى إدخال كلمة سر', 'danger');
+                return;
+            }
+
+            if (!fileId) {
+                showAlert('يرجى اختيار معرف الملف', 'danger');
+                return;
+            }
+
+            if (!code) {
+                showAlert('يرجى إدخال الكود', 'danger');
+                return;
+            }
+
+            try {
+                const response = await fetch('/api/codes', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        password,
+                        videoId: '',
+                        fileId,
+                        code,
+                        maxUses
+                    })
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    showAlert(result.message, 'success');
+                    // Clear form
+                    document.getElementById('fileCodePassword').value = '';
+                    document.getElementById('fileIdSelect').value = '';
+                    document.getElementById('fileCode').value = '';
+                    document.getElementById('fileMaxUses').value = '2';
+                    loadCodes();
+                } else {
+                    showAlert(result.error, 'danger');
+                }
+            } catch (error) {
+                showAlert('خطأ في الاتصال بالخادم', 'danger');
+            }
+        }
+
+        // Delete password
+        async function deletePassword(password) {
+            if (!confirm('هل أنت متأكد من حذف كلمة السر؟')) {
+                return;
+            }
+
+            try {
+                const response = await fetch(`/api/passwords/${password}`, {
+                    method: 'DELETE'
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    showAlert(result.message, 'success');
+                    loadPasswords();
+                } else {
+                    showAlert(result.error, 'danger');
+                }
+            } catch (error) {
+                showAlert('خطأ في الاتصال بالخادم', 'danger');
+            }
+        }
+
+        // Delete code
+        async function deleteCode(codeId) {
+            if (!confirm('هل أنت متأكد من حذف الكود؟')) {
+                return;
+            }
+
+            try {
+                const response = await fetch(`/api/codes/${codeId}`, {
+                    method: 'DELETE'
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    showAlert(result.message, 'success');
+                    loadCodes();
+                } else {
+                    showAlert(result.error, 'danger');
+                }
+            } catch (error) {
+                showAlert('خطأ في الاتصال بالخادم', 'danger');
+            }
+        }
+
+        // Toggle code status
+        async function toggleCodeStatus(codeId, newStatus) {
+            try {
+                const response = await fetch(`/api/codes/${codeId}`, {
+                    method: 'PATCH',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ 
+                        used: newStatus,
+                        useCount: newStatus ? 0 : undefined  // إعادة تعيين عدد مرات الاستخدام عند التفعيل
+                    })
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    showAlert(result.message, 'success');
+                    loadCodes();
+                } else {
+                    showAlert(result.error, 'danger');
+                }
+            } catch (error) {
+                showAlert('خطأ في الاتصال بالخادم', 'danger');
+            }
+        }
+
+        // Update statistics
+        function updateStats() {
+            const videoCodes = codes.filter(c => c.videoId);
+            const fileCodes = codes.filter(c => c.fileId);
+            
+            document.getElementById('totalPasswords').textContent = passwords.length;
+            document.getElementById('totalCodes').textContent = codes.length;
+            document.getElementById('activeCodes').textContent = codes.filter(c => !c.used && (c.useCount || 0) < (c.maxUses || 2)).length;
+            document.getElementById('usedCodes').textContent = codes.filter(c => c.used || (c.useCount || 0) >= (c.maxUses || 2)).length;
+        }
+
+        // Copy to clipboard function
+        async function copyToClipboard(text, type) {
+            try {
+                await navigator.clipboard.writeText(text);
+                showAlert(`${type} تم نسخه بنجاح`, 'success');
+            } catch (err) {
+                // Fallback for older browsers
+                const textArea = document.createElement('textarea');
+                textArea.value = text;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                showAlert(`${type} تم نسخه بنجاح`, 'success');
+            }
+        }
+
+        // Show alert message
+        function showAlert(message, type) {
+            const container = document.getElementById('alertContainer');
+            const alert = document.createElement('div');
+            alert.className = `alert alert-${type} animate__animated animate__fadeInDown`;
+            alert.innerHTML = `
+                <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'danger' ? 'exclamation-circle' : 'info-circle'}"></i>
+                ${message}
+            `;
+            
+            container.innerHTML = '';
+            container.appendChild(alert);
+            
+            // Auto remove after 5 seconds
+            setTimeout(() => {
+                if (alert.parentNode) {
+                    alert.classList.add('animate__fadeOutUp');
+                    setTimeout(() => {
+                        if (alert.parentNode) {
+                            alert.remove();
+                        }
+                    }, 300);
+                }
+            }, 5000);
+        }
+    </script>
 </body>
 </html>

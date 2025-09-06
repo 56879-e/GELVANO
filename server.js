@@ -169,6 +169,10 @@ app.patch('/api/codes/:id', (req, res) => {
         
         if (used !== undefined) {
             codes[codeIndex].used = used;
+            // إذا تم تفعيل الكود، إعادة تعيين عدد مرات الاستخدام
+            if (used === false) {
+                codes[codeIndex].useCount = 0;
+            }
         }
         if (useCount !== undefined) {
             codes[codeIndex].useCount = useCount;
