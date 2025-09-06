@@ -1073,9 +1073,10 @@
     "videoId": "F4",
     "fileId": "",
     "code": "QP854",
-    "used": false,
+    "used": true,
     "useCount": 0,
     "maxUses": 2,
-    "createdAt": "2025-09-06T23:52:24.366Z"
+    "createdAt": "2025-09-06T23:52:24.366Z",
+    "updatedAt": "2025-09-06T23:59:34.026Z"
   }
 ]
