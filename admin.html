@@ -1,0 +1,982 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <title>لوحة تحكم الأكواد والباسوردات</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    body { font-family: 'Cairo', Arial, sans-serif; background: #f7f7fa; }
+    .login-container, .dashboard-container { max-width: 400px; margin: 60px auto; background: #fff; border-radius: 10px; box-shadow: 0 2px 8px #0001; padding: 32px 24px; }
+    .dashboard-container { max-width: 1400px; }
+    h2 { text-align: center; color: #2a3b4c; margin-bottom: 24px; }
+    form { display: flex; flex-direction: column; gap: 16px; }
+    input[type="text"], input[type="password"] { padding: 10px; border: 1px solid #bbb; border-radius: 6px; font-size: 1rem; }
+    button { background: #2a3b4c; color: #fff; border: none; border-radius: 6px; padding: 10px; font-size: 1rem; cursor: pointer; transition: background 0.2s; }
+    button:hover { background: #1a2533; }
+    table { border-collapse: collapse; width: 100%; margin: 24px 0; background: #fff; }
+    th, td { border: 1px solid #e0e0e0; padding: 10px; text-align: center; }
+    th { background: #f0f4f8; color: #2a3b4c; }
+    tr:nth-child(even) { background: #f9f9fb; }
+    .add-form { margin: 0 auto 24px auto; width: 100%; }
+    .add-form-code, .add-form-file { margin: 0 auto 24px auto; width: 100%; }
+    .logout-btn { float: left; background: #e74c3c; margin-bottom: 16px; }
+    .copy-btn, .delete-btn, .toggle-btn { margin: 0 2px; padding: 4px 8px; font-size: 0.9em; }
+    .used { background: #d1ffd1; }
+    .not-used { background: #ffd1d1; }
+    .section-title { color: #2a3b4c; margin: 32px 0 8px 0; font-size: 1.2em; text-align: right; }
+    
+    /* تنسيق جديد للصفحة */
+    .scroll-table-container {
+      max-height: 350px;
+      overflow-y: auto;
+      margin-bottom: 16px;
+      border-radius: 8px;
+      border: 1px solid #eee;
+      box-shadow: 0 1px 4px #0001;
+      background: #fff;
+    }
+    
+    .codes-files-container { 
+      display: flex; 
+      gap: 24px; 
+      margin-bottom: 40px; 
+    }
+    
+    .codes-section, .files-section { 
+      flex: 1; 
+      background: #fff; 
+      padding: 24px; 
+      border-radius: 10px; 
+      box-shadow: 0 2px 8px #0001; 
+    }
+    
+    .section-header { 
+      color: #2a3b4c; 
+      margin-bottom: 20px; 
+      font-size: 1.3em; 
+      text-align: center; 
+      border-bottom: 2px solid #e0e0e0; 
+      padding-bottom: 10px; 
+    }
+    
+    @media (max-width: 1200px) { 
+      .codes-files-container { flex-direction: column; }
+      .dashboard-container { padding: 16px; } 
+    }
+    
+    @media (max-width: 600px) { 
+      .dashboard-container { padding: 8px; } 
+      table, th, td { font-size: 0.9rem; } 
+      .passwords-section, .codes-section, .files-section { padding: 16px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container" id="loginBox">
+    <h2>تسجيل الدخول</h2>
+    <form id="loginForm">
+      <input type="text" id="username" placeholder="اسم المستخدم" required>
+      <input type="password" id="password" placeholder="كلمة السر" required>
+      <button type="submit">دخول</button>
+    </form>
+    <div id="loginError" style="color:red; text-align:center; margin-top:10px; display:none;">بيانات الدخول غير صحيحة</div>
+  </div>
+  
+  <div class="dashboard-container" id="dashboard" style="display:none;">
+    <button class="logout-btn" onclick="logout()">تسجيل الخروج</button>
+    <h2>لوحة تحكم الأكواد والباسوردات</h2>
+    
+    <!-- قسم إدارة الباسوردات - يأخذ العرض الكامل -->
+    <div class="passwords-section">
+      <div class="section-header">إدارة كلمات السر</div>
+      <div style="margin-bottom:10px;display:flex;justify-content:flex-end;">
+        <input type="text" id="searchPasswordInput" placeholder="بحث بكلمة السر..." style="max-width:300px;padding:8px;">
+      </div>
+      <form class="add-form" id="addPasswordForm">
+        <div style="display:flex;gap:8px;align-items:center;justify-content:center;">
+          <button type="button" onclick="generateAndAddPassword()">توليد كلمة سر جديدة</button>
+          <input type="text" id="manualPassword" placeholder="أو أدخل كلمة سر يدويًا" style="flex:1;max-width:300px;">
+          <button type="submit">إضافة</button>
+        </div>
+      </form>
+      <div class="scroll-table-container">
+        <table id="passwordsTable">
+          <thead>
+            <tr><th>كلمة السر</th><th>نسخ</th><th>حذف</th></tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+    
+    <!-- قسم الأكواد والملفات - بجانب بعضهما -->
+    <div class="codes-files-container">
+      <!-- قسم أكواد الفيديوهات -->
+      <div class="codes-section">
+        <div class="section-header">أكواد الفيديوهات</div>
+        <div style="margin-bottom:10px;display:flex;justify-content:flex-end;">
+          <input type="text" id="searchCodeInput" placeholder="بحث بكلمة السر..." style="max-width:300px;padding:8px;">
+        </div>
+        <form class="add-form-code" id="addCodeForm">
+          <div style="display:flex;flex-direction:column;gap:12px;">
+            <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
+              <input type="text" id="codePassword" placeholder="كلمة سر الطالب" required style="flex:1;">
+              <select id="videoIdSelect" required style="flex:1;"></select>
+              <input type="text" id="newVideoIdInput" placeholder="رمز الحصة الجديد" style="max-width:120px;">
+              <button type="button" id="addVideoIdBtn">إضافة الرمز</button>
+            </div>
+            <div style="display:flex;gap:8px;align-items:center;">
+              <input type="text" id="videoCode" placeholder="كود الفيديو (يُولد تلقائيًا أو يدوي)" required style="flex:1;">
+              <button type="button" onclick="generateVideoCode()">توليد كود تلقائي</button>
+              <button type="submit">إضافة الكود</button>
+            </div>
+          </div>
+        </form>
+        <div class="scroll-table-container">
+          <table id="codesTable">
+            <thead>
+              <tr>
+                <th>كلمة السر</th>
+                <th>رمز الفيديو</th>
+                <th>كود الفيديو</th>
+                <th>نسخ</th>
+                <th>حذف</th>
+                <th>تم استخدامه؟</th>
+                <th>تغيير الحالة</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+      
+      <!-- قسم أكواد الملفات -->
+      <div class="files-section">
+        <div class="section-header">أكواد الملفات</div>
+        <div style="margin-bottom:10px;display:flex;justify-content:flex-end;">
+          <input type="text" id="searchFileCodeInput" placeholder="بحث بكلمة السر..." style="max-width:300px;padding:8px;">
+        </div>
+        <form class="add-form-file" id="addFileCodeForm">
+          <div style="display:flex;flex-direction:column;gap:12px;">
+            <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
+              <input type="text" id="fileCodePassword" placeholder="كلمة سر الطالب" required style="flex:1;">
+              <select id="fileIdSelect" required style="flex:1;"></select>
+              <input type="text" id="newFileIdInput" placeholder="رمز الحصة الجديد" style="max-width:120px;">
+              <button type="button" id="addFileIdBtn">إضافة الرمز</button>
+            </div>
+            <div style="display:flex;gap:8px;align-items:center;">
+              <input type="text" id="fileCode" placeholder="كود الملف (يُولد تلقائيًا أو يدوي)" required style="flex:1;">
+              <button type="button" onclick="generateFileCode()">توليد كود تلقائي</button>
+              <button type="submit">إضافة الكود</button>
+            </div>
+          </div>
+        </form>
+        <div class="scroll-table-container">
+          <table id="fileCodesTable">
+            <thead>
+              <tr>
+                <th>كلمة السر</th>
+                <th>رمز الملف</th>
+                <th>كود الملف</th>
+                <th>نسخ</th>
+                <th>حذف</th>
+                <th>تم استخدامه؟</th>
+                <th>تغيير الحالة</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="notes-icons-bar" style="position:fixed;bottom:32px;left:50%;transform:translateX(-50%);z-index:1000;display:flex;gap:28px;">
+    <div class="note-icon-circle" data-type="T" title="T - دفتر">T</div>
+    <div class="note-icon-circle" data-type="S" title="S - دفتر">S</div>
+    <div class="note-icon-circle" data-type="F" title="F - دفتر">F</div>
+  </div>
+  <div id="notes-popups"></div>
+  <div id="popup-overlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 1500; backdrop-filter: blur(5px);"></div>
+  <style>
+    .note-icon-circle {
+      width: 54px; height: 54px; border-radius: 50%; background: linear-gradient(135deg,#232946 60%,#5f4bb6 100%);
+      color: #fff; font-size: 2.1rem; font-weight: 900; display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 2px 12px #23294655; cursor: pointer; transition: box-shadow 0.2s, transform 0.1s;
+      border: 3px solid #e0e7ff; user-select: none;
+    }
+    .note-icon-circle:hover { box-shadow: 0 4px 24px #23294699; transform: scale(1.08); }
+    .note-popup {
+      position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+      width: 95vw; max-width: 1200px; min-width: 600px; 
+      max-height: 80vh; background: #fff; color: #232946; border-radius: 20px;
+      box-shadow: 0 20px 60px rgba(35, 41, 70, 0.4); padding: 25px 20px 20px 20px; z-index: 2000;
+      border: 3px solid #5f4bb6; display: none;
+      animation: popupIn 0.4s ease-out;
+      backdrop-filter: blur(20px);
+      overflow-y: auto;
+    }
+    @keyframes popupIn { from { opacity:0; transform:translateY(40px) scale(0.95); } to { opacity:1; transform:translateY(0) scale(1); } }
+    .note-popup.active { display: block; }
+    .note-popup-close { 
+      position: absolute; 
+      top: 15px; 
+      right: 20px; 
+      font-size: 2em; 
+      color: #232946; 
+      cursor: pointer; 
+      font-weight: bold; 
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.95);
+      box-shadow: 0 4px 15px rgba(35, 41, 70, 0.3);
+      transition: all 0.3s ease;
+      z-index: 10;
+    }
+    
+    .note-popup-close:hover {
+      background: #ff6b6b;
+      color: white;
+      transform: scale(1.2);
+      box-shadow: 0 6px 20px rgba(255, 107, 107, 0.6);
+    }
+    .note-popup-form { 
+      display: flex; 
+      gap: 10px; 
+      margin-bottom: 15px; 
+      background: linear-gradient(135deg, #f8f9ff, #e8f0ff);
+      padding: 15px;
+      border-radius: 12px;
+      border: 2px solid #e0e7ff;
+      box-shadow: 0 8px 25px rgba(35, 41, 70, 0.1);
+      align-items: center;
+      flex-wrap: nowrap;
+    }
+    
+    .note-popup-form input { 
+      flex: 1; 
+      padding: 8px 12px; 
+      border-radius: 8px; 
+      border: 2px solid #5f4bb6; 
+      font-size: 0.9em; 
+      background: #fff; 
+      color: #232946; 
+      transition: all 0.3s ease;
+      font-weight: 500;
+      box-shadow: 0 3px 10px rgba(35, 41, 70, 0.1);
+      min-width: 0;
+    }
+    
+    .note-popup-form input:first-child {
+      flex: 1;
+    }
+    
+    .note-popup-form input:last-of-type {
+      flex: 1;
+    }
+    
+    .note-popup-form input:focus {
+      outline: none;
+      border-color: #232946;
+      box-shadow: 0 0 0 4px rgba(35, 41, 70, 0.15);
+      transform: translateY(-2px);
+    }
+    
+    .note-popup-form button { 
+      padding: 8px 15px; 
+      border-radius: 8px; 
+      background: linear-gradient(135deg, #232946, #5f4bb6); 
+      color: #fff; 
+      font-weight: 800; 
+      border: none; 
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 5px 15px rgba(35, 41, 70, 0.3);
+      font-size: 0.9em;
+      white-space: nowrap;
+      min-width: 80px;
+      flex: 0 0 auto;
+    }
+    
+    .note-popup-form button:hover { 
+      background: linear-gradient(135deg, #5f4bb6, #232946); 
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(35, 41, 70, 0.4);
+    }
+    
+    /* Responsive design for mobile devices */
+    @media (max-width: 768px) {
+      .note-popup {
+        width: 95vw;
+        min-width: 320px;
+        max-width: 95vw;
+        padding: 20px 15px 15px 15px;
+        max-height: 85vh;
+      }
+      
+      .note-popup-form {
+        gap: 6px;
+        padding: 12px;
+        flex-wrap: nowrap;
+      }
+      
+      .note-popup-form input {
+        padding: 6px 8px;
+        font-size: 0.8em;
+        min-width: 0;
+        flex: 1;
+      }
+      
+      .note-popup-form button {
+        padding: 6px 12px;
+        font-size: 0.8em;
+        min-width: 70px;
+        flex: 0 0 auto;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .note-popup {
+        width: 98vw;
+        min-width: 300px;
+        padding: 15px 10px 10px 10px;
+      }
+      
+      .note-popup-form {
+        padding: 10px;
+        gap: 4px;
+      }
+      
+      .note-popup-form input {
+        padding: 5px 6px;
+        font-size: 0.75em;
+        flex: 1;
+      }
+      
+      .note-popup-form button {
+        padding: 5px 10px;
+        font-size: 0.75em;
+        min-width: 60px;
+        flex: 0 0 auto;
+      }
+    }
+    .note-popup-table { 
+      width: 100%; 
+      border-collapse: collapse; 
+      margin-top: 20px; 
+      background: #fff; 
+      border-radius: 20px; 
+      overflow: hidden; 
+      box-shadow: 0 8px 25px rgba(35, 41, 70, 0.15);
+    }
+    
+    .note-popup-table th, .note-popup-table td { 
+      padding: 18px 15px; 
+      border: none; 
+      text-align: center; 
+      font-size: 1.1em; 
+      background: #fff; 
+      color: #232946; 
+      font-weight: 500;
+    }
+    
+    .note-popup-table th { 
+      background: linear-gradient(135deg, #e0e7ff, #f0f4ff); 
+      color: #232946; 
+      font-weight: 900; 
+      font-size: 1.2em;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    
+    .note-popup-table tr:nth-child(even) { background: #f8f9ff; }
+    .note-popup-table tr:nth-child(odd) { background: #fff; }
+    
+    .note-popup-table td:last-child { 
+      color: #5f4bb6; 
+      cursor: pointer; 
+      font-weight: bold; 
+      font-size: 1.4em;
+      transition: all 0.3s ease;
+      border-radius: 10px;
+    }
+    
+    .note-popup-table td:last-child:hover { 
+      color: #fff; 
+      background: #ff6b6b;
+      transform: scale(1.3);
+    }
+    
+    /* إضافة خاصية التمرير لسجلات الدفاتر */
+    .note-popup-table-container {
+      max-height: 250px; /* ارتفاع أكبر للعرض الأفضل */
+      overflow-y: auto;
+      border-radius: 20px;
+      border: 2px solid #e0e7ff;
+      margin-top: 20px;
+      background: #fff;
+      box-shadow: 0 4px 15px rgba(35, 41, 70, 0.1);
+    }
+    
+    /* تخصيص شريط التمرير */
+    .note-popup-table-container::-webkit-scrollbar {
+      width: 8px;
+    }
+    
+    .note-popup-table-container::-webkit-scrollbar-track {
+      background: #f1f1f1;
+      border-radius: 4px;
+    }
+    
+    .note-popup-table-container::-webkit-scrollbar-thumb {
+      background: #5f4bb6;
+      border-radius: 4px;
+      transition: background 0.3s ease;
+    }
+    
+    .note-popup-table-container::-webkit-scrollbar-thumb:hover {
+      background: #232946;
+    }
+    
+    /* إخفاء شريط التمرير في Firefox */
+    .note-popup-table-container {
+      scrollbar-width: thin;
+      scrollbar-color: #5f4bb6 #f1f1f1;
+    }
+    
+    /* تحسين مظهر الجدول داخل الحاوية */
+    .note-popup-table-container .note-popup-table {
+      margin-top: 0;
+      border-radius: 0;
+    }
+    
+    /* إضافة ظل للحاوية عند التمرير */
+    .note-popup-table-container.scrolling {
+      box-shadow: 0 2px 8px rgba(35, 41, 70, 0.1);
+    }
+    
+    /* تحسين مظهر الصفوف */
+    .note-popup-table tbody tr {
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+    
+    .note-popup-table tbody tr:hover {
+      background-color: #f8f9ff !important;
+      transform: scale(1.02);
+      box-shadow: 0 2px 4px rgba(35, 41, 70, 0.1);
+    }
+    
+    /* تحسين مظهر أزرار الحذف */
+    .note-popup-table td:last-child {
+      transition: all 0.2s ease;
+      border-radius: 4px;
+    }
+    
+    .note-popup-table td:last-child:hover {
+      background-color: #ff6b6b;
+      color: white !important;
+      transform: scale(1.1);
+    }
+    
+    /* إضافة مؤشر التمرير */
+    .note-popup-table-container::before {
+      content: "📋";
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      font-size: 12px;
+      opacity: 0.5;
+      z-index: 1;
+    }
+    
+    /* تحسين مظهر العنوان */
+    .note-popup > div:first-of-type {
+      background: linear-gradient(135deg, #5f4bb6, #232946);
+      color: white;
+      padding: 20px 70px 20px 30px;
+      border-radius: 20px;
+      margin-bottom: 30px;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+      font-weight: 900;
+      font-size: 1.5em;
+      text-align: center;
+      letter-spacing: 1px;
+      box-shadow: 0 8px 25px rgba(35, 41, 70, 0.4);
+      border: 2px solid rgba(255, 255, 255, 0.1);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    /* إضافة تأثير لامع للعنوان */
+    .note-popup > div:first-of-type::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      transition: left 0.8s;
+    }
+    
+    .note-popup > div:first-of-type:hover::before {
+      left: 100%;
+    }
+  </style>
+  <script>
+    // بيانات الدخول (يمكنك تغييرها)
+    const ADMIN_USER = "admin";
+    const ADMIN_PASS = "gelvano2026";
+    const API = "http://localhost:7878/api";
+
+    function showDashboard() {
+      document.getElementById('loginBox').style.display = 'none';
+      document.getElementById('dashboard').style.display = 'block';
+      loadPasswords();
+      loadCodes();
+      loadFileCodes();
+    }
+    function logout() {
+      sessionStorage.removeItem('isAdmin');
+      location.reload();
+    }
+    document.getElementById('loginForm').onsubmit = function(e) {
+      e.preventDefault();
+      const user = document.getElementById('username').value;
+      const pass = document.getElementById('password').value;
+      if (user === ADMIN_USER && pass === ADMIN_PASS) {
+        sessionStorage.setItem('isAdmin', '1');
+        showDashboard();
+      } else {
+        document.getElementById('loginError').style.display = 'block';
+      }
+    };
+    if (sessionStorage.getItem('isAdmin') === '1') showDashboard();
+
+    // توليد كلمة سر عشوائية
+    function generatePassword(length = 8) {
+      const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+      let pass = "";
+      for (let i = 0; i < length; i++) pass += chars.charAt(Math.floor(Math.random() * chars.length));
+      return pass;
+    }
+    // توليد كود عشوائي
+    function generateCode(length = 6) {
+      const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+      let code = "";
+      for (let i = 0; i < length; i++) code += chars.charAt(Math.floor(Math.random() * chars.length));
+      return code;
+    }
+    // توليد كود فيديو: حرفان كابيتال + 3 أرقام
+    function generateVideoCode() {
+      const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+      let code = '';
+      for (let i = 0; i < 2; i++) code += letters.charAt(Math.floor(Math.random() * letters.length));
+      for (let i = 0; i < 3; i++) code += Math.floor(Math.random() * 10);
+      document.getElementById('videoCode').value = code;
+    }
+    // توليد كود ملف: 4 أرقام عشوائية
+    function generateFileCode() {
+      let code = '';
+      for (let i = 0; i < 4; i++) code += Math.floor(Math.random() * 10);
+      document.getElementById('fileCode').value = code;
+    }
+    // إدارة الباسوردات
+    async function loadPasswords() {
+      const res = await fetch(`${API}/passwords`);
+      const passwords = await res.json();
+      const search = document.getElementById('searchPasswordInput').value.trim();
+      const tbody = document.querySelector("#passwordsTable tbody");
+      tbody.innerHTML = "";
+      passwords.filter(p => !search || p.includes(search)).forEach(password => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `<td>${password}</td>
+          <td><button class='copy-btn' onclick='copyText("${password}")'>نسخ</button></td>
+          <td><button class='delete-btn' onclick='deletePassword("${password}")'>حذف</button></td>`;
+        tbody.appendChild(tr);
+      });
+    }
+    document.getElementById('searchPasswordInput').oninput = loadPasswords;
+    async function generateAndAddPassword() {
+      const password = generatePassword();
+      await addPassword(password);
+    }
+    async function addPassword(password) {
+      if (!password) return;
+      await fetch(`${API}/passwords`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ password })
+      });
+      loadPasswords();
+      document.getElementById('manualPassword').value = '';
+    }
+    async function deletePassword(password) {
+      await fetch(`${API}/passwords/${encodeURIComponent(password)}`, { method: 'DELETE' });
+      loadPasswords();
+    }
+    document.getElementById('addPasswordForm').onsubmit = function(e) {
+      e.preventDefault();
+      const password = document.getElementById('manualPassword').value;
+      addPassword(password);
+    };
+
+    // --- تعبئة وإدارة قائمة رموز الفيديوهات ---
+    let videoIds = [];
+    // متغيرات لتثبيت آخر اختيار
+    let lastSelectedVideoId = null;
+    
+    // دوال لحفظ واسترجاع رموز الفيديوهات
+    function getVideoIds() {
+      try {
+        const saved = localStorage.getItem('admin_video_ids');
+        return saved ? JSON.parse(saved) : [];
+      } catch {
+        return [];
+      }
+    }
+    
+    function saveVideoIds(ids) {
+      localStorage.setItem('admin_video_ids', JSON.stringify(ids));
+    }
+
+    function fillVideoIdSelect() {
+      const select = document.getElementById('videoIdSelect');
+      const prev = lastSelectedVideoId || select.value;
+      select.innerHTML = '';
+      
+      // دمج الرموز المحفوظة مع الرموز الموجودة
+      const savedIds = getVideoIds();
+      const allIds = Array.from(new Set([...videoIds, ...savedIds]));
+      
+      allIds.forEach(id => {
+        const option = document.createElement('option');
+        option.value = id;
+        option.textContent = id;
+        select.appendChild(option);
+      });
+      
+      if (prev && allIds.includes(prev)) select.value = prev;
+      else if (allIds.length) select.value = allIds[0];
+      lastSelectedVideoId = select.value;
+    }
+    document.getElementById('videoIdSelect').addEventListener('change', function() {
+      lastSelectedVideoId = this.value;
+    });
+
+    function updateVideoIdsFromCodes(codes) {
+      const ids = codes.filter(c => c.videoId && !c.fileId).map(c => c.videoId);
+      videoIds = Array.from(new Set(ids));
+      fillVideoIdSelect();
+    }
+    document.getElementById('addVideoIdBtn').onclick = function() {
+      const newId = document.getElementById('newVideoIdInput').value.trim();
+      if (newId) {
+        // إضافة إلى القائمة المحلية
+        if (!videoIds.includes(newId)) {
+          videoIds.push(newId);
+        }
+        
+        // حفظ في localStorage
+        const savedIds = getVideoIds();
+        if (!savedIds.includes(newId)) {
+          savedIds.push(newId);
+          saveVideoIds(savedIds);
+        }
+        
+        fillVideoIdSelect();
+        document.getElementById('videoIdSelect').value = newId;
+        document.getElementById('newVideoIdInput').value = '';
+      }
+    };
+    // --- تعبئة وإدارة قائمة رموز الملفات ---
+    let fileIds = [];
+    // متغيرات لتثبيت آخر اختيار
+    let lastSelectedFileId = null;
+    
+    // دوال لحفظ واسترجاع رموز الملفات
+    function getFileIds() {
+      try {
+        const saved = localStorage.getItem('admin_file_ids');
+        return saved ? JSON.parse(saved) : [];
+      } catch {
+        return [];
+      }
+    }
+    
+    function saveFileIds(ids) {
+      localStorage.setItem('admin_file_ids', JSON.stringify(ids));
+    }
+
+    function fillFileIdSelect() {
+      const select = document.getElementById('fileIdSelect');
+      const prev = lastSelectedFileId || select.value;
+      select.innerHTML = '';
+      
+      // دمج الرموز المحفوظة مع الرموز الموجودة
+      const savedIds = getFileIds();
+      const allIds = Array.from(new Set([...fileIds, ...savedIds]));
+      
+      allIds.forEach(id => {
+        const option = document.createElement('option');
+        option.value = id;
+        option.textContent = id;
+        select.appendChild(option);
+      });
+      
+      if (prev && allIds.includes(prev)) select.value = prev;
+      else if (allIds.length) select.value = allIds[0];
+      lastSelectedFileId = select.value;
+    }
+    document.getElementById('fileIdSelect').addEventListener('change', function() {
+      lastSelectedFileId = this.value;
+    });
+
+    function updateFileIdsFromCodes(codes) {
+      const ids = codes.filter(c => c.fileId && !c.videoId).map(c => c.fileId);
+      fileIds = Array.from(new Set(ids));
+      fillFileIdSelect();
+    }
+    document.getElementById('addFileIdBtn').onclick = function() {
+      const newId = document.getElementById('newFileIdInput').value.trim();
+      if (newId) {
+        // إضافة إلى القائمة المحلية
+        if (!fileIds.includes(newId)) {
+          fileIds.push(newId);
+        }
+        
+        // حفظ في localStorage
+        const savedIds = getFileIds();
+        if (!savedIds.includes(newId)) {
+          savedIds.push(newId);
+          saveFileIds(savedIds);
+        }
+        
+        fillFileIdSelect();
+        document.getElementById('fileIdSelect').value = newId;
+        document.getElementById('newFileIdInput').value = '';
+      }
+    };
+    // --- تحديث القوائم عند تحميل الأكواد ---
+    async function loadCodes() {
+      const res = await fetch(`${API}/codes`);
+      const codes = await res.json();
+      const search = document.getElementById('searchCodeInput').value.trim();
+      const tbody = document.querySelector("#codesTable tbody");
+      tbody.innerHTML = "";
+      updateVideoIdsFromCodes(codes);
+      codes.filter(codeObj => codeObj.videoId && !codeObj.fileId && (!search || (codeObj.password && codeObj.password.includes(search)) || (codeObj.code && codeObj.code.includes(search)))).forEach(codeObj => {
+        const tr = document.createElement("tr");
+        tr.className = codeObj.used ? 'used' : 'not-used';
+        tr.innerHTML = `
+          <td>${codeObj.password}</td>
+          <td>${codeObj.videoId}</td>
+          <td>${codeObj.code}</td>
+          <td><button class='copy-btn' onclick='copyText("${codeObj.code}")'>نسخ</button></td>
+          <td><button class='delete-btn' onclick='deleteCode("${codeObj.id}")'>حذف</button></td>
+          <td>${codeObj.used ? 'نعم' : 'لا'}</td>
+          <td><button class='toggle-btn' onclick='toggleUsed("${codeObj.id}", ${!codeObj.used})'>تغيير</button></td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+    document.getElementById('searchCodeInput').oninput = loadCodes;
+    document.getElementById('addCodeForm').onsubmit = async function(e) {
+      e.preventDefault();
+      const password = document.getElementById('codePassword').value;
+      const videoId = document.getElementById('videoIdSelect').value;
+      const code = document.getElementById('videoCode').value;
+      if (!password || !videoId || !code) return;
+      await fetch(`${API}/codes`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ password, videoId, code, fileId: "" })
+      });
+      loadCodes();
+      loadFileCodes();
+      this.reset();
+      // إعادة تثبيت آخر اختيار
+      document.getElementById('videoIdSelect').value = lastSelectedVideoId;
+    };
+    async function loadFileCodes() {
+      const res = await fetch(`${API}/codes`);
+      const codes = await res.json();
+      const search = document.getElementById('searchFileCodeInput').value.trim();
+      const tbody = document.querySelector("#fileCodesTable tbody");
+      tbody.innerHTML = "";
+      updateFileIdsFromCodes(codes);
+      codes.filter(codeObj => (codeObj.fileId || (!codeObj.videoId && codeObj.code)) && (!search || (codeObj.password && codeObj.password.includes(search)) || (codeObj.code && codeObj.code.includes(search)))).forEach(codeObj => {
+        const tr = document.createElement("tr");
+        tr.className = codeObj.used ? 'used' : 'not-used';
+        tr.innerHTML = `
+          <td>${codeObj.password}</td>
+          <td>${codeObj.fileId || codeObj.videoId || ''}</td>
+          <td>${codeObj.code}</td>
+          <td><button class='copy-btn' onclick='copyText("${codeObj.code}")'>نسخ</button></td>
+          <td><button class='delete-btn' onclick='deleteCode("${codeObj.id}")'>حذف</button></td>
+          <td>${codeObj.used ? 'نعم' : 'لا'}</td>
+          <td><button class='toggle-btn' onclick='toggleUsed("${codeObj.id}", ${!codeObj.used})'>تغيير</button></td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+    document.getElementById('searchFileCodeInput').oninput = loadFileCodes;
+    document.getElementById('addFileCodeForm').onsubmit = async function(e) {
+      e.preventDefault();
+      const password = document.getElementById('fileCodePassword').value;
+      const fileId = document.getElementById('fileIdSelect').value;
+      const code = document.getElementById('fileCode').value;
+      if (!password || !fileId || !code) return;
+      await fetch(`${API}/codes`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ password, fileId, code, videoId: "" })
+      });
+      loadCodes();
+      loadFileCodes();
+      this.reset();
+      // إعادة تثبيت آخر اختيار
+      document.getElementById('fileIdSelect').value = lastSelectedFileId;
+    };
+    async function deleteCode(id) {
+      await fetch(`${API}/codes/${id}`, { method: 'DELETE' });
+      loadCodes();
+      loadFileCodes();
+    }
+    async function toggleUsed(id, used) {
+      await fetch(`${API}/codes/${id}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ used })
+      });
+      loadCodes();
+      loadFileCodes();
+    }
+    // نسخ للنص
+    function copyText(text) {
+      navigator.clipboard.writeText(text);
+      alert('تم النسخ!');
+    }
+
+    // --- مذكرات المدير ---
+    const notesTypes = { 
+      T: 'T - دفتر', 
+      S: 'S - دفتر', 
+      F: 'F - دفتر' 
+    };
+    const notesStorageKey = type => `admin_notes_${type}`;
+    function getNotes(type) {
+      try { return JSON.parse(localStorage.getItem(notesStorageKey(type))) || []; } catch { return []; }
+    }
+    function saveNotes(type, arr) {
+      localStorage.setItem(notesStorageKey(type), JSON.stringify(arr));
+    }
+    function renderNotesPopup(type) {
+      const notes = getNotes(type);
+      const popupId = `note-popup-${type}`;
+      let html = `<div class='note-popup' id='${popupId}'>
+        <span class='note-popup-close' onclick='closeNotesPopup("${popupId}")' title='إغلاق النافذة'>✕</span>
+        <div style='font-weight:900;font-size:1.2em;margin-bottom:12px;text-align:center;'>${notesTypes[type]} (${notes.length} سجل)</div>
+        <form class='note-popup-form' onsubmit='return false;'>
+          <input type='text' id='noteNameInput${type}' placeholder='اسم الحصة أو الملف'>
+          <input type='text' id='noteCodeInput${type}' placeholder='رمز الحصة أو الملف'>
+          <button type='button' onclick='addNoteRow("${type}")'>إضافة</button>
+        </form>
+
+        <div class='note-popup-table-container' id='noteTableContainer${type}'>
+          <table class='note-popup-table'><thead><tr><th>الاسم</th><th>الرمز</th><th>حذف</th></tr></thead><tbody id='noteTableBody${type}'>
+            ${notes.map((row,i)=>`<tr><td>${row.name}</td><td>${row.code}</td><td onclick='deleteNoteRow("${type}",${i})'>&#10006;</td></tr>`).join('')}
+          </tbody></table>
+        </div>
+      </div>`;
+      return html;
+    }
+    function closeNotesPopup(popupId) {
+      document.getElementById(popupId).classList.remove('active');
+      document.getElementById('popup-overlay').style.display = 'none';
+    }
+    
+    function showNotesPopup(type) {
+      let popups = document.getElementById('notes-popups');
+      let overlay = document.getElementById('popup-overlay');
+      popups.innerHTML = renderNotesPopup(type);
+      overlay.style.display = 'block';
+      setTimeout(()=>{
+        document.getElementById(`note-popup-${type}`).classList.add('active');
+        
+        // إضافة تأثيرات التمرير للحاوية
+        const container = document.getElementById(`noteTableContainer${type}`);
+        if (container) {
+          // إضافة مستمع للتمرير
+          container.addEventListener('scroll', function() {
+            if (this.scrollTop > 0) {
+              this.classList.add('scrolling');
+            } else {
+              this.classList.remove('scrolling');
+            }
+          });
+          
+          // إضافة تأثير hover للصفوف
+          const rows = container.querySelectorAll('tbody tr');
+          rows.forEach(row => {
+            row.addEventListener('mouseenter', function() {
+              this.style.backgroundColor = '#f8f9ff';
+              this.style.transform = 'scale(1.02)';
+              this.style.transition = 'all 0.2s ease';
+            });
+            
+            row.addEventListener('mouseleave', function() {
+              this.style.backgroundColor = '';
+              this.style.transform = 'scale(1)';
+            });
+          });
+        }
+      }, 10);
+    }
+    function addNoteRow(type) {
+      const name = document.getElementById(`noteNameInput${type}`).value.trim();
+      const code = document.getElementById(`noteCodeInput${type}`).value.trim();
+      if (!name || !code) return;
+      const arr = getNotes(type);
+      arr.push({ name, code });
+      saveNotes(type, arr);
+      showNotesPopup(type);
+    }
+    function deleteNoteRow(type, idx) {
+      const arr = getNotes(type);
+      const note = arr[idx];
+      if (confirm(`هل أنت متأكد من حذف السجل "${note.name}"؟`)) {
+        arr.splice(idx, 1);
+        saveNotes(type, arr);
+        showNotesPopup(type);
+      }
+    }
+    
+    document.querySelectorAll('.note-icon-circle').forEach(icon => {
+      icon.onclick = e => {
+        showNotesPopup(icon.dataset.type);
+      };
+    });
+    
+    // تهيئة الرموز المحفوظة عند تحميل الصفحة
+    window.addEventListener('DOMContentLoaded', function() {
+      // تحميل الرموز المحفوظة للفيديوهات
+      const savedVideoIds = getVideoIds();
+      videoIds = Array.from(new Set([...videoIds, ...savedVideoIds]));
+      
+      // تحميل الرموز المحفوظة للملفات
+      const savedFileIds = getFileIds();
+      fileIds = Array.from(new Set([...fileIds, ...savedFileIds]));
+      
+      // تحديث القوائم
+      fillVideoIdSelect();
+      fillFileIdSelect();
+    });
+  </script>
+</body>
+</html>
