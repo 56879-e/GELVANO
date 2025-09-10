@@ -735,29 +735,60 @@
         let fileIds = [];
         let currentNotebook = '';
         let notebookRecords = {
-            first: { videos: [], files: [] },
+            first: {
+                videos: [],
+                files: []
+            },
             second: { videos: [], files: [] },
             third: { videos: [], files: [] }
         };
+
+        // Function to set selected value to localStorage
+        function setSelectedValue(selectElement, key) {
+            localStorage.setItem(key, selectElement.value);
+        }
+
+        // Function to get selected value from localStorage
+        function getSelectedValue(key, defaultValue = '') {
+            return localStorage.getItem(key) || defaultValue;
+        }
         // Initialize admin page
+        function setSelectValue(selectElementId, value) {
+            const selectElement = document.getElementById(selectElementId);
+            if (selectElement) {
+                selectElement.value = value;
+            }
+        }
+
         document.addEventListener('DOMContentLoaded', function() {
             loadPasswords();
             loadCodes();
-            loadVideoIds();
-            loadFileIds();
             loadNotebookRecords();
+
+            // Setup event listeners to save dropdown selections
+            const videoIdSelect = document.getElementById('videoIdSelect');
+            if (videoIdSelect) {
+                videoIdSelect.addEventListener('change', () => setSelectedValue(videoIdSelect, 'selectedVideoId'));
+            }
+            const fileIdSelect = document.getElementById('fileIdSelect');
+            if (fileIdSelect) {
+                fileIdSelect.addEventListener('change', () => setSelectedValue(fileIdSelect, 'selectedFileId'));
+            }
+
             // Listen for code usage updates
             window.addEventListener('message', function(event) {
                 if (event.data === 'codeUsed') {
                     loadCodes();
                 }
             });
+
             // Listen for localStorage changes (fallback)
             window.addEventListener('storage', function(event) {
                 if (event.key === 'gelvano_code_used') {
                     loadCodes();
                 }
             });
+
             // Periodic refresh every 30 seconds
             setInterval(loadCodes, 30000);
         });
@@ -993,18 +1024,24 @@
         // Update video ID select dropdown
         function updateVideoIdSelect() {
             const select = document.getElementById('videoIdSelect');
+            const selectedValue = localStorage.getItem('selectedVideoId');
             select.innerHTML = '<option value="">اختر معرف الفيديو</option>';
-            videoIds.forEach(id => {
+            videoIds.sort().forEach(id => {
                 select.innerHTML += `<option value="${id}">${id}</option>`;
             });
+            // Set the selected value if it exists
+            select.value = selectedValue || '';
         }
         // Update file ID select dropdown
         function updateFileIdSelect() {
             const select = document.getElementById('fileIdSelect');
+            const selectedValue = localStorage.getItem('selectedFileId');
             select.innerHTML = '<option value="">اختر معرف الملف</option>';
-            fileIds.forEach(id => {
+            fileIds.sort().forEach(id => {
                 select.innerHTML += `<option value="${id}">${id}</option>`;
             });
+            // Set the selected value if it exists
+            select.value = selectedValue || '';
         }
         // Add new video ID
         function addVideoId() {
@@ -1477,5 +1514,8 @@
         });
     </script>
 </body>
+
 </html>
+
+
 </html>
