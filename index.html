@@ -10,7 +10,19 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         body {
-            padding-top: 55px; /* تحديد مسافة علوية ثابتة لتطابق ارتفاع الهيدر */
+            padding-top: 0 !important; /* إزالة المسافة العلوية نهائياً */
+            margin: 0;
+        }
+        .header {
+            top: 0;
+            margin: 0;
+            padding: 0;
+            height: 55px;
+            position: relative;
+        }
+        .logo-container {
+            margin: 0;
+            padding: 0;
         }
         .whatsapp-button {
             position: fixed;
@@ -305,7 +317,7 @@
         }
     </style>
 </head>
-<body>
+<body style="margin:0; padding:0;">
     <!-- Login Overlay -->
     <div class="login-overlay" id="loginOverlay">
         <form class="login-box" id="loginForm" autocomplete="off" onsubmit="return false;">
