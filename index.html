@@ -232,6 +232,63 @@
                 padding: 1.5rem;
             }
         }
+
+        /* Profile Icon Styles */
+        .header {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .profile-container {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            z-index: 1100;
+        }
+
+        .profile-icon {
+            font-size: 2.5rem;
+            color: #333;
+            transition: color 0.3s;
+        }
+
+        .profile-icon:hover {
+            color: #d5472f;
+        }
+
+        .profile-dropdown {
+            display: none;
+            position: absolute;
+            left: 0;
+            top: 120%;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+            padding: 1rem;
+            min-width: 220px;
+            z-index: 2100;
+            border: 1px solid #eee;
+            text-align: right;
+        }
+
+        .profile-dropdown.show {
+            display: block;
+            animation: fadeInDown 0.3s;
+        }
+
+        .profile-info-item {
+            padding: 0.5rem 0;
+            font-size: 1rem;
+            color: #333;
+        }
+
+        .profile-info-item strong {
+            color: #d5472f;
+        }
     </style>
 </head>
 <body>
@@ -255,6 +312,17 @@
 
     <!-- Header with Logo -->
     <header class="header">
+        <div class="profile-container" id="profileContainer" style="display: none;">
+            <i class="fas fa-user-circle profile-icon" id="profileIcon"></i>
+            <div class="profile-dropdown" id="profileDropdown">
+                <div class="profile-info-item">
+                    <strong>الاسم:</strong> <span id="profileName"></span>
+                </div>
+                <div class="profile-info-item">
+                    <strong>كلمة السر:</strong> <span id="profilePassword"></span>
+                </div>
+            </div>
+        </div>
         <div class="logo-container">
             <a href="index.html">
                 <img loading="lazy" src="assets/logo.png" alt="شعار الموقع" class="logo animate__animated animate__fadeIn">
@@ -407,6 +475,19 @@
         const passwordInput = document.getElementById('password');
         const errorDiv = document.getElementById('loginError');
         const studentNameDisplay = document.getElementById('studentNameDisplay');
+        const profileContainer = document.getElementById('profileContainer');
+        const profileIcon = document.getElementById('profileIcon');
+        const profileDropdown = document.getElementById('profileDropdown');
+        const profileName = document.getElementById('profileName');
+        const profilePassword = document.getElementById('profilePassword');
+
+        function showProfileUI(name, password) {
+            if (profileContainer && profileName && profilePassword) {
+                profileName.textContent = name;
+                profilePassword.textContent = password;
+                profileContainer.style.display = 'block';
+            }
+        }
 
         // Auto-fill password and student name if saved
         const savedPassword = localStorage.getItem('gelvano_password');
@@ -424,6 +505,7 @@
                 setTimeout(() => { overlay.style.display = 'none'; }, 400);
                 studentNameDisplay.textContent = '👤 الدكتور/ة : ' + savedStudentName;
                 studentNameDisplay.style.display = 'block';
+                showProfileUI(savedStudentName, savedPassword);
             }
         }
 
@@ -452,14 +534,17 @@
 
         form.addEventListener('submit', function(e) {
             e.preventDefault();
+            const studentName = studentNameInput.value.trim();
+            const password = passwordInput.value.trim();
             if (validateLogin()) {
                 // Save password and student name to localStorage
-                localStorage.setItem('gelvano_password', passwordInput.value.trim());
-                localStorage.setItem('gelvano_student_name', studentNameInput.value.trim());
+                localStorage.setItem('gelvano_password', password);
+                localStorage.setItem('gelvano_student_name', studentName);
                 overlay.classList.add('hidden');
                 setTimeout(() => { overlay.style.display = 'none'; }, 400);
-                studentNameDisplay.textContent = '👤 الدكتور/ة : ' + studentNameInput.value.trim();
+                studentNameDisplay.textContent = '👤 الدكتور/ة : ' + studentName;
                 studentNameDisplay.style.display = 'block';
+                showProfileUI(studentName, password);
             }
         });
 
@@ -470,6 +555,19 @@
         form.addEventListener('keydown', function(e) {
             if (e.key === 'Enter') {
                 form.dispatchEvent(new Event('submit'));
+            }
+        });
+
+        if (profileIcon) {
+            profileIcon.addEventListener('click', (e) => {
+                e.stopPropagation();
+                profileDropdown.classList.toggle('show');
+            });
+        }
+
+        window.addEventListener('click', () => {
+            if (profileDropdown && profileDropdown.classList.contains('show')) {
+                profileDropdown.classList.remove('show');
             }
         });
     });
