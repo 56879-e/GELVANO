@@ -289,17 +289,6 @@
         .profile-info-item strong {
             color: #d5472f;
         }
-
-        /* Student Name Display in Header */
-        #studentNameDisplay {
-            position: absolute;
-            right: 20px;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 1.2rem;
-            font-weight: bold;
-            color: #333;
-        }
     </style>
 </head>
 <body>
@@ -308,7 +297,7 @@
         <form class="login-box" id="loginForm" autocomplete="off" onsubmit="return false;">
             <h2>تسجيل الدخول</h2>
             <input type="text" id="studentName" placeholder="اسم الطالب (بالعربية)" autocomplete="off" required style="direction:rtl;">
-            <input type="password" id="password" placeholder="مثال: F1234" autocomplete="off" required>
+            <input type="password" id="password" placeholder="اكتب ال ID الخاص بك" autocomplete="off" required>
             <button type="submit" id="loginBtn">دخول</button>
             <div class="login-error" id="loginError"></div>
         </form>
@@ -328,7 +317,7 @@
                     <strong>الاسم:</strong> <span id="profileName"></span>
                 </div>
                 <div class="profile-info-item">
-                    <strong>كلمة السر:</strong> <span id="profilePassword"></span>
+                    <strong>ID:</strong> <span id="profilePassword"></span>
                 </div>
             </div>
         </div>
@@ -337,7 +326,6 @@
                 <img loading="lazy" src="assets/logo.png" alt="شعار الموقع" class="logo animate__animated animate__fadeIn">
             </a>
         </div>
-        <div id="studentNameDisplay" style="display:none;"></div>
     </header>
 
 
@@ -484,7 +472,6 @@
         const studentNameInput = document.getElementById('studentName');
         const passwordInput = document.getElementById('password');
         const errorDiv = document.getElementById('loginError');
-        const studentNameDisplay = document.getElementById('studentNameDisplay');
         const profileContainer = document.getElementById('profileContainer');
         const profileIcon = document.getElementById('profileIcon');
         const profileDropdown = document.getElementById('profileDropdown');
@@ -502,10 +489,6 @@
         // Auto-fill password and student name if saved
         const savedPassword = localStorage.getItem('gelvano_password');
         const savedStudentName = localStorage.getItem('gelvano_student_name');
-        if (savedStudentName) {
-            studentNameDisplay.textContent = '👤 الطالب/ه : ' + savedStudentName;
-            studentNameDisplay.style.display = 'block';
-        }
         if (savedPassword && savedStudentName && passwordsLoaded) {
             passwordInput.value = savedPassword;
             studentNameInput.value = savedStudentName;
@@ -513,8 +496,6 @@
                 allowedPasswords.map(p => p.trim().toUpperCase()).includes(savedPassword.toUpperCase().trim())) {
                 overlay.classList.add('hidden');
                 setTimeout(() => { overlay.style.display = 'none'; }, 400);
-                studentNameDisplay.textContent = '👤 الطالب/ه : ' + savedStudentName;
-                studentNameDisplay.style.display = 'block';
                 showProfileUI(savedStudentName, savedPassword);
             }
         }
@@ -552,8 +533,6 @@
                 localStorage.setItem('gelvano_student_name', studentName);
                 overlay.classList.add('hidden');
                 setTimeout(() => { overlay.style.display = 'none'; }, 400);
-                studentNameDisplay.textContent = '👤 الطالب/ه : ' + studentName;
-                studentNameDisplay.style.display = 'block';
                 showProfileUI(studentName, password);
             }
         });
