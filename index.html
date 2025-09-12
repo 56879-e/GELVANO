@@ -9,6 +9,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
+        body {
+            padding-top: 55px; /* تحديد مسافة علوية ثابتة لتطابق ارتفاع الهيدر */
+        }
         .whatsapp-button {
             position: fixed;
             left: 20px;
@@ -239,7 +242,7 @@
             justify-content: center;
             align-items: center;
             position: relative;
-            height: 65px; /* تصغير ارتفاع الهيدر */
+            height: 55px; /* تقليل ارتفاع الهيدر */
         }
 
         /* تعديل ارتفاع الهيدر */
@@ -247,7 +250,7 @@
             padding: 0; /* إزالة المساحة العمودية الزائدة */
         }
         .logo {
-            max-width: 100px; /* تصغير حجم الشعار ليتناسب مع الهيدر */
+            max-width: 90px; /* تصغير حجم الشعار ليتناسب مع الهيدر الجديد */
             display: block; /* لإزالة أي مساحة سفلية إضافية للصورة */
         }
 
@@ -262,7 +265,7 @@
         }
 
         .profile-icon {
-            font-size: 2.2rem; /* تصغير أيقونة المستخدم */
+            font-size: 2rem; /* تصغير أيقونة المستخدم لتتناسب */
             color: #333;
             transition: color 0.3s;
         }
