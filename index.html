@@ -289,11 +289,20 @@
         .profile-info-item strong {
             color: #d5472f;
         }
+
+        /* Student Name Display in Header */
+        #studentNameDisplay {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #333;
+        }
     </style>
 </head>
 <body>
-    <!-- Student Name Display -->
-    <div id="studentNameDisplay" style="display:none; text-align:center; font-size:1.3rem; font-weight:bold; color:#d5472f; margin-top:0.5rem;"></div>
     <!-- Login Overlay -->
     <div class="login-overlay" id="loginOverlay">
         <form class="login-box" id="loginForm" autocomplete="off" onsubmit="return false;">
@@ -328,6 +337,7 @@
                 <img loading="lazy" src="assets/logo.png" alt="شعار الموقع" class="logo animate__animated animate__fadeIn">
             </a>
         </div>
+        <div id="studentNameDisplay" style="display:none;"></div>
     </header>
 
 
@@ -493,7 +503,7 @@
         const savedPassword = localStorage.getItem('gelvano_password');
         const savedStudentName = localStorage.getItem('gelvano_student_name');
         if (savedStudentName) {
-            studentNameDisplay.textContent = '👤 الدكتور/ة : ' + savedStudentName;
+            studentNameDisplay.textContent = '👤 الطالب/ه : ' + savedStudentName;
             studentNameDisplay.style.display = 'block';
         }
         if (savedPassword && savedStudentName && passwordsLoaded) {
@@ -503,7 +513,7 @@
                 allowedPasswords.map(p => p.trim().toUpperCase()).includes(savedPassword.toUpperCase().trim())) {
                 overlay.classList.add('hidden');
                 setTimeout(() => { overlay.style.display = 'none'; }, 400);
-                studentNameDisplay.textContent = '👤 الدكتور/ة : ' + savedStudentName;
+                studentNameDisplay.textContent = '👤 الطالب/ه : ' + savedStudentName;
                 studentNameDisplay.style.display = 'block';
                 showProfileUI(savedStudentName, savedPassword);
             }
@@ -542,7 +552,7 @@
                 localStorage.setItem('gelvano_student_name', studentName);
                 overlay.classList.add('hidden');
                 setTimeout(() => { overlay.style.display = 'none'; }, 400);
-                studentNameDisplay.textContent = '👤 الدكتور/ة : ' + studentName;
+                studentNameDisplay.textContent = '👤 الطالب/ه : ' + studentName;
                 studentNameDisplay.style.display = 'block';
                 showProfileUI(studentName, password);
             }
