@@ -481,6 +481,68 @@
             background: #c82333;
             transform: scale(1.05);
         }
+        /* Admin Login Overlay */
+        .admin-login-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #f8f9fa;
+            z-index: 20000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .admin-login-box {
+            background: white;
+            padding: 3rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            text-align: center;
+            width: 100%;
+            max-width: 400px;
+            border: 1px solid #e9ecef;
+        }
+        .admin-login-box h2 {
+            color: #2c3e50;
+            margin-bottom: 2rem;
+            font-size: 2rem;
+        }
+        .admin-login-box input {
+            width: 100%;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            border: 2px solid #bdc3c7;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            text-align: center;
+        }
+        .admin-login-box input:focus {
+            outline: none;
+            border-color: #2c3e50;
+        }
+        .admin-login-box button {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, #2c3e50, #34495e);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .admin-login-box button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(44, 62, 80, 0.3);
+        }
+        .admin-login-error {
+            color: #dc3545;
+            margin-top: 1rem;
+            min-height: 1.2em;
+            font-weight: 600;
+        }
         @media (max-width: 768px) {
             .notebook-sections {
                 grid-template-columns: 1fr;
@@ -509,7 +571,19 @@
     </style>
 </head>
 <body>
-    <div class="admin-container">
+    <!-- Admin Login Overlay -->
+    <div id="adminLoginOverlay" class="admin-login-overlay">
+        <div class="admin-login-box animate__animated animate__fadeInDown">
+            <h2><i class="fas fa-lock"></i> دخول الأدمن</h2>
+            <form id="adminLoginForm" onsubmit="return false;">
+                <input type="password" id="adminPasswordInput" placeholder="أدخل كلمة السر" required>
+                <button type="submit">دخول</button>
+                <div id="adminLoginError" class="admin-login-error"></div>
+            </form>
+        </div>
+    </div>
+
+    <div class="admin-container" style="display: none;">
         <!-- Admin Header -->
         <div class="admin-header animate__animated animate__fadeInDown">
             <h1><i class="fas fa-shield-alt"></i> لوحة الأدمن</h1>
@@ -761,6 +835,43 @@
         }
 
         document.addEventListener('DOMContentLoaded', function() {
+            // Admin Login Logic
+            const correctAdminPassword = '1072004';
+            const loginOverlay = document.getElementById('adminLoginOverlay');
+            const loginForm = document.getElementById('adminLoginForm');
+            const passwordInput = document.getElementById('adminPasswordInput');
+            const loginError = document.getElementById('adminLoginError');
+            const adminContainer = document.querySelector('.admin-container');
+
+            // Check session storage first
+            if (sessionStorage.getItem('admin_logged_in') === 'true') {
+                loginOverlay.style.display = 'none';
+                adminContainer.style.display = 'block';
+            } else {
+                passwordInput.focus();
+            }
+
+            loginForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                if (passwordInput.value === correctAdminPassword) {
+                    // Correct password
+                    sessionStorage.setItem('admin_logged_in', 'true');
+                    loginOverlay.style.display = 'none';
+                    adminContainer.style.display = 'block';
+                } else {
+                    // Incorrect password
+                    loginError.textContent = 'كلمة السر غير صحيحة';
+                    passwordInput.value = '';
+                    passwordInput.focus();
+                    // Shake animation for feedback
+                    const loginBox = document.querySelector('.admin-login-box');
+                    loginBox.classList.add('animate__shakeX');
+                    setTimeout(() => {
+                        loginBox.classList.remove('animate__shakeX');
+                    }, 1000);
+                }
+            });
+
             loadPasswords();
             loadCodes();
             loadNotebookRecords();
