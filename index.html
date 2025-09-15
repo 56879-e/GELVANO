@@ -315,22 +315,6 @@
         .profile-info-item strong {
             color: #d5472f;
         }
-
-        .logout-button {
-            width: 100%;
-            background: #e74c3c;
-            color: white;
-            border: none;
-            padding: 0.6rem;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: bold;
-            margin-top: 0.5rem;
-            transition: background 0.2s;
-        }
-        .logout-button:hover {
-            background: #c0392b;
-        }
     </style>
 </head>
 <body style="margin:0; padding:0;">
@@ -361,8 +345,6 @@
                 <div class="profile-info-item">
                     <strong>ID:</strong> <span id="profilePassword"></span>
                 </div>
-                <div style="border-top: 1px solid #eee; margin: 0.5rem 0;"></div>
-                <button id="logoutBtn" class="logout-button">تسجيل الخروج</button>
             </div>
         </div>
         <div class="logo-container">
@@ -476,19 +458,41 @@
 
     <script src="script.js"></script>
     <script>
-    // The server API base
-    const API_BASE = (location.hostname === 'localhost' || location.hostname === '127.0.0.1') ? 'http://localhost:7878/api' : '/api';
-
-    // عند تحميل الصفحة
-    document.addEventListener('DOMContentLoaded', async function() {
-        // 1. Get or create a unique device ID
-        let deviceId = localStorage.getItem('gelvano_deviceId');
-        if (!deviceId) {
-            deviceId = crypto.randomUUID();
-            localStorage.setItem('gelvano_deviceId', deviceId);
+    // حذف القائمة الثابتة allowedPasswords
+    // const allowedPasswords = [ ... ];
+    let allowedPasswords = [];
+    let passwordsLoaded = false;
+    // جلب كلمات السر المفعلة من السيرفر أو الملف مباشرة عند النشر كصفحة ثابتة
+    async function fetchAllowedPasswords() {
+        passwordsLoaded = false;
+        try {
+            // المحاولة الأولى: عبر API
+            const apiRes = await fetch('/api/passwords', { cache: 'no-store' });
+            if (apiRes.ok) {
+                allowedPasswords = await apiRes.json();
+            } else {
+                throw new Error('API not available');
+            }
+        } catch (_) {
+            try {
+                // السقوط إلى الملف الثابت passwords.json عند النشر على GitHub Pages
+                const fileRes = await fetch('passwords.json', { cache: 'no-store' });
+                if (!fileRes.ok) throw new Error('passwords.json not found');
+                allowedPasswords = await fileRes.json();
+            } catch (_) {
+                allowedPasswords = [];
+            }
+        } finally {
+            passwordsLoaded = true;
         }
+    }
 
+    // عند تحميل الصفحة، جلب كلمات السر أولاً
+    document.addEventListener('DOMContentLoaded', async function() {
         const loginBtn = document.getElementById('loginBtn');
+        loginBtn.disabled = true;
+        await fetchAllowedPasswords();
+        loginBtn.disabled = false;
         const overlay = document.getElementById('loginOverlay');
         const form = document.getElementById('loginForm');
         const studentNameInput = document.getElementById('studentName');
@@ -499,7 +503,6 @@
         const profileDropdown = document.getElementById('profileDropdown');
         const profileName = document.getElementById('profileName');
         const profilePassword = document.getElementById('profilePassword');
-        const logoutBtn = document.getElementById('logoutBtn');
 
         function showProfileUI(name, password) {
             if (profileContainer && profileName && profilePassword) {
@@ -509,84 +512,67 @@
             }
         }
 
-        // 2. Auto-login check
+        // Auto-fill password and student name if saved
         const savedPassword = localStorage.getItem('gelvano_password');
         const savedStudentName = localStorage.getItem('gelvano_student_name');
-
-        if (savedPassword && savedStudentName) {
-            // Verify session with the server
-            try {
-                const res = await fetch(`${API_BASE}/verify-session`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ password: savedPassword, deviceId })
-                });
-                const data = await res.json();
-                if (res.ok && data.valid) {
-                    // Session is valid, hide login and show profile
-                    overlay.classList.add('hidden');
-                    setTimeout(() => { overlay.style.display = 'none'; }, 400);
-                    showProfileUI(savedStudentName, savedPassword);
-                } else {
-                    // Session is invalid, clear local storage and stay on login
-                    localStorage.removeItem('gelvano_password');
-                    localStorage.removeItem('gelvano_student_name');
-                }
-            } catch (err) {
-                // Network error, maybe show a message
-                console.error("Failed to verify session", err);
-                errorDiv.textContent = 'لا يمكن التحقق من الجلسة، يرجى المحاولة مرة أخرى';
+        if (savedPassword && savedStudentName && passwordsLoaded) {
+            passwordInput.value = savedPassword;
+            studentNameInput.value = savedStudentName;
+            if (/^[FST][0-9]{4}$/.test(savedPassword) &&
+                allowedPasswords.map(p => p.trim().toUpperCase()).includes(savedPassword.toUpperCase().trim())) {
+                overlay.classList.add('hidden');
+                setTimeout(() => { overlay.style.display = 'none'; }, 400);
+                showProfileUI(savedStudentName, savedPassword);
             }
         }
 
-        // 3. Login form submission
-        form.addEventListener('submit', async function(e) {
-            e.preventDefault();
-            errorDiv.textContent = '';
+        function validateLogin() {
+            if (!passwordsLoaded) {
+                errorDiv.textContent = 'جاري تحميل كلمات السر...';
+                return false;
+            }
             const studentName = studentNameInput.value.trim();
-            const password = passwordInput.value.trim().toUpperCase();
-
-            // Client-side validation
+            const password = passwordInput.value.trim();
             if (!studentName) {
                 errorDiv.textContent = 'يرجى إدخال اسم الطالب بالعربية';
-                return;
+                return false;
             }
             if (!/^[FST][0-9]{4}$/.test(password)) {
                 errorDiv.textContent = 'كلمة المرور يجب أن تبدأ بحرف (F/S/T) ثم 4 أرقام';
-                return;
+                return false;
             }
+            if (!allowedPasswords.map(p => p.trim().toUpperCase()).includes(password.toUpperCase().trim())) {
+                errorDiv.textContent = 'كلمة المرور غير صحيحة أو غير مسجلة';
+                return false;
+            }
+            errorDiv.textContent = '';
+            return true;
+        }
 
-            loginBtn.disabled = true;
-            loginBtn.textContent = 'جاري الدخول...';
-
-            try {
-                const response = await fetch(`${API_BASE}/login`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ password, deviceId })
-                });
-
-                if (response.ok) {
-                    // Login successful
-                    localStorage.setItem('gelvano_password', password);
-                    localStorage.setItem('gelvano_student_name', studentName);
-                    overlay.classList.add('hidden');
-                    setTimeout(() => { overlay.style.display = 'none'; }, 400);
-                    showProfileUI(studentName, password);
-                } else {
-                    // Login failed
-                    const result = await response.json();
-                    errorDiv.textContent = result.error || 'حدث خطأ غير متوقع';
-                }
-            } catch (error) {
-                errorDiv.textContent = 'فشل الاتصال بالخادم. يرجى التحقق من اتصالك بالإنترنت.';
-            } finally {
-                loginBtn.disabled = false;
-                loginBtn.textContent = 'دخول';
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const studentName = studentNameInput.value.trim();
+            const password = passwordInput.value.trim();
+            if (validateLogin()) {
+                // Save password and student name to localStorage
+                localStorage.setItem('gelvano_password', password);
+                localStorage.setItem('gelvano_student_name', studentName);
+                overlay.classList.add('hidden');
+                setTimeout(() => { overlay.style.display = 'none'; }, 400);
+                showProfileUI(studentName, password);
             }
         });
 
-        // --- Existing profile dropdown logic ---
+        loginBtn.addEventListener('click', function() {
+            form.dispatchEvent(new Event('submit'));
+        });
+
+        form.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                form.dispatchEvent(new Event('submit'));
+            }
+        });
+
         if (profileIcon) {
             profileIcon.addEventListener('click', (e) => {
                 e.stopPropagation();
@@ -599,29 +585,6 @@
                 profileDropdown.classList.remove('show');
             }
         });
-
-        // 4. Logout button logic
-        if (logoutBtn) {
-            logoutBtn.addEventListener('click', async () => {
-                const passwordToLogout = localStorage.getItem('gelvano_password');
-                if (passwordToLogout && deviceId) {
-                    try {
-                        await fetch(`${API_BASE}/logout`, {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify({ password: passwordToLogout, deviceId })
-                        });
-                    } catch (err) {
-                        console.error("Logout request failed", err);
-                    }
-                }
-                
-                // Clear local data and reload
-                localStorage.removeItem('gelvano_password');
-                localStorage.removeItem('gelvano_student_name');
-                location.reload();
-            });
-        }
     });
     </script>
 </body>

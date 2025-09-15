@@ -14,7 +14,6 @@ app.use(express.static('.'));
 // مسارات الملفات
 const PASSWORDS_FILE = 'passwords.json';
 const CODES_FILE = 'codes.json';
-const SESSIONS_FILE = 'sessions.json';
 
 // التأكد من وجود الملفات
 function ensureFiles() {
@@ -23,9 +22,6 @@ function ensureFiles() {
     }
     if (!fs.existsSync(CODES_FILE)) {
         fs.writeFileSync(CODES_FILE, JSON.stringify([], null, 2));
-    }
-    if (!fs.existsSync(SESSIONS_FILE)) {
-        fs.writeFileSync(SESSIONS_FILE, JSON.stringify([], null, 2));
     }
 }
 
@@ -48,15 +44,6 @@ function readCodes() {
     }
 }
 
-function readSessions() {
-    try {
-        const data = fs.readFileSync(SESSIONS_FILE, 'utf8');
-        return JSON.parse(data);
-    } catch (error) {
-        return [];
-    }
-}
-
 // كتابة البيانات إلى الملفات
 function writePasswords(passwords) {
     fs.writeFileSync(PASSWORDS_FILE, JSON.stringify(passwords, null, 2));
@@ -64,10 +51,6 @@ function writePasswords(passwords) {
 
 function writeCodes(codes) {
     fs.writeFileSync(CODES_FILE, JSON.stringify(codes, null, 2));
-}
-
-function writeSessions(sessions) {
-    fs.writeFileSync(SESSIONS_FILE, JSON.stringify(sessions, null, 2));
 }
 
 // API Routes
@@ -263,89 +246,6 @@ app.delete('/api/codes/:id', (req, res) => {
         res.json({ message: 'تم حذف الكود بنجاح' });
     } catch (error) {
         res.status(500).json({ error: 'خطأ في الخادم' });
-    }
-});
-
-// تسجيل الدخول
-app.post('/api/login', (req, res) => {
-    try {
-        const { password, deviceId } = req.body;
-        if (!password || !deviceId) {
-            return res.status(400).json({ error: 'كلمة السر ومعرف الجهاز مطلوبان' });
-        }
-
-        ensureFiles();
-        const passwords = readPasswords();
-        const sessions = readSessions();
-
-        // التحقق من صحة كلمة السر
-        if (!passwords.map(p => p.trim().toUpperCase()).includes(password.toUpperCase().trim())) {
-            return res.status(401).json({ error: 'كلمة المرور غير صحيحة' });
-        }
-
-        const existingSession = sessions.find(s => s.password.toUpperCase() === password.toUpperCase());
-
-        if (existingSession) {
-            if (existingSession.deviceId === deviceId) {
-                // نفس الجهاز، تسجيل دخول ناجح
-                res.json({ message: 'تم تسجيل الدخول بنجاح' });
-            } else {
-                // جهاز مختلف، منع تسجيل الدخول
-                return res.status(409).json({ error: 'هذا الحساب مسجل بالفعل على جهاز آخر' });
-            }
-        } else {
-            // تسجيل دخول لأول مرة لهذا الحساب
-            sessions.push({ password, deviceId });
-            writeSessions(sessions);
-            res.json({ message: 'تم تسجيل الدخول بنجاح' });
-        }
-    } catch (error) {
-        res.status(500).json({ error: 'خطأ في الخادم' });
-    }
-});
-
-// تسجيل الخروج
-app.post('/api/logout', (req, res) => {
-    try {
-        const { password, deviceId } = req.body;
-        if (!password || !deviceId) {
-            return res.status(400).json({ error: 'كلمة السر ومعرف الجهاز مطلوبان' });
-        }
-
-        ensureFiles();
-        let sessions = readSessions();
-        
-        const initialLength = sessions.length;
-        sessions = sessions.filter(s => !(s.password.toUpperCase() === password.toUpperCase() && s.deviceId === deviceId));
-
-        if (sessions.length < initialLength) {
-            writeSessions(sessions);
-            res.json({ message: 'تم تسجيل الخروج بنجاح' });
-        } else {
-            // لم يتم العثور على جلسة مطابقة، ولكن لا يزال يعتبر نجاحًا من جانب العميل
-            res.json({ message: 'لم يتم العثور على جلسة نشطة لتسجيل الخروج' });
-        }
-    } catch (error) {
-        res.status(500).json({ error: 'خطأ في الخادم' });
-    }
-});
-
-// التحقق من الجلسة
-app.post('/api/verify-session', (req, res) => {
-    try {
-        const { password, deviceId } = req.body;
-        if (!password || !deviceId) {
-            return res.status(400).json({ valid: false, error: 'بيانات غير مكتملة' });
-        }
-
-        ensureFiles();
-        const sessions = readSessions();
-        
-        const isValid = sessions.some(s => s.password.toUpperCase() === password.toUpperCase() && s.deviceId === deviceId);
-        
-        res.json({ valid: isValid });
-    } catch (error) {
-        res.status(500).json({ valid: false, error: 'خطأ في الخادم' });
     }
 });
 
