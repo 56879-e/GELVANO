@@ -1,4 +1,4 @@
-Z// Access code popup and verification for all files and videos
+// Access code popup and verification for all files and videos
 // Each content (file/video) has a unique code
 // Codes are stored in the backend
 
@@ -422,7 +422,7 @@ setInterval(blockShareButtons, 2000);
 
 document.addEventListener('DOMContentLoaded', function() {
     // Attach to all file and video links on page load
-    const selectors = ['a.download-button[data-content-id]', 'a.play-button[data-content-id]'];
+    const selectors = ['a.download-button[data-content-id]', 'a.play-button[data-content-id]', 'a.lesson-bar[data-content-id]'];
     selectors.forEach(sel => {
         document.querySelectorAll(sel).forEach(link => {
             link.addEventListener('click', function(e) {
