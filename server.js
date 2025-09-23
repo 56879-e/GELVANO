@@ -14,6 +14,7 @@ app.use(express.static('.'));
 // مسارات الملفات
 const PASSWORDS_FILE = 'passwords.json';
 const CODES_FILE = 'codes.json';
+const NOTEBOOKS_FILE = 'notebooks.json';
 
 // التأكد من وجود الملفات
 function ensureFiles() {
@@ -23,6 +24,37 @@ function ensureFiles() {
     if (!fs.existsSync(CODES_FILE)) {
         fs.writeFileSync(CODES_FILE, JSON.stringify([], null, 2));
     }
+    if (!fs.existsSync(NOTEBOOKS_FILE)) {
+        const defaultNotebooks = {
+            first: { videos: [], files: [] },
+            second: { videos: [], files: [] },
+            third: { videos: [], files: [] }
+        };
+        fs.writeFileSync(NOTEBOOKS_FILE, JSON.stringify(defaultNotebooks, null, 2));
+    }
+}
+
+// قراءة وكتابة سجلات الدفاتر
+function readNotebooks() {
+    try {
+        const data = fs.readFileSync(NOTEBOOKS_FILE, 'utf8');
+        return JSON.parse(data);
+    } catch (error) {
+        return { first: { videos: [], files: [] }, second: { videos: [], files: [] }, third: { videos: [], files: [] } };
+    }
+}
+
+function writeNotebooks(notebooks) {
+    try {
+        // backup previous
+        if (fs.existsSync(NOTEBOOKS_FILE)) {
+            const prev = fs.readFileSync(NOTEBOOKS_FILE, 'utf8');
+            fs.writeFileSync('notebooks_backup.json', prev);
+        }
+    } catch (err) {
+        console.error('Backup error:', err && err.message);
+    }
+    fs.writeFileSync(NOTEBOOKS_FILE, JSON.stringify(notebooks, null, 2));
 }
 
 // قراءة البيانات من الملفات
@@ -113,6 +145,47 @@ app.get('/api/codes', (req, res) => {
     ensureFiles();
     const codes = readCodes();
     res.json(codes);
+});
+
+// جلب سجلات الدفاتر
+app.get('/api/notebooks', (req, res) => {
+    try {
+        ensureFiles();
+        const notebooks = readNotebooks();
+        res.json(notebooks);
+    } catch (err) {
+        res.status(500).json({ error: 'خطأ في جلب سجلات الدفاتر' });
+    }
+});
+
+// حفظ سجلات الدفاتر (استبدال كامل)
+app.post('/api/notebooks', (req, res) => {
+    try {
+        const notebooks = req.body;
+        if (!notebooks) {
+            return res.status(400).json({ error: 'البيانات مطلوبة' });
+        }
+        ensureFiles();
+        writeNotebooks(notebooks);
+        res.json({ message: 'تم حفظ سجلات الدفاتر بنجاح' });
+    } catch (err) {
+        res.status(500).json({ error: 'خطأ في حفظ سجلات الدفاتر' });
+    }
+});
+
+// استعادة النسخة الاحتياطية
+app.get('/api/notebooks/restore-backup', (req, res) => {
+    try {
+        if (!fs.existsSync('notebooks_backup.json')) {
+            return res.status(404).json({ error: 'لا توجد نسخة احتياطية' });
+        }
+        const data = fs.readFileSync('notebooks_backup.json', 'utf8');
+        const notebooks = JSON.parse(data);
+        writeNotebooks(notebooks);
+        res.json({ message: 'تمت استعادة النسخة الاحتياطية' });
+    } catch (err) {
+        res.status(500).json({ error: 'خطأ أثناء الاستعادة' });
+    }
 });
 
 // إضافة كود جديد

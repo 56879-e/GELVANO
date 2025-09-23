@@ -601,7 +601,7 @@
             </div>
             <div class="notebook-card" onclick="openNotebookModal('third')">
                 <i class="fas fa-book"></i>
-                <span>دفتر ثالثه>
+                <span>دفتر ثالث</span>
             </div>
         </div>
         <!-- Alert Container -->
@@ -657,6 +657,9 @@
                                 <!-- File records will be displayed here -->
                             </div>
                         </div>
+                    </div>
+                    <div style="text-align:center;margin-top:1rem;">
+                        <button class="btn btn-secondary" onclick="restoreNotebooksFromServer()">استعادة سجلات الدفاتر من الخادم</button>
                     </div>
                 </div>
             </div>
@@ -834,7 +837,7 @@
             }
         }
 
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', async function() {
             // Admin Login Logic
             const correctAdminPassword = '1072004';
             const loginOverlay = document.getElementById('adminLoginOverlay');
@@ -874,7 +877,7 @@
 
             loadPasswords();
             loadCodes();
-            loadNotebookRecords();
+            await loadNotebookRecords();
 
             // Setup event listeners to save dropdown selections
             const videoIdSelect = document.getElementById('videoIdSelect');
@@ -1509,15 +1512,69 @@
             document.getElementById('notebookFileCode').value = '';
         }
         
-        function loadNotebookRecords() {
+        async function loadNotebookRecords() {
+            // Try to fetch notebooks from server first
+            try {
+                const resp = await fetch('/api/notebooks');
+                if (resp.ok) {
+                    const data = await resp.json();
+                    if (data && (data.first || data.second || data.third)) {
+                        notebookRecords = data;
+                        // Mirror locally
+                        localStorage.setItem('notebookRecords', JSON.stringify(notebookRecords));
+                        return;
+                    }
+                }
+            } catch (err) {
+                console.warn('تعذر تحميل سجلات الدفاتر من الخادم');
+            }
+
+            // Fallback to localStorage
             const saved = localStorage.getItem('notebookRecords');
             if (saved) {
-                notebookRecords = JSON.parse(saved);
+                try {
+                    notebookRecords = JSON.parse(saved);
+                } catch (e) {
+                    console.warn('خطأ في قراءة سجلات الدفاتر من التخزين المحلي');
+                }
             }
         }
-        
-        function saveNotebookRecords() {
+
+        async function saveNotebookRecords() {
+            // Save locally
             localStorage.setItem('notebookRecords', JSON.stringify(notebookRecords));
+
+            // Try to persist to server (best-effort)
+            try {
+                const resp = await fetch('/api/notebooks', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(notebookRecords)
+                });
+                if (!resp.ok) {
+                    console.warn('تعذر حفظ سجلات الدفاتر على الخادم');
+                }
+            } catch (err) {
+                console.warn('تعذر الاتصال بالخادم لحفظ سجلات الدفاتر');
+            }
+        }
+
+        async function restoreNotebooksFromServer() {
+            if (!confirm('هل تريد استعادة سجلات الدفاتر من نسخة الخادم (سيستبدل المحتوى المحلي)؟')) return;
+            try {
+                const resp = await fetch('/api/notebooks');
+                if (resp.ok) {
+                    const data = await resp.json();
+                    notebookRecords = data;
+                    localStorage.setItem('notebookRecords', JSON.stringify(notebookRecords));
+                    displayNotebookRecords();
+                    showAlert('تم استعادة سجلات الدفاتر من الخادم', 'success');
+                } else {
+                    showAlert('تعذر استعادة البيانات من الخادم', 'danger');
+                }
+            } catch (err) {
+                showAlert('خطأ في الاتصال بالخادم', 'danger');
+            }
         }
         
         function displayNotebookRecords() {
