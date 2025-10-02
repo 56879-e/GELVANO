@@ -590,18 +590,48 @@
             <p>إدارة كلمات السر والأكواد - منصة جلفانو</p>
         </div>
         <!-- Notebooks -->
-        <div class="notebooks-section animate__animated animate__fadeInUp">
-            <div class="notebook-card" onclick="openNotebookModal('first')">
-                <i class="fas fa-book"></i>
-                <span>دفتر أولي</span>
+        <div class="notebooks-section animate__animated animate__fadeInUp" style="align-items: flex-start;">
+            <!-- دفاتر المراجعات -->
+            <div style="display: flex; flex-direction: column; gap: 1rem;">
+                <div style="display: flex; align-items: center; gap: 1rem;">
+                    <div class="notebook-card" onclick="openNotebookModal('first')">
+                        <i class="fas fa-book"></i>
+                        <span>دفتر أولي</span>
+                    </div>
+                </div>
+                <div style="display: flex; align-items: center; gap: 1rem;">
+                    <div class="notebook-card" onclick="openNotebookModal('second')">
+                        <i class="fas fa-book"></i>
+                        <span>دفتر ثاني</span>
+                    </div>
+                </div>
+                <div style="display: flex; align-items: center; gap: 1rem;">
+                    <div class="notebook-card" onclick="openNotebookModal('third')">
+                        <i class="fas fa-book"></i>
+                        <span>دفتر ثالث</span>
+                    </div>
+                </div>
             </div>
-            <div class="notebook-card" onclick="openNotebookModal('second')">
-                <i class="fas fa-book"></i>
-                <span>دفتر ثاني</span>
-            </div>
-            <div class="notebook-card" onclick="openNotebookModal('third')">
-                <i class="fas fa-book"></i>
-                <span>دفتر ثالث</span>
+            <!-- دفاتر باكيدج الحصص -->
+            <div style="display: flex; flex-direction: column; gap: 1rem; margin-right:2rem;">
+                <div style="display: flex; align-items: center; gap: 1rem;">
+                    <div class="notebook-card" onclick="openNotebookModal('fourth')">
+                        <i class="fas fa-book-open"></i>
+                        <span>دفتر أولي (باكيدج الحصص)</span>
+                    </div>
+                </div>
+                <div style="display: flex; align-items: center; gap: 1rem;">
+                    <div class="notebook-card" onclick="openNotebookModal('fifth')">
+                        <i class="fas fa-book-open"></i>
+                        <span>دفتر ثانيه (باكيدج الحصص)</span>
+                    </div>
+                </div>
+                <div style="display: flex; align-items: center; gap: 1rem;">
+                    <div class="notebook-card" onclick="openNotebookModal('sixth')">
+                        <i class="fas fa-book-open"></i>
+                        <span>دفتر تالته (باكيدج الحصص)</span>
+                    </div>
+                </div>
             </div>
         </div>
         <!-- Alert Container -->
@@ -817,7 +847,10 @@
                 files: []
             },
             second: { videos: [], files: [] },
-            third: { videos: [], files: [] }
+            third: { videos: [], files: [] },
+            fourth: { videos: [], files: [] },
+            fifth: { videos: [], files: [] },
+            sixth: { videos: [], files: [] }
         };
 
         // Function to set selected value to localStorage
@@ -1491,10 +1524,17 @@
         // Notebook Modal Functions
         function openNotebookModal(notebookType) {
             currentNotebook = notebookType;
+            // تأكد من وجود الدفتر في السجلات
+            if (!notebookRecords[currentNotebook]) {
+                notebookRecords[currentNotebook] = { videos: [], files: [] };
+            }
             const titles = {
                 'first': 'دفتر أولي',
                 'second': 'دفتر ثاني', 
-                'third': 'دفتر ثالثه'
+                'third': 'دفتر ثالثه',
+                'fourth': 'دفتر أولي',
+                'fifth': 'دفتر ثانيه',
+                'sixth': 'دفتر تالته'
             };
             document.getElementById('notebookModalTitle').textContent = titles[notebookType];
             document.getElementById('notebookModal').style.display = 'flex';
@@ -1510,6 +1550,7 @@
             document.getElementById('notebookVideoCode').value = '';
             document.getElementById('fileName').value = '';
             document.getElementById('notebookFileCode').value = '';
+            currentNotebook = '';
         }
         
         async function loadNotebookRecords() {
@@ -1518,7 +1559,7 @@
                 const resp = await fetch('/api/notebooks');
                 if (resp.ok) {
                     const data = await resp.json();
-                    if (data && (data.first || data.second || data.third)) {
+                    if (data && (data.first || data.second || data.third || data.fourth || data.fifth || data.sixth)) {
                         notebookRecords = data;
                         // Mirror locally
                         localStorage.setItem('notebookRecords', JSON.stringify(notebookRecords));
@@ -1538,6 +1579,10 @@
                     console.warn('خطأ في قراءة سجلات الدفاتر من التخزين المحلي');
                 }
             }
+            // إضافة الدفاتر الجديدة إذا لم تكن موجودة
+            if (!notebookRecords.fourth) notebookRecords.fourth = { videos: [], files: [] };
+            if (!notebookRecords.fifth) notebookRecords.fifth = { videos: [], files: [] };
+            if (!notebookRecords.sixth) notebookRecords.sixth = { videos: [], files: [] };
         }
 
         async function saveNotebookRecords() {
@@ -1580,7 +1625,7 @@
         function displayNotebookRecords() {
             const videoRecords = document.getElementById('videoRecords');
             const fileRecords = document.getElementById('fileRecords');
-            
+            if (!notebookRecords[currentNotebook]) return;
             // Display video records
             if (notebookRecords[currentNotebook].videos.length === 0) {
                 videoRecords.innerHTML = '<div style="text-align: center; color: #666; padding: 1rem;">لا توجد سجلات فيديو</div>';
@@ -1597,7 +1642,6 @@
                     </div>
                 `).join('');
             }
-            
             // Display file records
             if (notebookRecords[currentNotebook].files.length === 0) {
                 fileRecords.innerHTML = '<div style="text-align: center; color: #666; padding: 1rem;">لا توجد سجلات ملفات</div>';
