@@ -748,6 +748,9 @@
                             <select id="videoIdSelect" style="flex: 1; border: 3px solid #bdc3c7; border-radius: 8px; padding: 0.8rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
                                 <option value="">اختر معرف الفيديو</option>
                             </select>
+                            <button class="btn btn-danger" onclick="deleteVideoId()" title="حذف المعرف المحدد" style="margin: 0;">
+                                <i class="fas fa-trash"></i>
+                            </button>
                             <input type="text" id="newVideoId" placeholder="إضافة معرف جديد" style="flex: 1; border: 3px solid #bdc3c7; border-radius: 8px; padding: 0.8rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
                             <button class="btn" onclick="addVideoId()" style="margin: 0;">
                                 <i class="fas fa-plus"></i>
@@ -795,6 +798,9 @@
                             <select id="fileIdSelect" style="flex: 1; border: 3px solid #bdc3c7; border-radius: 8px; padding: 0.8rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
                                 <option value="">اختر معرف الملف</option>
                             </select>
+                            <button class="btn btn-danger" onclick="deleteFileId()" title="حذف المعرف المحدد" style="margin: 0;">
+                                <i class="fas fa-trash"></i>
+                            </button>
                             <input type="text" id="newFileId" placeholder="إضافة معرف جديد" style="flex: 1; border: 3px solid #bdc3c7; border-radius: 8px; padding: 0.8rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
                             <button class="btn" onclick="addFileId()" style="margin: 0;">
                                 <i class="fas fa-plus"></i>
@@ -976,17 +982,20 @@
         function loadVideoIds() {
             // Load from existing codes
             const codesVideoIds = [...new Set(codes.filter(code => code.videoId).map(code => code.videoId))];
-            
+
             // Load from localStorage
             const savedVideoIds = localStorage.getItem('savedVideoIds');
             const storedVideoIds = savedVideoIds ? JSON.parse(savedVideoIds) : [];
-            
-            // Combine and remove duplicates
-            videoIds = [...new Set([...codesVideoIds, ...storedVideoIds])];
-            
+
+            // Load blocked IDs that were removed by the user to prevent re-adding from server
+            const blocked = localStorage.getItem('blockedVideoIds') ? JSON.parse(localStorage.getItem('blockedVideoIds')) : [];
+
+            // Combine and remove duplicates, then filter out blocked IDs
+            videoIds = [...new Set([...codesVideoIds, ...storedVideoIds])].filter(id => !blocked.includes(String(id)));
+
             // Save back to localStorage to keep it updated
             localStorage.setItem('savedVideoIds', JSON.stringify(videoIds));
-            
+
             updateVideoIdSelect();
         }
         // Load file IDs from codes and localStorage
@@ -1172,11 +1181,17 @@
         function updateVideoIdSelect() {
             const select = document.getElementById('videoIdSelect');
             const selectedValue = localStorage.getItem('selectedVideoId');
-            select.innerHTML = '<option value="">اختر معرف الفيديو</option>';
-            videoIds.sort().forEach(id => {
-                // HTML-escape the id to avoid markup issues
-                const safe = String(id).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-                select.innerHTML += `<option value="${safe}">${safe}</option>`;
+            // Rebuild options using DOM to keep raw values intact (textContent will be escaped automatically)
+            select.innerHTML = '';
+            const emptyOpt = document.createElement('option');
+            emptyOpt.value = '';
+            emptyOpt.textContent = 'اختر معرف الفيديو';
+            select.appendChild(emptyOpt);
+            videoIds.slice().sort().forEach(id => {
+                const opt = document.createElement('option');
+                opt.value = String(id);
+                opt.textContent = String(id);
+                select.appendChild(opt);
             });
             // Set the selected value if it exists
             select.value = selectedValue || '';
@@ -1185,10 +1200,16 @@
         function updateFileIdSelect() {
             const select = document.getElementById('fileIdSelect');
             const selectedValue = localStorage.getItem('selectedFileId');
-            select.innerHTML = '<option value="">اختر معرف الملف</option>';
-            fileIds.sort().forEach(id => {
-                const safe = String(id).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-                select.innerHTML += `<option value="${safe}">${safe}</option>`;
+            select.innerHTML = '';
+            const emptyOpt = document.createElement('option');
+            emptyOpt.value = '';
+            emptyOpt.textContent = 'اختر معرف الملف';
+            select.appendChild(emptyOpt);
+            fileIds.slice().sort().forEach(id => {
+                const opt = document.createElement('option');
+                opt.value = String(id);
+                opt.textContent = String(id);
+                select.appendChild(opt);
             });
             // Set the selected value if it exists
             select.value = selectedValue || '';
@@ -1201,11 +1222,19 @@
                 return;
             }
             if (!videoIds.includes(newId)) {
+                // If this id was previously blocked, un-block it
+                const blocked = localStorage.getItem('blockedVideoIds') ? JSON.parse(localStorage.getItem('blockedVideoIds')) : [];
+                const idx = blocked.indexOf(newId);
+                if (idx !== -1) {
+                    blocked.splice(idx, 1);
+                    localStorage.setItem('blockedVideoIds', JSON.stringify(blocked));
+                }
+
                 videoIds.push(newId);
-                
+
                 // Save to localStorage for persistence
                 localStorage.setItem('savedVideoIds', JSON.stringify(videoIds));
-                
+
                 updateVideoIdSelect();
                 document.getElementById('videoIdSelect').value = newId;
                 document.getElementById('newVideoId').value = '';
@@ -1233,6 +1262,75 @@
                 showAlert('تم إضافة معرف الملف بنجاح', 'success');
             } else {
                 showAlert('معرف الملف موجود بالفعل', 'danger');
+            }
+        }
+
+        // Delete selected video ID (delete only the exact selected id)
+        function deleteVideoId() {
+            const select = document.getElementById('videoIdSelect');
+            const value = select.value;
+            if (!value) {
+                showAlert('يرجى اختيار معرف لحذفه', 'danger');
+                return;
+            }
+
+            // Find exact match
+            const idx = videoIds.findIndex(id => String(id) === String(value));
+            if (idx === -1) {
+                showAlert('المعرف غير موجود', 'danger');
+                return;
+            }
+
+            if (!confirm(`سيتم حذف المعرف: ${value}\nهل أنت متأكد؟`)) return;
+
+            // Remove only the exact id
+            videoIds.splice(idx, 1);
+
+            // Persist savedVideoIds
+            localStorage.setItem('savedVideoIds', JSON.stringify(videoIds));
+
+            // Add the exact removed id to blockedVideoIds so it won't be re-added from server
+            const blocked = localStorage.getItem('blockedVideoIds') ? JSON.parse(localStorage.getItem('blockedVideoIds')) : [];
+            const sVal = String(value);
+            if (!blocked.includes(sVal)) {
+                blocked.push(sVal);
+                localStorage.setItem('blockedVideoIds', JSON.stringify(blocked));
+            }
+
+            updateVideoIdSelect();
+            showAlert(`تم حذف المعرف ${value}`, 'success');
+
+            // Clear persisted selection if it was removed
+            const sel = localStorage.getItem('selectedVideoId');
+            if (sel && String(sel) === sVal) {
+                localStorage.removeItem('selectedVideoId');
+            }
+        }
+
+        // Delete selected file ID
+        function deleteFileId() {
+            const select = document.getElementById('fileIdSelect');
+            const value = select.value;
+            if (!value) {
+                showAlert('يرجى اختيار معرف لحذفه', 'danger');
+                return;
+            }
+            const base = value.split('-')[0];
+            const toRemove = fileIds.filter(id => {
+                const s = String(id);
+                return s === value || s === base || s.startsWith(base + '-') || s.match(new RegExp('^' + base + '\\d+$'));
+            });
+            if (toRemove.length === 0) {
+                showAlert('المعرف غير موجود', 'danger');
+                return;
+            }
+            if (!confirm(`سيتم حذف ${toRemove.length} معرفاً مطابقاً / شبيهاً: ${toRemove.join(', ')}\nهل أنت متأكد؟`)) return;
+            fileIds = fileIds.filter(id => !toRemove.includes(id));
+            localStorage.setItem('savedFileIds', JSON.stringify(fileIds));
+            updateFileIdSelect();
+            showAlert(`تم حذف ${toRemove.length} معرفاً`, 'success');
+            if (toRemove.includes(localStorage.getItem('selectedFileId'))) {
+                localStorage.removeItem('selectedFileId');
             }
         }
         // Generate video code (2 letters + 3 numbers)
