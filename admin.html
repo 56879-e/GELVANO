@@ -1174,7 +1174,9 @@
             const selectedValue = localStorage.getItem('selectedVideoId');
             select.innerHTML = '<option value="">اختر معرف الفيديو</option>';
             videoIds.sort().forEach(id => {
-                select.innerHTML += `<option value="${id}">${id}</option>`;
+                // HTML-escape the id to avoid markup issues
+                const safe = String(id).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+                select.innerHTML += `<option value="${safe}">${safe}</option>`;
             });
             // Set the selected value if it exists
             select.value = selectedValue || '';
@@ -1185,7 +1187,8 @@
             const selectedValue = localStorage.getItem('selectedFileId');
             select.innerHTML = '<option value="">اختر معرف الملف</option>';
             fileIds.sort().forEach(id => {
-                select.innerHTML += `<option value="${id}">${id}</option>`;
+                const safe = String(id).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+                select.innerHTML += `<option value="${safe}">${safe}</option>`;
             });
             // Set the selected value if it exists
             select.value = selectedValue || '';

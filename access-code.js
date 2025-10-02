@@ -231,13 +231,16 @@ async function handleVerify() {
     codeInput.disabled = true;
     try {
         const codes = await fetchCodesWithFallback();
-        const isVideo = /^[FST]\d+$/.test(currentContentId);
-        const isFile = /^F[FST]\d+$/.test(currentContentId) || /^FF\d+$/.test(currentContentId);
+        // Normalize the content id and allow IDs with an optional hyphen part (e.g. T8-1)
+        const contentId = String(currentContentId || '').trim();
+        const isVideo = /^[FST]\d+(?:-\d+)?$/i.test(contentId);
+        const isFile = /^F[FST]\d+(?:-\d+)?$/i.test(contentId) || /^FF\d+(?:-\d+)?$/i.test(contentId);
+
         let found = null;
         if (isVideo) {
-            found = codes.find(c => c.videoId === currentContentId && String(c.code).trim().toUpperCase() === code.toUpperCase());
+            found = codes.find(c => String(c.videoId || '').trim().toUpperCase() === contentId.toUpperCase() && String(c.code).trim().toUpperCase() === code.toUpperCase());
         } else if (isFile) {
-            found = codes.find(c => c.fileId === currentContentId && String(c.code).trim().toUpperCase() === code.toUpperCase());
+            found = codes.find(c => String(c.fileId || '').trim().toUpperCase() === contentId.toUpperCase() && String(c.code).trim().toUpperCase() === code.toUpperCase());
         }
         // التحقق من وجود الكود أولاً
         if (!found) {
