@@ -568,6 +568,36 @@
                 grid-template-columns: 1fr;
             }
         }
+            /* Improved multi-select styling */
+            #videoIdSelect, #fileIdSelect {
+                min-height: 48px;
+                max-height: 220px;
+                padding: 0.6rem 0.8rem;
+                background: linear-gradient(180deg,#ffffff,#f7fafc);
+                border: 2px solid #c4ccd3;
+                border-radius: 8px;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+                font-size: 0.98rem;
+                color: #2c3e50;
+                overflow-y: auto;
+            }
+            #videoIdSelect:focus, #fileIdSelect:focus {
+                border-color: #2c3e50;
+                box-shadow: 0 6px 20px rgba(44,62,80,0.12);
+                outline: none;
+            }
+            /* selected option appearance (browser support varies) */
+            #videoIdSelect option:checked, #fileIdSelect option:checked {
+                background: #2c3e50;
+                color: #ffffff;
+            }
+            .multi-select-hint {
+                font-size: 0.85rem;
+                color: #666;
+                margin-top: 0.35rem;
+                direction: rtl;
+                text-align: right;
+            }
     </style>
 </head>
 <body>
@@ -745,7 +775,7 @@
                     <div class="form-group">
                         <label for="videoIdSelect">معرف الفيديو:</label>
                         <div style="display: flex; gap: 0.5rem;">
-                            <select id="videoIdSelect" style="flex: 1; border: 3px solid #bdc3c7; border-radius: 8px; padding: 0.8rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                            <select id="videoIdSelect" multiple style="flex: 1; border: 3px solid #bdc3c7; border-radius: 8px; padding: 0.8rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
                                 <option value="">اختر معرف الفيديو</option>
                             </select>
                             <button class="btn btn-danger" onclick="deleteVideoId()" title="حذف المعرف المحدد" style="margin: 0;">
@@ -795,7 +825,7 @@
                     <div class="form-group">
                         <label for="fileIdSelect">معرف الملف:</label>
                         <div style="display: flex; gap: 0.5rem;">
-                            <select id="fileIdSelect" style="flex: 1; border: 3px solid #bdc3c7; border-radius: 8px; padding: 0.8rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                            <select id="fileIdSelect" multiple style="flex: 1; border: 3px solid #bdc3c7; border-radius: 8px; padding: 0.8rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
                                 <option value="">اختر معرف الملف</option>
                             </select>
                             <button class="btn btn-danger" onclick="deleteFileId()" title="حذف المعرف المحدد" style="margin: 0;">
@@ -859,9 +889,14 @@
             sixth: { videos: [], files: [] }
         };
 
-        // Function to set selected value to localStorage
+        // Function to set selected value(s) to localStorage
         function setSelectedValue(selectElement, key) {
-            localStorage.setItem(key, selectElement.value);
+            if (selectElement && selectElement.multiple) {
+                const values = Array.from(selectElement.selectedOptions).map(o => o.value);
+                localStorage.setItem(key, JSON.stringify(values));
+            } else if (selectElement) {
+                localStorage.setItem(key, selectElement.value);
+            }
         }
 
         // Function to get selected value from localStorage
@@ -1002,17 +1037,20 @@
         function loadFileIds() {
             // Load from existing codes
             const codesFileIds = [...new Set(codes.filter(code => code.fileId).map(code => code.fileId))];
-            
+
             // Load from localStorage
             const savedFileIds = localStorage.getItem('savedFileIds');
             const storedFileIds = savedFileIds ? JSON.parse(savedFileIds) : [];
-            
-            // Combine and remove duplicates
-            fileIds = [...new Set([...codesFileIds, ...storedFileIds])];
-            
+
+            // Load blocked IDs that were removed by the user to prevent re-adding from server
+            const blocked = localStorage.getItem('blockedFileIds') ? JSON.parse(localStorage.getItem('blockedFileIds')) : [];
+
+            // Combine and remove duplicates, then filter out blocked IDs
+            fileIds = [...new Set([...codesFileIds, ...storedFileIds])].filter(id => !blocked.includes(String(id)));
+
             // Save back to localStorage to keep it updated
             localStorage.setItem('savedFileIds', JSON.stringify(fileIds));
-            
+
             updateFileIdSelect();
         }
         // Display passwords in the list
@@ -1180,39 +1218,59 @@
         // Update video ID select dropdown
         function updateVideoIdSelect() {
             const select = document.getElementById('videoIdSelect');
-            const selectedValue = localStorage.getItem('selectedVideoId');
+            const selectedRaw = localStorage.getItem('selectedVideoId');
+            let selectedArray = [];
+            try {
+                if (selectedRaw) {
+                    const parsed = JSON.parse(selectedRaw);
+                    if (Array.isArray(parsed)) selectedArray = parsed.map(String);
+                    else selectedArray = [String(selectedRaw)];
+                }
+            } catch (e) {
+                if (selectedRaw) selectedArray = [String(selectedRaw)];
+            }
+
             // Rebuild options using DOM to keep raw values intact (textContent will be escaped automatically)
             select.innerHTML = '';
             const emptyOpt = document.createElement('option');
             emptyOpt.value = '';
-            emptyOpt.textContent = 'اختر معرف الفيديو';
+            emptyOpt.textContent = 'اختر معرف الفيديو (يمكن اختيار أكثر من واحد)';
             select.appendChild(emptyOpt);
             videoIds.slice().sort().forEach(id => {
                 const opt = document.createElement('option');
                 opt.value = String(id);
                 opt.textContent = String(id);
+                if (selectedArray.includes(String(id))) opt.selected = true;
                 select.appendChild(opt);
             });
-            // Set the selected value if it exists
-            select.value = selectedValue || '';
         }
         // Update file ID select dropdown
         function updateFileIdSelect() {
             const select = document.getElementById('fileIdSelect');
-            const selectedValue = localStorage.getItem('selectedFileId');
+            const selectedRaw = localStorage.getItem('selectedFileId');
+            let selectedArray = [];
+            try {
+                if (selectedRaw) {
+                    const parsed = JSON.parse(selectedRaw);
+                    if (Array.isArray(parsed)) selectedArray = parsed.map(String);
+                    else selectedArray = [String(selectedRaw)];
+                }
+            } catch (e) {
+                if (selectedRaw) selectedArray = [String(selectedRaw)];
+            }
+
             select.innerHTML = '';
             const emptyOpt = document.createElement('option');
             emptyOpt.value = '';
-            emptyOpt.textContent = 'اختر معرف الملف';
+            emptyOpt.textContent = 'اختر معرف الملف (يمكن اختيار أكثر من واحد)';
             select.appendChild(emptyOpt);
             fileIds.slice().sort().forEach(id => {
                 const opt = document.createElement('option');
                 opt.value = String(id);
                 opt.textContent = String(id);
+                if (selectedArray.includes(String(id))) opt.selected = true;
                 select.appendChild(opt);
             });
-            // Set the selected value if it exists
-            select.value = selectedValue || '';
         }
         // Add new video ID
         function addVideoId() {
@@ -1265,72 +1323,89 @@
             }
         }
 
-        // Delete selected video ID (delete only the exact selected id)
+        // Delete selected video ID(s) - removes/block exact selected ids
         function deleteVideoId() {
             const select = document.getElementById('videoIdSelect');
-            const value = select.value;
-            if (!value) {
+            if (!select) return;
+            const selected = Array.from(select.selectedOptions).map(o => o.value).filter(v => v);
+            if (selected.length === 0) {
                 showAlert('يرجى اختيار معرف لحذفه', 'danger');
                 return;
             }
 
-            // Find exact match
-            const idx = videoIds.findIndex(id => String(id) === String(value));
-            if (idx === -1) {
-                showAlert('المعرف غير موجود', 'danger');
-                return;
-            }
+            if (!confirm(`سيتم حذف ${selected.length} معرفاً: ${selected.join(', ')}\nهل أنت متأكد؟`)) return;
 
-            if (!confirm(`سيتم حذف المعرف: ${value}\nهل أنت متأكد؟`)) return;
-
-            // Remove only the exact id
-            videoIds.splice(idx, 1);
+            // Remove exact ids
+            const selSet = new Set(selected.map(String));
+            videoIds = videoIds.filter(id => !selSet.has(String(id)));
 
             // Persist savedVideoIds
             localStorage.setItem('savedVideoIds', JSON.stringify(videoIds));
 
-            // Add the exact removed id to blockedVideoIds so it won't be re-added from server
+            // Add removed ids to blockedVideoIds so they won't be re-added from server
             const blocked = localStorage.getItem('blockedVideoIds') ? JSON.parse(localStorage.getItem('blockedVideoIds')) : [];
-            const sVal = String(value);
-            if (!blocked.includes(sVal)) {
-                blocked.push(sVal);
-                localStorage.setItem('blockedVideoIds', JSON.stringify(blocked));
-            }
+            selected.map(String).forEach(r => { if (!blocked.includes(r)) blocked.push(r); });
+            localStorage.setItem('blockedVideoIds', JSON.stringify(blocked));
 
             updateVideoIdSelect();
-            showAlert(`تم حذف المعرف ${value}`, 'success');
+            showAlert(`تم حذف ${selected.length} معرفاً`, 'success');
 
-            // Clear persisted selection if it was removed
-            const sel = localStorage.getItem('selectedVideoId');
-            if (sel && String(sel) === sVal) {
-                localStorage.removeItem('selectedVideoId');
+            // Clear persisted selection if any of them were selected
+            const selStoredRaw = localStorage.getItem('selectedVideoId');
+            if (selStoredRaw) {
+                try {
+                    const parsed = JSON.parse(selStoredRaw);
+                    if (Array.isArray(parsed)) {
+                        const remaining = parsed.map(String).filter(p => !selSet.has(p));
+                        if (remaining.length) localStorage.setItem('selectedVideoId', JSON.stringify(remaining));
+                        else localStorage.removeItem('selectedVideoId');
+                    } else {
+                        if (selSet.has(String(parsed))) localStorage.removeItem('selectedVideoId');
+                    }
+                } catch (e) {
+                    if (selSet.has(String(selStoredRaw))) localStorage.removeItem('selectedVideoId');
+                }
             }
         }
 
-        // Delete selected file ID
+        // Delete selected file ID(s) - remove/block exact selected ids
         function deleteFileId() {
             const select = document.getElementById('fileIdSelect');
-            const value = select.value;
-            if (!value) {
+            if (!select) return;
+            const selected = Array.from(select.selectedOptions).map(o => o.value).filter(v => v);
+            if (selected.length === 0) {
                 showAlert('يرجى اختيار معرف لحذفه', 'danger');
                 return;
             }
-            const base = value.split('-')[0];
-            const toRemove = fileIds.filter(id => {
-                const s = String(id);
-                return s === value || s === base || s.startsWith(base + '-') || s.match(new RegExp('^' + base + '\\d+$'));
-            });
-            if (toRemove.length === 0) {
-                showAlert('المعرف غير موجود', 'danger');
-                return;
-            }
-            if (!confirm(`سيتم حذف ${toRemove.length} معرفاً مطابقاً / شبيهاً: ${toRemove.join(', ')}\nهل أنت متأكد؟`)) return;
-            fileIds = fileIds.filter(id => !toRemove.includes(id));
+            if (!confirm(`سيتم حذف ${selected.length} معرفاً: ${selected.join(', ')}\nهل أنت متأكد؟`)) return;
+
+            const selSet = new Set(selected.map(String));
+            fileIds = fileIds.filter(id => !selSet.has(String(id)));
             localStorage.setItem('savedFileIds', JSON.stringify(fileIds));
+
+            // Add to blockedFileIds
+            const blocked = localStorage.getItem('blockedFileIds') ? JSON.parse(localStorage.getItem('blockedFileIds')) : [];
+            selected.map(String).forEach(r => { if (!blocked.includes(r)) blocked.push(r); });
+            localStorage.setItem('blockedFileIds', JSON.stringify(blocked));
+
             updateFileIdSelect();
-            showAlert(`تم حذف ${toRemove.length} معرفاً`, 'success');
-            if (toRemove.includes(localStorage.getItem('selectedFileId'))) {
-                localStorage.removeItem('selectedFileId');
+            showAlert(`تم حذف ${selected.length} معرفاً`, 'success');
+
+            // Adjust persisted selectedFileId
+            const selStoredRaw = localStorage.getItem('selectedFileId');
+            if (selStoredRaw) {
+                try {
+                    const parsed = JSON.parse(selStoredRaw);
+                    if (Array.isArray(parsed)) {
+                        const remaining = parsed.map(String).filter(p => !selSet.has(p));
+                        if (remaining.length) localStorage.setItem('selectedFileId', JSON.stringify(remaining));
+                        else localStorage.removeItem('selectedFileId');
+                    } else {
+                        if (selSet.has(String(parsed))) localStorage.removeItem('selectedFileId');
+                    }
+                } catch (e) {
+                    if (selSet.has(String(selStoredRaw))) localStorage.removeItem('selectedFileId');
+                }
             }
         }
         // Generate video code (2 letters + 3 numbers)
@@ -1404,15 +1479,16 @@
         // Add new video code
         async function addVideoCode() {
             const password = document.getElementById('videoCodePassword').value.trim();
-            const videoId = document.getElementById('videoIdSelect').value;
+            const videoSelect = document.getElementById('videoIdSelect');
+            const selectedVideoIds = videoSelect ? Array.from(videoSelect.selectedOptions).map(o => o.value).filter(v => v) : [];
             const code = document.getElementById('videoCode').value.trim();
             const maxUses = parseInt(document.getElementById('videoMaxUses').value);
             if (!password) {
                 showAlert('يرجى إدخال كلمة سر', 'danger');
                 return;
             }
-            if (!videoId) {
-                showAlert('يرجى اختيار معرف الفيديو', 'danger');
+            if (selectedVideoIds.length === 0) {
+                showAlert('يرجى اختيار معرف فيديو واحد على الأقل', 'danger');
                 return;
             }
             if (!code) {
@@ -1420,30 +1496,35 @@
                 return;
             }
             try {
-                const response = await fetch('/api/codes', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        password,
-                        videoId,
-                        fileId: '',
-                        code,
-                        maxUses
-                    })
-                });
-                const result = await response.json();
-                if (response.ok) {
-                    showAlert(result.message, 'success');
+                // If multiple video IDs selected, send one request per id
+                const results = [];
+                for (const vid of selectedVideoIds) {
+                    const response = await fetch('/api/codes', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ password, videoId: vid, fileId: '', code, maxUses })
+                    });
+                    const result = await response.json().catch(() => ({ error: 'خطأ في قراءة الاستجابة' }));
+                    results.push({ ok: response.ok, result });
+                }
+
+                // Aggregate response messages
+                const successCount = results.filter(r => r.ok).length;
+                if (successCount > 0) {
+                    showAlert(`تم إضافة ${successCount} كود${successCount > 1 ? 'ات' : ''} بنجاح`, 'success');
                     // Clear form
                     document.getElementById('videoCodePassword').value = '';
-                    document.getElementById('videoIdSelect').value = '';
+                    // clear selected options
+                    if (videoSelect && videoSelect.multiple) {
+                        Array.from(videoSelect.options).forEach(o => o.selected = false);
+                    } else if (videoSelect) {
+                        videoSelect.value = '';
+                    }
                     document.getElementById('videoCode').value = '';
                     document.getElementById('videoMaxUses').value = '2';
                     loadCodes();
                 } else {
-                    showAlert(result.error, 'danger');
+                    showAlert(results[0] && results[0].result && results[0].result.error ? results[0].result.error : 'فشل إضافة الأكواد', 'danger');
                 }
             } catch (error) {
                 showAlert('خطأ في الاتصال بالخادم', 'danger');
@@ -1452,15 +1533,16 @@
         // Add new file code
         async function addFileCode() {
             const password = document.getElementById('fileCodePassword').value.trim();
-            const fileId = document.getElementById('fileIdSelect').value;
+            const fileSelect = document.getElementById('fileIdSelect');
+            const selectedFileIds = fileSelect ? Array.from(fileSelect.selectedOptions).map(o => o.value).filter(v => v) : [];
             const code = document.getElementById('fileCode').value.trim();
             const maxUses = parseInt(document.getElementById('fileMaxUses').value);
             if (!password) {
                 showAlert('يرجى إدخال كلمة سر', 'danger');
                 return;
             }
-            if (!fileId) {
-                showAlert('يرجى اختيار معرف الملف', 'danger');
+            if (selectedFileIds.length === 0) {
+                showAlert('يرجى اختيار معرف ملف واحد على الأقل', 'danger');
                 return;
             }
             if (!code) {
@@ -1468,30 +1550,31 @@
                 return;
             }
             try {
-                const response = await fetch('/api/codes', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        password,
-                        videoId: '',
-                        fileId,
-                        code,
-                        maxUses
-                    })
-                });
-                const result = await response.json();
-                if (response.ok) {
-                    showAlert(result.message, 'success');
+                const results = [];
+                for (const fid of selectedFileIds) {
+                    const response = await fetch('/api/codes', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ password, videoId: '', fileId: fid, code, maxUses })
+                    });
+                    const result = await response.json().catch(() => ({ error: 'خطأ في قراءة الاستجابة' }));
+                    results.push({ ok: response.ok, result });
+                }
+                const successCount = results.filter(r => r.ok).length;
+                if (successCount > 0) {
+                    showAlert(`تم إضافة ${successCount} كود${successCount > 1 ? 'ات' : ''} بنجاح`, 'success');
                     // Clear form
                     document.getElementById('fileCodePassword').value = '';
-                    document.getElementById('fileIdSelect').value = '';
+                    if (fileSelect && fileSelect.multiple) {
+                        Array.from(fileSelect.options).forEach(o => o.selected = false);
+                    } else if (fileSelect) {
+                        fileSelect.value = '';
+                    }
                     document.getElementById('fileCode').value = '';
                     document.getElementById('fileMaxUses').value = '2';
                     loadCodes();
                 } else {
-                    showAlert(result.error, 'danger');
+                    showAlert(results[0] && results[0].result && results[0].result.error ? results[0].result.error : 'فشل إضافة الأكواد', 'danger');
                 }
             } catch (error) {
                 showAlert('خطأ في الاتصال بالخادم', 'danger');
