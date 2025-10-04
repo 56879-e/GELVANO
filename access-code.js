@@ -232,15 +232,20 @@ async function handleVerify() {
     try {
         const codes = await fetchCodesWithFallback();
         // Normalize the content id and allow IDs with an optional hyphen part (e.g. T8-1)
+        // Also treat hyphenated and non-hyphenated IDs as equivalent (T8-1 === T801)
         const contentId = String(currentContentId || '').trim();
         const isVideo = /^[FST]\d+(?:-\d+)?$/i.test(contentId);
         const isFile = /^F[FST]\d+(?:-\d+)?$/i.test(contentId) || /^FF\d+(?:-\d+)?$/i.test(contentId);
 
+        // helper: normalize id by removing hyphens, trimming and uppercasing
+        const normalizeId = (s) => String(s || '').trim().toUpperCase().replace(/-/g, '');
+        const normalizedContentId = normalizeId(contentId);
+
         let found = null;
         if (isVideo) {
-            found = codes.find(c => String(c.videoId || '').trim().toUpperCase() === contentId.toUpperCase() && String(c.code).trim().toUpperCase() === code.toUpperCase());
+            found = codes.find(c => normalizeId(c.videoId) === normalizedContentId && String(c.code).trim().toUpperCase() === code.toUpperCase());
         } else if (isFile) {
-            found = codes.find(c => String(c.fileId || '').trim().toUpperCase() === contentId.toUpperCase() && String(c.code).trim().toUpperCase() === code.toUpperCase());
+            found = codes.find(c => normalizeId(c.fileId) === normalizedContentId && String(c.code).trim().toUpperCase() === code.toUpperCase());
         }
         // التحقق من وجود الكود أولاً
         if (!found) {
