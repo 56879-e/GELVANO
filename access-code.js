@@ -223,7 +223,8 @@ function showPdfModal(url) {
 }
 
 async function handleVerify() {
-    const code = codeInput.value.trim();
+    // Normalize user input: remove all whitespace inside the code and trim
+    const code = (codeInput.value || '').replace(/\s+/g, '').trim();
     attempts++;
     const originalText = verifyButton.textContent;
     verifyButton.textContent = 'جاري التحقق...';
@@ -249,6 +250,14 @@ async function handleVerify() {
         }
         // التحقق من وجود الكود أولاً
         if (!found) {
+            // Debug info for developer (will appear in the browser console)
+            console.debug('Access code lookup failed', {
+                contentId: contentId,
+                normalizedContentId: normalizedContentId,
+                inputCode: code,
+                normalizedInputCode: code.toUpperCase()
+            });
+
             errorMessage.textContent = isVideo ? 'كود غير صحيح لهذا الفيديو' : 'كود غير صحيح لهذا الملف';
             errorMessage.style.display = 'block';
             if (attempts >= MAX_ATTEMPTS) {
