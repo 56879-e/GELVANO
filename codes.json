@@ -7,7 +7,6 @@
     "code": "CR111",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-08-28T23:55:35.843Z",
     "updatedAt": "2025-09-07T00:03:00.238Z"
   },
@@ -19,8 +18,7 @@
     "code": "EC497",
     "used": false,
     "createdAt": "2025-08-30T10:58:57.406Z",
-    "useCount": 0,
-    "maxUses": 2
+    "useCount": 0
   },
   {
     "id": "1756551956559",
@@ -30,8 +28,7 @@
     "code": "CF751",
     "used": false,
     "createdAt": "2025-08-30T11:05:56.559Z",
-    "useCount": 0,
-    "maxUses": 2
+    "useCount": 0
   },
   {
     "id": "1756552213038",
@@ -41,8 +38,7 @@
     "code": "GR149",
     "used": false,
     "createdAt": "2025-08-30T11:10:13.038Z",
-    "useCount": 0,
-    "maxUses": 2
+    "useCount": 0
   },
   {
     "id": "1756552433237",
@@ -52,8 +48,7 @@
     "code": "GD958",
     "used": false,
     "createdAt": "2025-08-30T11:13:53.237Z",
-    "useCount": 0,
-    "maxUses": 2
+    "useCount": 0
   },
   {
     "id": "1756552617055",
@@ -63,8 +58,7 @@
     "code": "PN584",
     "used": false,
     "createdAt": "2025-08-30T11:16:57.055Z",
-    "useCount": 0,
-    "maxUses": 2
+    "useCount": 0
   },
   {
     "id": "1756553650632",
@@ -74,8 +68,7 @@
     "code": "CH495",
     "used": false,
     "createdAt": "2025-08-30T11:34:10.632Z",
-    "useCount": 0,
-    "maxUses": 2
+    "useCount": 0
   },
   {
     "id": "1756553859468",
@@ -85,8 +78,7 @@
     "code": "MF632",
     "used": false,
     "createdAt": "2025-08-30T11:37:39.468Z",
-    "useCount": 0,
-    "maxUses": 2
+    "useCount": 0
   },
   {
     "id": "1756554205340",
@@ -96,8 +88,7 @@
     "code": "DZ424",
     "used": false,
     "createdAt": "2025-08-30T11:43:25.340Z",
-    "useCount": 0,
-    "maxUses": 2
+    "useCount": 0
   },
   {
     "id": "1756554640782",
@@ -107,8 +98,7 @@
     "code": "MK374",
     "used": false,
     "createdAt": "2025-08-30T11:50:40.782Z",
-    "useCount": 0,
-    "maxUses": 2
+    "useCount": 0
   },
   {
     "id": "1756554829774",
@@ -118,8 +108,7 @@
     "code": "AE616",
     "used": false,
     "createdAt": "2025-08-30T11:53:49.774Z",
-    "useCount": 0,
-    "maxUses": 2
+    "useCount": 0
   },
   {
     "id": "1756612442733",
@@ -129,8 +118,7 @@
     "code": "TB227",
     "used": false,
     "createdAt": "2025-08-31T03:54:02.735Z",
-    "useCount": 0,
-    "maxUses": 2
+    "useCount": 0
   },
   {
     "id": "1756612861063",
@@ -140,8 +128,7 @@
     "code": "UV156",
     "used": false,
     "createdAt": "2025-08-31T04:01:01.063Z",
-    "useCount": 0,
-    "maxUses": 2
+    "useCount": 0
   },
   {
     "id": "1756612966352",
@@ -151,8 +138,7 @@
     "code": "GG458",
     "used": false,
     "createdAt": "2025-08-31T04:02:46.352Z",
-    "useCount": 0,
-    "maxUses": 2
+    "useCount": 0
   },
   {
     "id": "1756613337022",
@@ -162,8 +148,7 @@
     "code": "WR147",
     "used": false,
     "createdAt": "2025-08-31T04:08:57.022Z",
-    "useCount": 0,
-    "maxUses": 2
+    "useCount": 0
   },
   {
     "id": "1756613481832",
@@ -173,8 +158,7 @@
     "code": "JZ434",
     "used": false,
     "createdAt": "2025-08-31T04:11:21.832Z",
-    "useCount": 0,
-    "maxUses": 2
+    "useCount": 0
   },
   {
     "id": "1756613749665",
@@ -184,8 +168,7 @@
     "code": "FU454",
     "used": false,
     "createdAt": "2025-08-31T04:15:49.665Z",
-    "useCount": 0,
-    "maxUses": 2
+    "useCount": 0
   },
   {
     "id": "1756615524456",
@@ -195,8 +178,7 @@
     "code": "WG188",
     "used": false,
     "createdAt": "2025-08-31T04:45:24.456Z",
-    "useCount": 0,
-    "maxUses": 2
+    "useCount": 0
   },
   {
     "id": "1756616320895",
@@ -206,8 +188,7 @@
     "code": "HZ020",
     "used": false,
     "createdAt": "2025-08-31T04:58:40.895Z",
-    "useCount": 0,
-    "maxUses": 2
+    "useCount": 0
   },
   {
     "id": "1756616631600",
@@ -217,8 +198,7 @@
     "code": "QN810",
     "used": false,
     "createdAt": "2025-08-31T05:03:51.600Z",
-    "useCount": 0,
-    "maxUses": 2
+    "useCount": 0
   },
   {
     "id": "1756621793918",
@@ -228,8 +208,7 @@
     "code": "ZN067",
     "used": false,
     "createdAt": "2025-08-31T06:29:53.918Z",
-    "useCount": 0,
-    "maxUses": 2
+    "useCount": 0
   },
   {
     "id": "1756623348736",
@@ -239,8 +218,7 @@
     "code": "UU461",
     "used": false,
     "createdAt": "2025-08-31T06:55:48.736Z",
-    "useCount": 0,
-    "maxUses": 2
+    "useCount": 0
   },
   {
     "id": "1756623547981",
@@ -250,8 +228,7 @@
     "code": "SD124",
     "used": false,
     "createdAt": "2025-08-31T06:59:07.981Z",
-    "useCount": 0,
-    "maxUses": 2
+    "useCount": 0
   },
   {
     "id": "1756624248425",
@@ -261,8 +238,7 @@
     "code": "OR893",
     "used": false,
     "createdAt": "2025-08-31T07:10:48.426Z",
-    "useCount": 0,
-    "maxUses": 2
+    "useCount": 0
   },
   {
     "id": "1756624815262",
@@ -272,8 +248,7 @@
     "code": "WZ872",
     "used": false,
     "createdAt": "2025-08-31T07:20:15.262Z",
-    "useCount": 0,
-    "maxUses": 2
+    "useCount": 0
   },
   {
     "id": "1756624870650",
@@ -283,8 +258,7 @@
     "code": "YP307",
     "used": false,
     "createdAt": "2025-08-31T07:21:10.650Z",
-    "useCount": 0,
-    "maxUses": 2
+    "useCount": 0
   },
   {
     "id": "1756624988902",
@@ -294,8 +268,7 @@
     "code": "AA129",
     "used": false,
     "createdAt": "2025-08-31T07:23:08.903Z",
-    "useCount": 0,
-    "maxUses": 2
+    "useCount": 0
   },
   {
     "id": "1756660106842",
@@ -305,8 +278,7 @@
     "code": "EP255",
     "used": false,
     "createdAt": "2025-08-31T17:08:26.846Z",
-    "useCount": 0,
-    "maxUses": 2
+    "useCount": 0
   },
   {
     "id": "1756660298497",
@@ -316,8 +288,7 @@
     "code": "VR200",
     "used": false,
     "createdAt": "2025-08-31T17:11:38.497Z",
-    "useCount": 0,
-    "maxUses": 2
+    "useCount": 0
   },
   {
     "id": "1756660347096",
@@ -327,8 +298,7 @@
     "code": "VO345",
     "used": false,
     "createdAt": "2025-08-31T17:12:27.096Z",
-    "useCount": 0,
-    "maxUses": 2
+    "useCount": 0
   },
   {
     "id": "1756671243074",
@@ -338,8 +308,7 @@
     "code": "KA660",
     "used": false,
     "createdAt": "2025-08-31T20:14:03.074Z",
-    "useCount": 0,
-    "maxUses": 2
+    "useCount": 0
   },
   {
     "id": "1756673771810",
@@ -349,8 +318,7 @@
     "code": "NF066",
     "used": false,
     "createdAt": "2025-08-31T20:56:11.812Z",
-    "useCount": 0,
-    "maxUses": 2
+    "useCount": 0
   },
   {
     "id": "1756785315070",
@@ -360,8 +328,7 @@
     "code": "NF066",
     "used": false,
     "createdAt": "2025-09-02T03:55:15.072Z",
-    "useCount": 0,
-    "maxUses": 2
+    "useCount": 0
   },
   {
     "id": "1756785413474",
@@ -371,8 +338,7 @@
     "code": "NF066",
     "used": false,
     "createdAt": "2025-09-02T03:56:53.474Z",
-    "useCount": 0,
-    "maxUses": 2
+    "useCount": 0
   },
   {
     "id": "1756789983276",
@@ -382,8 +348,7 @@
     "code": "FQ803",
     "used": false,
     "createdAt": "2025-09-02T05:13:03.276Z",
-    "useCount": 0,
-    "maxUses": 2
+    "useCount": 0
   },
   {
     "id": "1756790349594",
@@ -393,8 +358,7 @@
     "code": "OU734",
     "used": false,
     "createdAt": "2025-09-02T05:19:09.594Z",
-    "useCount": 0,
-    "maxUses": 2
+    "useCount": 0
   },
   {
     "id": "1756793927219",
@@ -404,8 +368,7 @@
     "code": "WR387",
     "used": false,
     "createdAt": "2025-09-02T06:18:47.219Z",
-    "useCount": 0,
-    "maxUses": 2
+    "useCount": 0
   },
   {
     "id": "1756794078065",
@@ -415,8 +378,7 @@
     "code": "DF702",
     "used": false,
     "createdAt": "2025-09-02T06:21:18.065Z",
-    "useCount": 0,
-    "maxUses": 2
+    "useCount": 0
   },
   {
     "id": "1756794570973",
@@ -426,8 +388,7 @@
     "code": "FT124",
     "used": false,
     "createdAt": "2025-09-02T06:29:30.973Z",
-    "useCount": 0,
-    "maxUses": 2
+    "useCount": 0
   },
   {
     "id": "1756795145627",
@@ -437,8 +398,7 @@
     "code": "GQ036",
     "used": false,
     "createdAt": "2025-09-02T06:39:05.627Z",
-    "useCount": 0,
-    "maxUses": 2
+    "useCount": 0
   },
   {
     "id": "1756795395574",
@@ -448,8 +408,7 @@
     "code": "KL064",
     "used": false,
     "createdAt": "2025-09-02T06:43:15.574Z",
-    "useCount": 0,
-    "maxUses": 2
+    "useCount": 0
   },
   {
     "id": "1756795809728",
@@ -459,8 +418,7 @@
     "code": "XJ244",
     "used": false,
     "createdAt": "2025-09-02T06:50:09.728Z",
-    "useCount": 0,
-    "maxUses": 2
+    "useCount": 0
   },
   {
     "id": "1756795921888",
@@ -470,8 +428,7 @@
     "code": "AW979",
     "used": false,
     "createdAt": "2025-09-02T06:52:01.888Z",
-    "useCount": 0,
-    "maxUses": 2
+    "useCount": 0
   },
   {
     "id": "1756796088730",
@@ -481,8 +438,7 @@
     "code": "EL244",
     "used": false,
     "createdAt": "2025-09-02T06:54:48.730Z",
-    "useCount": 0,
-    "maxUses": 2
+    "useCount": 0
   },
   {
     "id": "1756797451225",
@@ -492,8 +448,7 @@
     "code": "YR454",
     "used": false,
     "createdAt": "2025-09-02T07:17:31.225Z",
-    "useCount": 0,
-    "maxUses": 2
+    "useCount": 0
   },
   {
     "id": "1756797588138",
@@ -503,8 +458,7 @@
     "code": "CL162",
     "used": false,
     "createdAt": "2025-09-02T07:19:48.138Z",
-    "useCount": 0,
-    "maxUses": 2
+    "useCount": 0
   },
   {
     "id": "1756798683247",
@@ -514,8 +468,7 @@
     "code": "EF832",
     "used": false,
     "createdAt": "2025-09-02T07:38:03.247Z",
-    "useCount": 0,
-    "maxUses": 2
+    "useCount": 0
   },
   {
     "id": "1756799907717",
@@ -525,8 +478,7 @@
     "code": "XW797",
     "used": false,
     "createdAt": "2025-09-02T07:58:27.717Z",
-    "useCount": 0,
-    "maxUses": 2
+    "useCount": 0
   },
   {
     "id": "1756800078753",
@@ -536,8 +488,7 @@
     "code": "NB226",
     "used": false,
     "createdAt": "2025-09-02T08:01:18.753Z",
-    "useCount": 0,
-    "maxUses": 2
+    "useCount": 0
   },
   {
     "id": "1756800238266",
@@ -547,8 +498,7 @@
     "code": "CW369",
     "used": false,
     "createdAt": "2025-09-02T08:03:58.266Z",
-    "useCount": 0,
-    "maxUses": 2
+    "useCount": 0
   },
   {
     "id": "1756800409914",
@@ -558,8 +508,7 @@
     "code": "YP048",
     "used": false,
     "createdAt": "2025-09-02T08:06:49.914Z",
-    "useCount": 0,
-    "maxUses": 2
+    "useCount": 0
   },
   {
     "id": "1756800520658",
@@ -569,8 +518,7 @@
     "code": "KC398",
     "used": false,
     "createdAt": "2025-09-02T08:08:40.658Z",
-    "useCount": 0,
-    "maxUses": 2
+    "useCount": 0
   },
   {
     "id": "1756801402313",
@@ -580,8 +528,7 @@
     "code": "YX440",
     "used": false,
     "createdAt": "2025-09-02T08:23:22.313Z",
-    "useCount": 0,
-    "maxUses": 2
+    "useCount": 0
   },
   {
     "id": "1756801693390",
@@ -591,8 +538,7 @@
     "code": "MC193",
     "used": false,
     "createdAt": "2025-09-02T08:28:13.390Z",
-    "useCount": 0,
-    "maxUses": 2
+    "useCount": 0
   },
   {
     "id": "1756801821727",
@@ -602,8 +548,7 @@
     "code": "HT829",
     "used": false,
     "createdAt": "2025-09-02T08:30:21.727Z",
-    "useCount": 0,
-    "maxUses": 2
+    "useCount": 0
   },
   {
     "id": "1756801927484",
@@ -613,8 +558,7 @@
     "code": "TN800",
     "used": false,
     "createdAt": "2025-09-02T08:32:07.484Z",
-    "useCount": 0,
-    "maxUses": 2
+    "useCount": 0
   },
   {
     "id": "1756802067059",
@@ -624,8 +568,7 @@
     "code": "ZV275",
     "used": false,
     "createdAt": "2025-09-02T08:34:27.059Z",
-    "useCount": 0,
-    "maxUses": 2
+    "useCount": 0
   },
   {
     "id": "1756802949939",
@@ -635,8 +578,7 @@
     "code": "JQ614",
     "used": false,
     "createdAt": "2025-09-02T08:49:09.939Z",
-    "useCount": 0,
-    "maxUses": 2
+    "useCount": 0
   },
   {
     "id": "1756802974230",
@@ -646,8 +588,7 @@
     "code": "YN896",
     "used": false,
     "createdAt": "2025-09-02T08:49:34.230Z",
-    "useCount": 0,
-    "maxUses": 2
+    "useCount": 0
   },
   {
     "id": "1756840639530",
@@ -657,8 +598,7 @@
     "code": "MF635",
     "used": false,
     "createdAt": "2025-09-02T19:17:19.530Z",
-    "useCount": 0,
-    "maxUses": 2
+    "useCount": 0
   },
   {
     "id": "1756842665800",
@@ -668,8 +608,7 @@
     "code": "GW109",
     "used": false,
     "createdAt": "2025-09-02T19:51:05.801Z",
-    "useCount": 0,
-    "maxUses": 2
+    "useCount": 0
   },
   {
     "id": "1756842782509",
@@ -679,8 +618,7 @@
     "code": "HU280",
     "used": false,
     "createdAt": "2025-09-02T19:53:02.509Z",
-    "useCount": 0,
-    "maxUses": 2
+    "useCount": 0
   },
   {
     "id": "1756845080316",
@@ -690,8 +628,7 @@
     "code": "WV190",
     "used": false,
     "createdAt": "2025-09-02T20:31:20.316Z",
-    "useCount": 0,
-    "maxUses": 2
+    "useCount": 0
   },
   {
     "id": "1756845300088",
@@ -701,8 +638,7 @@
     "code": "NB201",
     "used": false,
     "createdAt": "2025-09-02T20:35:00.088Z",
-    "useCount": 0,
-    "maxUses": 2
+    "useCount": 0
   },
   {
     "id": "1756845377085",
@@ -712,8 +648,7 @@
     "code": "RR578",
     "used": false,
     "createdAt": "2025-09-02T20:36:17.085Z",
-    "useCount": 0,
-    "maxUses": 2
+    "useCount": 0
   },
   {
     "id": "1756845497701",
@@ -723,8 +658,7 @@
     "code": "TD061",
     "used": false,
     "createdAt": "2025-09-02T20:38:17.701Z",
-    "useCount": 0,
-    "maxUses": 2
+    "useCount": 0
   },
   {
     "id": "1756845610332",
@@ -734,8 +668,7 @@
     "code": "ZV843",
     "used": false,
     "createdAt": "2025-09-02T20:40:10.332Z",
-    "useCount": 0,
-    "maxUses": 2
+    "useCount": 0
   },
   {
     "id": "1756850316169",
@@ -745,8 +678,7 @@
     "code": "PP896",
     "used": false,
     "createdAt": "2025-09-02T21:58:36.171Z",
-    "useCount": 0,
-    "maxUses": 2
+    "useCount": 0
   },
   {
     "id": "1756869675927",
@@ -756,8 +688,7 @@
     "code": "WE200",
     "used": false,
     "createdAt": "2025-09-03T03:21:15.927Z",
-    "useCount": 0,
-    "maxUses": 2
+    "useCount": 0
   },
   {
     "id": "1756869870107",
@@ -767,8 +698,7 @@
     "code": "UL312",
     "used": false,
     "createdAt": "2025-09-03T03:24:30.107Z",
-    "useCount": 0,
-    "maxUses": 2
+    "useCount": 0
   },
   {
     "id": "1756869898314",
@@ -778,8 +708,7 @@
     "code": "UL312",
     "used": false,
     "createdAt": "2025-09-03T03:24:58.315Z",
-    "useCount": 0,
-    "maxUses": 2
+    "useCount": 0
   },
   {
     "id": "1756870629736",
@@ -789,8 +718,7 @@
     "code": "FX482",
     "used": false,
     "createdAt": "2025-09-03T03:37:09.736Z",
-    "useCount": 0,
-    "maxUses": 2
+    "useCount": 0
   },
   {
     "id": "1756968727435",
@@ -800,8 +728,7 @@
     "code": "EO235",
     "used": false,
     "createdAt": "2025-09-04T06:52:07.437Z",
-    "useCount": 0,
-    "maxUses": 2
+    "useCount": 0
   },
   {
     "id": "1757017617709",
@@ -811,8 +738,7 @@
     "code": "RE087",
     "used": false,
     "createdAt": "2025-09-04T20:26:57.710Z",
-    "useCount": 0,
-    "maxUses": 2
+    "useCount": 0
   },
   {
     "id": "1757017724693",
@@ -822,8 +748,7 @@
     "code": "XB491",
     "used": false,
     "createdAt": "2025-09-04T20:28:44.693Z",
-    "useCount": 0,
-    "maxUses": 2
+    "useCount": 0
   },
   {
     "id": "1757017905094",
@@ -833,8 +758,7 @@
     "code": "MR181",
     "used": false,
     "createdAt": "2025-09-04T20:31:45.094Z",
-    "useCount": 0,
-    "maxUses": 2
+    "useCount": 0
   },
   {
     "id": "1757018138692",
@@ -844,8 +768,7 @@
     "code": "XA940",
     "used": false,
     "createdAt": "2025-09-04T20:35:38.692Z",
-    "useCount": 0,
-    "maxUses": 2
+    "useCount": 0
   },
   {
     "id": "1757018242402",
@@ -855,8 +778,7 @@
     "code": "YQ924",
     "used": false,
     "createdAt": "2025-09-04T20:37:22.402Z",
-    "useCount": 0,
-    "maxUses": 2
+    "useCount": 0
   },
   {
     "id": "1757022409142",
@@ -866,8 +788,7 @@
     "code": "XH510",
     "used": false,
     "createdAt": "2025-09-04T21:46:49.147Z",
-    "useCount": 0,
-    "maxUses": 2
+    "useCount": 0
   },
   {
     "id": "1757032120549",
@@ -877,8 +798,7 @@
     "code": "VD248",
     "used": false,
     "createdAt": "2025-09-05T00:28:40.559Z",
-    "useCount": 0,
-    "maxUses": 2
+    "useCount": 0
   },
   {
     "id": "1757033242903",
@@ -888,8 +808,7 @@
     "code": "JU424",
     "used": false,
     "createdAt": "2025-09-05T00:47:22.904Z",
-    "useCount": 0,
-    "maxUses": 2
+    "useCount": 0
   },
   {
     "id": "1757033258699",
@@ -899,8 +818,7 @@
     "code": "JU424",
     "used": false,
     "createdAt": "2025-09-05T00:47:38.699Z",
-    "useCount": 0,
-    "maxUses": 2
+    "useCount": 0
   },
   {
     "id": "1757033442755",
@@ -910,8 +828,7 @@
     "code": "UG285",
     "used": false,
     "createdAt": "2025-09-05T00:50:42.755Z",
-    "useCount": 0,
-    "maxUses": 2
+    "useCount": 0
   },
   {
     "id": "1757033947850",
@@ -921,8 +838,7 @@
     "code": "CK802",
     "used": false,
     "createdAt": "2025-09-05T00:59:07.850Z",
-    "useCount": 0,
-    "maxUses": 2
+    "useCount": 0
   },
   {
     "id": "1757033970956",
@@ -932,8 +848,7 @@
     "code": "CK802",
     "used": false,
     "createdAt": "2025-09-05T00:59:30.957Z",
-    "useCount": 0,
-    "maxUses": 2
+    "useCount": 0
   },
   {
     "id": "1757034077347",
@@ -943,8 +858,7 @@
     "code": "BA758",
     "used": false,
     "createdAt": "2025-09-05T01:01:17.347Z",
-    "useCount": 0,
-    "maxUses": 2
+    "useCount": 0
   },
   {
     "id": "1757034090280",
@@ -954,8 +868,7 @@
     "code": "BA758",
     "used": false,
     "createdAt": "2025-09-05T01:01:30.280Z",
-    "useCount": 0,
-    "maxUses": 2
+    "useCount": 0
   },
   {
     "id": "1757037228277",
@@ -965,8 +878,7 @@
     "code": "XZ424",
     "used": false,
     "createdAt": "2025-09-05T01:53:48.277Z",
-    "useCount": 0,
-    "maxUses": 2
+    "useCount": 0
   },
   {
     "id": "1757037245691",
@@ -976,8 +888,7 @@
     "code": "XZ424",
     "used": false,
     "createdAt": "2025-09-05T01:54:05.691Z",
-    "useCount": 0,
-    "maxUses": 2
+    "useCount": 0
   },
   {
     "id": "1757038437938",
@@ -987,8 +898,7 @@
     "code": "HA027",
     "used": false,
     "createdAt": "2025-09-05T02:13:57.938Z",
-    "useCount": 0,
-    "maxUses": 2
+    "useCount": 0
   },
   {
     "id": "1757038457016",
@@ -998,8 +908,7 @@
     "code": "HA027",
     "used": false,
     "createdAt": "2025-09-05T02:14:17.016Z",
-    "useCount": 0,
-    "maxUses": 2
+    "useCount": 0
   },
   {
     "id": "1757038755171",
@@ -1009,8 +918,7 @@
     "code": "BG034",
     "used": false,
     "createdAt": "2025-09-05T02:19:15.171Z",
-    "useCount": 0,
-    "maxUses": 2
+    "useCount": 0
   },
   {
     "id": "1757038779165",
@@ -1020,8 +928,7 @@
     "code": "BG034",
     "used": false,
     "createdAt": "2025-09-05T02:19:39.165Z",
-    "useCount": 0,
-    "maxUses": 2
+    "useCount": 0
   },
   {
     "id": "1757038793995",
@@ -1031,8 +938,7 @@
     "code": "BG034",
     "used": false,
     "createdAt": "2025-09-05T02:19:53.995Z",
-    "useCount": 0,
-    "maxUses": 2
+    "useCount": 0
   },
   {
     "id": "1757038988454",
@@ -1042,8 +948,7 @@
     "code": "FJ005",
     "used": false,
     "createdAt": "2025-09-05T02:23:08.454Z",
-    "useCount": 0,
-    "maxUses": 2
+    "useCount": 0
   },
   {
     "id": "1757039004752",
@@ -1053,8 +958,7 @@
     "code": "FJ005",
     "used": false,
     "createdAt": "2025-09-05T02:23:24.752Z",
-    "useCount": 0,
-    "maxUses": 2
+    "useCount": 0
   },
   {
     "id": "1757039054736",
@@ -1064,8 +968,7 @@
     "code": "FJ005",
     "used": false,
     "createdAt": "2025-09-05T02:24:14.736Z",
-    "useCount": 0,
-    "maxUses": 2
+    "useCount": 0
   },
   {
     "id": "1757202744363",
@@ -1075,7 +978,6 @@
     "code": "QP854",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-06T23:52:24.366Z",
     "updatedAt": "2025-09-07T00:03:12.742Z"
   },
@@ -1087,7 +989,6 @@
     "code": "HB225",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-08T08:13:58.838Z"
   },
   {
@@ -1098,7 +999,6 @@
     "code": "OG583",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-08T08:21:43.934Z"
   },
   {
@@ -1109,7 +1009,6 @@
     "code": "GG455",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-08T20:34:35.248Z"
   },
   {
@@ -1120,7 +1019,6 @@
     "code": "DH354",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-08T20:35:26.372Z"
   },
   {
@@ -1131,7 +1029,6 @@
     "code": "VL431",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-08T20:37:21.188Z"
   },
   {
@@ -1142,7 +1039,6 @@
     "code": "IU128",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-08T20:38:37.183Z"
   },
   {
@@ -1153,7 +1049,6 @@
     "code": "ZW227",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-08T22:30:13.958Z"
   },
   {
@@ -1164,7 +1059,6 @@
     "code": "TS464",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-08T22:33:24.590Z"
   },
   {
@@ -1175,7 +1069,6 @@
     "code": "TS464",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-08T22:34:14.427Z"
   },
   {
@@ -1186,7 +1079,6 @@
     "code": "TQ066",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-08T22:37:03.341Z"
   },
   {
@@ -1197,7 +1089,6 @@
     "code": "RU691",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-08T22:38:34.860Z"
   },
   {
@@ -1208,7 +1099,6 @@
     "code": "PV607",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-08T22:39:56.832Z"
   },
   {
@@ -1219,7 +1109,6 @@
     "code": "LM419",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-08T22:41:20.293Z"
   },
   {
@@ -1230,7 +1119,6 @@
     "code": "FE665",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-08T22:42:08.069Z"
   },
   {
@@ -1241,7 +1129,6 @@
     "code": "JI169",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-08T22:42:57.850Z"
   },
   {
@@ -1252,7 +1139,6 @@
     "code": "WX450",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-08T22:46:23.063Z"
   },
   {
@@ -1263,7 +1149,6 @@
     "code": "WX450",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-08T22:47:16.486Z"
   },
   {
@@ -1274,7 +1159,6 @@
     "code": "WX450",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-08T22:49:30.611Z"
   },
   {
@@ -1285,7 +1169,6 @@
     "code": "TS464",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-08T22:51:35.242Z"
   },
   {
@@ -1296,7 +1179,6 @@
     "code": "LR214",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-09T01:28:45.412Z"
   },
   {
@@ -1307,7 +1189,6 @@
     "code": "LR214",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-09T01:29:34.143Z"
   },
   {
@@ -1318,7 +1199,6 @@
     "code": "CE637",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-09T19:14:41.109Z"
   },
   {
@@ -1329,7 +1209,6 @@
     "code": "DK904",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-09T21:25:47.154Z"
   },
   {
@@ -1340,7 +1219,6 @@
     "code": "UG043",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-09T21:41:32.352Z"
   },
   {
@@ -1351,7 +1229,6 @@
     "code": "NS922",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-09T21:45:25.793Z"
   },
   {
@@ -1362,7 +1239,6 @@
     "code": "NS922",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-09T21:46:22.622Z"
   },
   {
@@ -1373,7 +1249,6 @@
     "code": "QD396",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-10T00:06:16.876Z"
   },
   {
@@ -1384,7 +1259,6 @@
     "code": "QD396",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-10T00:06:59.374Z"
   },
   {
@@ -1395,7 +1269,6 @@
     "code": "QD396",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-10T00:07:20.367Z"
   },
   {
@@ -1406,7 +1279,6 @@
     "code": "XY305",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-10T02:09:41.188Z"
   },
   {
@@ -1417,7 +1289,6 @@
     "code": "XY305",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-10T02:10:52.828Z"
   },
   {
@@ -1428,7 +1299,6 @@
     "code": "CV061",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-10T02:15:23.075Z"
   },
   {
@@ -1439,7 +1309,6 @@
     "code": "WG650",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-10T05:11:10.599Z"
   },
   {
@@ -1450,7 +1319,6 @@
     "code": "QH152",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-11T00:02:45.414Z"
   },
   {
@@ -1461,7 +1329,6 @@
     "code": "PD250",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-11T00:08:27.221Z"
   },
   {
@@ -1472,7 +1339,6 @@
     "code": "RB734",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-11T00:09:41.553Z"
   },
   {
@@ -1483,7 +1349,6 @@
     "code": "AS963",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-11T00:12:14.136Z"
   },
   {
@@ -1494,7 +1359,6 @@
     "code": "LO439",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-11T00:13:21.930Z"
   },
   {
@@ -1505,7 +1369,6 @@
     "code": "RG788",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-11T00:14:43.838Z"
   },
   {
@@ -1516,7 +1379,6 @@
     "code": "QE979",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-11T00:15:58.706Z"
   },
   {
@@ -1527,7 +1389,6 @@
     "code": "HN996",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-11T03:44:18.148Z"
   },
   {
@@ -1538,7 +1399,6 @@
     "code": "IP557",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-11T03:45:25.612Z"
   },
   {
@@ -1549,7 +1409,6 @@
     "code": "UT432",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-11T03:50:07.709Z"
   },
   {
@@ -1560,7 +1419,6 @@
     "code": "JX031",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-11T03:55:00.393Z"
   },
   {
@@ -1571,7 +1429,6 @@
     "code": "JX031",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-11T03:55:17.996Z"
   },
   {
@@ -1582,7 +1439,6 @@
     "code": "JX031",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-11T03:55:38.729Z"
   },
   {
@@ -1593,7 +1449,6 @@
     "code": "KB015",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-11T03:58:03.123Z"
   },
   {
@@ -1604,7 +1459,6 @@
     "code": "KB015",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-11T03:58:26.048Z"
   },
   {
@@ -1615,7 +1469,6 @@
     "code": "KB015",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-11T03:58:46.691Z"
   },
   {
@@ -1626,7 +1479,6 @@
     "code": "QP824",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-11T04:24:08.222Z"
   },
   {
@@ -1637,7 +1489,6 @@
     "code": "LD735",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-11T04:29:13.867Z"
   },
   {
@@ -1648,7 +1499,6 @@
     "code": "DA188",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-11T20:44:40.517Z"
   },
   {
@@ -1659,7 +1509,6 @@
     "code": "DA188",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-11T20:44:54.644Z"
   },
   {
@@ -1670,7 +1519,6 @@
     "code": "FG026",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-11T20:50:36.635Z"
   },
   {
@@ -1681,7 +1529,6 @@
     "code": "QX085",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-11T20:53:21.581Z"
   },
   {
@@ -1692,7 +1539,6 @@
     "code": "CH100",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-11T20:57:14.139Z"
   },
   {
@@ -1703,7 +1549,6 @@
     "code": "CH100",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-11T20:57:29.011Z"
   },
   {
@@ -1714,7 +1559,6 @@
     "code": "SU723",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-11T21:00:45.230Z"
   },
   {
@@ -1725,7 +1569,6 @@
     "code": "SU723",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-11T21:01:02.513Z"
   },
   {
@@ -1736,7 +1579,6 @@
     "code": "AW523",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-11T21:16:04.434Z"
   },
   {
@@ -1747,7 +1589,6 @@
     "code": "AW523",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-11T21:16:17.738Z"
   },
   {
@@ -1758,7 +1599,6 @@
     "code": "FW026",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-11T21:20:51.653Z"
   },
   {
@@ -1769,7 +1609,6 @@
     "code": "FW026",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-11T21:21:13.051Z"
   },
   {
@@ -1780,7 +1619,6 @@
     "code": "YI672",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-11T21:24:04.712Z"
   },
   {
@@ -1791,7 +1629,6 @@
     "code": "YI672",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-11T21:24:21.332Z"
   },
   {
@@ -1802,7 +1639,6 @@
     "code": "GY232",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-11T21:26:09.052Z"
   },
   {
@@ -1813,7 +1649,6 @@
     "code": "GY232",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-11T21:26:22.361Z"
   },
   {
@@ -1824,7 +1659,6 @@
     "code": "CG171",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-11T21:29:03.090Z"
   },
   {
@@ -1835,7 +1669,6 @@
     "code": "CG171",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-11T21:29:13.166Z"
   },
   {
@@ -1846,7 +1679,6 @@
     "code": "YV724",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-11T21:58:03.499Z"
   },
   {
@@ -1857,7 +1689,6 @@
     "code": "YV724",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-11T21:58:20.616Z"
   },
   {
@@ -1868,7 +1699,6 @@
     "code": "KA775",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-11T22:00:51.052Z"
   },
   {
@@ -1879,7 +1709,6 @@
     "code": "KA775",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-11T22:01:05.264Z"
   },
   {
@@ -1890,7 +1719,6 @@
     "code": "OX259",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-11T22:03:33.381Z"
   },
   {
@@ -1901,7 +1729,6 @@
     "code": "FA232",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-11T22:04:49.638Z"
   },
   {
@@ -1912,7 +1739,6 @@
     "code": "CX781",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-12T02:14:55.755Z"
   },
   {
@@ -1923,7 +1749,6 @@
     "code": "CX781",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-12T02:15:08.168Z"
   },
   {
@@ -1934,7 +1759,6 @@
     "code": "EQ865",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-12T02:19:29.985Z"
   },
   {
@@ -1945,7 +1769,6 @@
     "code": "EQ865",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-12T02:19:42.335Z"
   },
   {
@@ -1956,7 +1779,6 @@
     "code": "LV019",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-12T02:24:24.774Z"
   },
   {
@@ -1967,7 +1789,6 @@
     "code": "OY540",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-12T02:27:00.745Z"
   },
   {
@@ -1978,7 +1799,6 @@
     "code": "OY540",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-12T02:27:16.851Z"
   },
   {
@@ -1989,7 +1809,6 @@
     "code": "DS825",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-12T02:28:49.831Z"
   },
   {
@@ -2000,7 +1819,6 @@
     "code": "RB040",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-13T05:10:15.445Z"
   },
   {
@@ -2011,7 +1829,6 @@
     "code": "RB040",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-13T05:10:32.064Z"
   },
   {
@@ -2022,7 +1839,6 @@
     "code": "TR381",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-13T05:18:39.896Z"
   },
   {
@@ -2033,7 +1849,6 @@
     "code": "TR381",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-13T05:18:59.656Z"
   },
   {
@@ -2044,7 +1859,6 @@
     "code": "WB690",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-14T08:38:19.998Z"
   },
   {
@@ -2055,7 +1869,6 @@
     "code": "QV231",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-14T08:40:41.797Z"
   },
   {
@@ -2066,7 +1879,6 @@
     "code": "UW706",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-14T08:42:14.833Z"
   },
   {
@@ -2077,7 +1889,6 @@
     "code": "UW706",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-14T08:42:33.645Z"
   },
   {
@@ -2088,7 +1899,6 @@
     "code": "GP459",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-14T08:44:16.241Z"
   },
   {
@@ -2099,7 +1909,6 @@
     "code": "QJ087",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-15T06:10:33.916Z"
   },
   {
@@ -2110,7 +1919,6 @@
     "code": "GP459",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-15T06:24:59.163Z"
   },
   {
@@ -2121,7 +1929,6 @@
     "code": "ZX901",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-17T03:33:08.326Z"
   },
   {
@@ -2132,7 +1939,6 @@
     "code": "ZX901",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-17T03:33:30.237Z"
   },
   {
@@ -2143,7 +1949,6 @@
     "code": "ZX901",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-17T03:33:50.146Z"
   },
   {
@@ -2154,7 +1959,6 @@
     "code": "ZX901",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-17T03:34:13.292Z"
   },
   {
@@ -2165,7 +1969,6 @@
     "code": "JD005",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-17T03:37:00.387Z"
   },
   {
@@ -2176,7 +1979,6 @@
     "code": "AH076",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-17T03:41:12.266Z"
   },
   {
@@ -2187,7 +1989,6 @@
     "code": "HS431",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-17T03:42:47.930Z"
   },
   {
@@ -2198,7 +1999,6 @@
     "code": "DK605",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-17T03:47:49.027Z"
   },
   {
@@ -2209,7 +2009,6 @@
     "code": "QD770",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-17T03:59:37.209Z"
   },
   {
@@ -2220,7 +2019,6 @@
     "code": "OQ635",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-18T09:35:04.717Z"
   },
   {
@@ -2231,7 +2029,6 @@
     "code": "PF445",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-19T05:30:07.181Z"
   },
   {
@@ -2242,7 +2039,6 @@
     "code": "QP568",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-19T05:33:30.044Z"
   },
   {
@@ -2253,7 +2049,6 @@
     "code": "ES233",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-22T10:20:36.219Z"
   },
   {
@@ -2264,7 +2059,6 @@
     "code": "ES233",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-22T10:20:56.787Z"
   },
   {
@@ -2275,7 +2069,6 @@
     "code": "ES233",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-22T10:21:15.709Z"
   },
   {
@@ -2286,7 +2079,6 @@
     "code": "ES233",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-22T10:21:33.469Z"
   },
   {
@@ -2297,7 +2089,6 @@
     "code": "QM299",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-23T07:37:39.482Z"
   },
   {
@@ -2308,7 +2099,6 @@
     "code": "QM299",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-23T07:37:54.476Z"
   },
   {
@@ -2319,7 +2109,6 @@
     "code": "QM299",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-23T07:38:08.069Z"
   },
   {
@@ -2330,7 +2119,6 @@
     "code": "QM299",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-23T07:38:22.310Z"
   },
   {
@@ -2341,7 +2129,6 @@
     "code": "UN462",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-23T07:42:33.894Z"
   },
   {
@@ -2352,7 +2139,6 @@
     "code": "UN462",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-23T07:42:57.259Z"
   },
   {
@@ -2363,7 +2149,6 @@
     "code": "QI384",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-23T08:55:51.579Z"
   },
   {
@@ -2374,7 +2159,6 @@
     "code": "QI384",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-23T08:56:19.083Z"
   },
   {
@@ -2385,7 +2169,6 @@
     "code": "PM074",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-28T15:51:22.990Z"
   },
   {
@@ -2396,7 +2179,6 @@
     "code": "PM074",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-28T15:51:40.769Z"
   },
   {
@@ -2407,7 +2189,6 @@
     "code": "VI179",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-28T15:53:32.428Z"
   },
   {
@@ -2418,7 +2199,6 @@
     "code": "VI179",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-28T15:53:47.778Z"
   },
   {
@@ -2429,7 +2209,6 @@
     "code": "VI179",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-28T15:54:01.488Z"
   },
   {
@@ -2440,7 +2219,6 @@
     "code": "VI179",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-28T15:54:14.246Z"
   },
   {
@@ -2451,7 +2229,6 @@
     "code": "VI179",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-28T15:54:27.249Z"
   },
   {
@@ -2462,7 +2239,6 @@
     "code": "VI179",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-28T15:54:43.194Z"
   },
   {
@@ -2473,7 +2249,6 @@
     "code": "HM108",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-28T15:55:53.430Z"
   },
   {
@@ -2484,7 +2259,6 @@
     "code": "HM108",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-28T15:56:10.668Z"
   },
   {
@@ -2495,7 +2269,6 @@
     "code": "NE648",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-29T18:11:05.733Z"
   },
   {
@@ -2506,7 +2279,6 @@
     "code": "NE648",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-29T18:13:36.755Z"
   },
   {
@@ -2517,7 +2289,6 @@
     "code": "VG722",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-29T18:19:26.817Z"
   },
   {
@@ -2528,7 +2299,6 @@
     "code": "VG722",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-29T18:19:52.842Z"
   },
   {
@@ -2539,7 +2309,6 @@
     "code": "GQ036",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-29T18:21:38.044Z"
   },
   {
@@ -2550,7 +2319,6 @@
     "code": "QM500",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-29T21:52:35.291Z"
   },
   {
@@ -2561,7 +2329,6 @@
     "code": "QM500",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-29T21:52:35.316Z"
   },
   {
@@ -2572,7 +2339,6 @@
     "code": "GT760",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-30T07:29:59.126Z"
   },
   {
@@ -2583,7 +2349,6 @@
     "code": "GQ192",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-30T21:25:58.855Z"
   },
   {
@@ -2594,7 +2359,6 @@
     "code": "WR147",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-30T22:04:58.318Z"
   },
   {
@@ -2605,7 +2369,6 @@
     "code": "WR147",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-09-30T22:05:13.510Z"
   },
   {
@@ -2616,7 +2379,6 @@
     "code": "AN494",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-10-01T18:29:17.551Z"
   },
   {
@@ -2627,7 +2389,6 @@
     "code": "AN494",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-10-01T18:29:51.841Z"
   },
   {
@@ -2638,7 +2399,6 @@
     "code": "CE931",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-10-01T18:35:15.485Z"
   },
   {
@@ -2649,7 +2409,6 @@
     "code": "CE931",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-10-01T18:35:36.407Z"
   },
   {
@@ -2660,7 +2419,6 @@
     "code": "RG358",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-10-01T18:38:13.436Z"
   },
   {
@@ -2671,7 +2429,6 @@
     "code": "RG358",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-10-01T18:38:22.609Z"
   },
   {
@@ -2682,7 +2439,6 @@
     "code": "RG358",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-10-01T18:38:35.580Z"
   },
   {
@@ -2693,7 +2449,6 @@
     "code": "YU669",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-10-01T18:40:15.275Z"
   },
   {
@@ -2704,7 +2459,6 @@
     "code": "YU669",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-10-01T18:40:28.197Z"
   },
   {
@@ -2715,7 +2469,6 @@
     "code": "GQ889",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-10-01T18:41:52.484Z"
   },
   {
@@ -2726,7 +2479,6 @@
     "code": "GQ889",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-10-01T18:42:43.805Z"
   },
   {
@@ -2737,7 +2489,6 @@
     "code": "JQ102",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-10-01T18:48:21.187Z"
   },
   {
@@ -2748,7 +2499,6 @@
     "code": "JQ102",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-10-01T18:48:50.735Z"
   },
   {
@@ -2759,7 +2509,6 @@
     "code": "DA359",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-10-01T18:52:49.959Z"
   },
   {
@@ -2770,7 +2519,6 @@
     "code": "DA359",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-10-01T18:53:04.221Z"
   },
   {
@@ -2781,7 +2529,6 @@
     "code": "BZ184",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-10-01T18:58:52.109Z"
   },
   {
@@ -2792,7 +2539,6 @@
     "code": "BZ184",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-10-01T18:59:16.343Z"
   },
   {
@@ -2803,7 +2549,6 @@
     "code": "XG372",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-10-01T20:26:35.905Z"
   },
   {
@@ -2814,7 +2559,6 @@
     "code": "XG372",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-10-01T20:26:47.959Z"
   },
   {
@@ -2825,7 +2569,6 @@
     "code": "TR111",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-10-02T00:45:48.564Z"
   },
   {
@@ -2836,7 +2579,6 @@
     "code": "XX929",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-10-02T01:07:04.593Z"
   },
   {
@@ -2847,7 +2589,6 @@
     "code": "CR111",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-10-02T09:37:18.137Z"
   },
   {
@@ -2858,7 +2599,6 @@
     "code": "LM901",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-10-02T09:53:33.689Z"
   },
   {
@@ -2869,7 +2609,6 @@
     "code": "LM901",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-10-02T09:54:27.632Z"
   },
   {
@@ -2880,7 +2619,6 @@
     "code": "QS683",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-10-02T10:01:12.163Z"
   },
   {
@@ -2891,7 +2629,6 @@
     "code": "QS683",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-10-02T10:01:12.279Z"
   },
   {
@@ -2902,7 +2639,6 @@
     "code": "BG801",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-10-02T10:10:54.065Z"
   },
   {
@@ -2913,7 +2649,6 @@
     "code": "PN306",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-10-02T10:19:39.723Z"
   },
   {
@@ -2924,7 +2659,6 @@
     "code": "PN306",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-10-02T10:19:39.737Z"
   },
   {
@@ -2935,7 +2669,6 @@
     "code": "PN306",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-10-02T10:19:39.745Z"
   },
   {
@@ -2946,7 +2679,6 @@
     "code": "PN306",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-10-02T10:19:39.750Z"
   },
   {
@@ -2957,7 +2689,6 @@
     "code": "PN306",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-10-02T10:19:39.754Z"
   },
   {
@@ -2968,7 +2699,6 @@
     "code": "PN306",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-10-02T10:19:39.767Z"
   },
   {
@@ -2979,7 +2709,6 @@
     "code": "EQ633",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-10-02T10:22:18.624Z"
   },
   {
@@ -2990,7 +2719,6 @@
     "code": "EQ633",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-10-02T10:22:18.638Z"
   },
   {
@@ -3001,7 +2729,6 @@
     "code": "EQ633",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-10-02T10:22:18.642Z"
   },
   {
@@ -3012,7 +2739,6 @@
     "code": "EQ633",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-10-02T10:22:18.648Z"
   },
   {
@@ -3023,7 +2749,6 @@
     "code": "EQ633",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-10-02T10:22:18.653Z"
   },
   {
@@ -3034,7 +2759,6 @@
     "code": "EQ633",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-10-02T10:22:18.657Z"
   },
   {
@@ -3045,7 +2769,6 @@
     "code": "EQ633",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-10-02T10:22:18.661Z"
   },
   {
@@ -3056,7 +2779,6 @@
     "code": "EQ633",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-10-02T10:22:18.665Z"
   },
   {
@@ -3067,7 +2789,6 @@
     "code": "EQ633",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-10-02T10:22:18.672Z"
   },
   {
@@ -3078,7 +2799,6 @@
     "code": "PQ258",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-10-02T10:47:03.288Z"
   },
   {
@@ -3089,7 +2809,6 @@
     "code": "PQ258",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-10-02T10:47:03.298Z"
   },
   {
@@ -3100,7 +2819,6 @@
     "code": "PQ258",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-10-02T10:47:03.303Z"
   },
   {
@@ -3111,7 +2829,6 @@
     "code": "PQ258",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-10-02T10:47:03.307Z"
   },
   {
@@ -3122,7 +2839,6 @@
     "code": "PQ258",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-10-02T10:47:03.312Z"
   },
   {
@@ -3133,7 +2849,6 @@
     "code": "PQ258",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-10-02T10:47:03.317Z"
   },
   {
@@ -3144,7 +2859,6 @@
     "code": "PQ258",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-10-02T10:47:03.321Z"
   },
   {
@@ -3155,7 +2869,6 @@
     "code": "AR003",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-10-02T10:47:40.774Z"
   },
   {
@@ -3166,7 +2879,6 @@
     "code": "YB517",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-10-02T10:48:19.567Z"
   },
   {
@@ -3177,7 +2889,6 @@
     "code": "CR111",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-10-02T11:30:14.565Z"
   },
   {
@@ -3188,7 +2899,127 @@
     "code": "CR111",
     "used": false,
     "useCount": 0,
-    "maxUses": 2,
     "createdAt": "2025-10-02T11:30:14.612Z"
+  },
+  {
+    "id": "1759574347649",
+    "password": "T1111",
+    "videoId": "T6",
+    "fileId": "",
+    "code": "MI172",
+    "used": false,
+    "useCount": 0,
+    "maxUses": 10,
+    "createdAt": "2025-10-04T10:39:07.650Z"
+  },
+  {
+    "id": "1759574347956",
+    "password": "T1111",
+    "videoId": "T7",
+    "fileId": "",
+    "code": "MI172",
+    "used": false,
+    "useCount": 0,
+    "maxUses": 10,
+    "createdAt": "2025-10-04T10:39:07.956Z"
+  },
+  {
+    "id": "1759574733165",
+    "password": "يبليبل",
+    "videoId": "T6",
+    "fileId": "",
+    "code": "DU259",
+    "used": false,
+    "useCount": 0,
+    "maxUses": 2,
+    "createdAt": "2025-10-04T10:45:33.165Z"
+  },
+  {
+    "id": "1759574733263",
+    "password": "يبليبل",
+    "videoId": "T7",
+    "fileId": "",
+    "code": "DU259",
+    "used": false,
+    "useCount": 0,
+    "maxUses": 2,
+    "createdAt": "2025-10-04T10:45:33.263Z"
+  },
+  {
+    "id": "1759575049237",
+    "password": "F3994",
+    "videoId": "F2",
+    "fileId": "",
+    "code": "PW012",
+    "used": false,
+    "useCount": 0,
+    "maxUses": 2,
+    "createdAt": "2025-10-04T10:50:49.237Z"
+  },
+  {
+    "id": "1759575049254",
+    "password": "F3994",
+    "videoId": "F3",
+    "fileId": "",
+    "code": "PW012",
+    "used": false,
+    "useCount": 0,
+    "maxUses": 2,
+    "createdAt": "2025-10-04T10:50:49.254Z"
+  },
+  {
+    "id": "1759575049259",
+    "password": "F3994",
+    "videoId": "F4",
+    "fileId": "",
+    "code": "PW012",
+    "used": false,
+    "useCount": 0,
+    "maxUses": 2,
+    "createdAt": "2025-10-04T10:50:49.259Z"
+  },
+  {
+    "id": "1759575049265",
+    "password": "F3994",
+    "videoId": "F5",
+    "fileId": "",
+    "code": "PW012",
+    "used": false,
+    "useCount": 0,
+    "maxUses": 2,
+    "createdAt": "2025-10-04T10:50:49.265Z"
+  },
+  {
+    "id": "1759575049271",
+    "password": "F3994",
+    "videoId": "F6",
+    "fileId": "",
+    "code": "PW012",
+    "used": false,
+    "useCount": 0,
+    "maxUses": 2,
+    "createdAt": "2025-10-04T10:50:49.271Z"
+  },
+  {
+    "id": "1759575049284",
+    "password": "F3994",
+    "videoId": "F7",
+    "fileId": "",
+    "code": "PW012",
+    "used": false,
+    "useCount": 0,
+    "maxUses": 2,
+    "createdAt": "2025-10-04T10:50:49.284Z"
+  },
+  {
+    "id": "1759575049289",
+    "password": "F3994",
+    "videoId": "F8",
+    "fileId": "",
+    "code": "PW012",
+    "used": false,
+    "useCount": 0,
+    "maxUses": 2,
+    "createdAt": "2025-10-04T10:50:49.289Z"
   }
 ]

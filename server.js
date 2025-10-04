@@ -191,7 +191,7 @@ app.get('/api/notebooks/restore-backup', (req, res) => {
 // إضافة كود جديد
 app.post('/api/codes', (req, res) => {
     try {
-        const { password, videoId, fileId, code, maxUses } = req.body;
+    const { password, videoId, fileId, code } = req.body;
         
         if (!password || !code) {
             return res.status(400).json({ error: 'كلمة السر والكود مطلوبان' });
@@ -213,7 +213,6 @@ app.post('/api/codes', (req, res) => {
             code,
             used: false,
             useCount: 0,
-            maxUses: maxUses || 2,
             createdAt: new Date().toISOString()
         };
         
@@ -230,7 +229,7 @@ app.post('/api/codes', (req, res) => {
 app.patch('/api/codes/:id', (req, res) => {
     try {
         const { id } = req.params;
-        const { used, useCount, maxUses } = req.body;
+    const { used, useCount } = req.body;
         
         ensureFiles();
         const codes = readCodes();
@@ -250,9 +249,7 @@ app.patch('/api/codes/:id', (req, res) => {
         if (useCount !== undefined) {
             codes[codeIndex].useCount = useCount;
         }
-        if (maxUses !== undefined) {
-            codes[codeIndex].maxUses = maxUses;
-        }
+        // Ignoring maxUses — unlimited usage is enforced.
         
         codes[codeIndex].updatedAt = new Date().toISOString();
         
@@ -279,13 +276,8 @@ app.post('/api/codes/:id/use', (req, res) => {
         
         const code = codes[codeIndex];
         
-        // زيادة عدد مرات الاستخدام
+        // زيادة عدد مرات الاستخدام (لكن لا نستخدم الحَد الأقصى لمنع الاستخدام)
         code.useCount = (code.useCount || 0) + 1;
-        
-        // إذا وصل للحد الأقصى، تعليمه كمستخدم
-        if (code.useCount >= (code.maxUses || 2)) {
-            code.used = true;
-        }
         
         code.updatedAt = new Date().toISOString();
         
@@ -294,7 +286,7 @@ app.post('/api/codes/:id/use', (req, res) => {
         res.json({ 
             message: 'تم تحديث عدد مرات الاستخدام', 
             code: code,
-            canUse: code.useCount < (code.maxUses || 2)
+            canUse: true // السماح بالاستخدام دائماً؛ لم نعد نعتمد الحد الأقصى
         });
     } catch (error) {
         res.status(500).json({ error: 'خطأ في الخادم' });

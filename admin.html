@@ -796,10 +796,7 @@
                             </button>
                         </div>
                 </div>
-                    <div class="form-group">
-                        <label for="videoMaxUses">الحد الأقصى للاستخدام:</label>
-                        <input type="number" id="videoMaxUses" value="2" min="1" max="10">
-                </div>
+                    <!-- removed maxUses input for videos (unlimited usage) -->
                     <button class="btn" onclick="addVideoCode()">
                         <i class="fas fa-plus"></i> إضافة كود فيديو
                     </button>
@@ -846,10 +843,7 @@
                             </button>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label for="fileMaxUses">الحد الأقصى للاستخدام:</label>
-                        <input type="number" id="fileMaxUses" value="2" min="1" max="10">
-                    </div>
+                    <!-- removed maxUses input for files (unlimited usage) -->
                     <button class="btn" onclick="addFileCode()">
                         <i class="fas fa-plus"></i> إضافة كود ملف
                 </button>
@@ -1115,10 +1109,10 @@
                                 <i class="fas fa-video"></i> ${code.videoId}
                             </div>
                             <div class="detail-item">
-                                <i class="fas fa-chart-bar"></i> ${code.useCount || 0}/${code.maxUses || 2}
+                                <i class="fas fa-chart-bar"></i> ${code.useCount || 0}
                             </div>
-                            <span class="status-badge ${code.used || (code.useCount || 0) >= (code.maxUses || 2) ? 'status-used' : 'status-active'}">
-                                ${code.used || (code.useCount || 0) >= (code.maxUses || 2) ? 'مستخدم' : 'نشط'}
+                            <span class="status-badge ${code.used ? 'status-used' : 'status-active'}">
+                                ${code.used ? 'مستخدم' : 'نشط'}
                             </span>
                         </div>
                     </div>
@@ -1132,9 +1126,9 @@
                             </button>
                         </div>
                         <div class="action-row">
-                            <button class="btn btn-success" onclick="toggleCodeStatus('${code.id}', ${!(code.used || (code.useCount || 0) >= (code.maxUses || 2))})" title="${code.used || (code.useCount || 0) >= (code.maxUses || 2) ? 'تفعيل الكود' : 'إيقاف الكود'}">
-                                <i class="fas fa-${code.used || (code.useCount || 0) >= (code.maxUses || 2) ? 'play' : 'pause'}"></i> 
-                                ${code.used || (code.useCount || 0) >= (code.maxUses || 2) ? 'تفعيل' : 'إيقاف'}
+                            <button class="btn btn-success" onclick="toggleCodeStatus('${code.id}', ${!code.used})" title="${code.used ? 'تفعيل الكود' : 'إيقاف الكود'}">
+                                <i class="fas fa-${code.used ? 'play' : 'pause'}"></i> 
+                                ${code.used ? 'تفعيل' : 'إيقاف'}
                             </button>
                             <button class="btn btn-danger" onclick="deleteCode('${code.id}')" title="حذف الكود">
                                 <i class="fas fa-trash"></i> حذف
@@ -1166,10 +1160,10 @@
                                 <i class="fas fa-file"></i> ${code.fileId}
                             </div>
                             <div class="detail-item">
-                                <i class="fas fa-chart-bar"></i> ${code.useCount || 0}/${code.maxUses || 2}
+                                <i class="fas fa-chart-bar"></i> ${code.useCount || 0}
                             </div>
-                            <span class="status-badge ${code.used || (code.useCount || 0) >= (code.maxUses || 2) ? 'status-used' : 'status-active'}">
-                                ${code.used || (code.useCount || 0) >= (code.maxUses || 2) ? 'مستخدم' : 'نشط'}
+                            <span class="status-badge ${code.used ? 'status-used' : 'status-active'}">
+                                ${code.used ? 'مستخدم' : 'نشط'}
                             </span>
                         </div>
                     </div>
@@ -1183,9 +1177,9 @@
                             </button>
                         </div>
                         <div class="action-row">
-                            <button class="btn btn-success" onclick="toggleCodeStatus('${code.id}', ${!(code.used || (code.useCount || 0) >= (code.maxUses || 2))})" title="${code.used || (code.useCount || 0) >= (code.maxUses || 2) ? 'تفعيل الكود' : 'إيقاف الكود'}">
-                                <i class="fas fa-${code.used || (code.useCount || 0) >= (code.maxUses || 2) ? 'play' : 'pause'}"></i> 
-                                ${code.used || (code.useCount || 0) >= (code.maxUses || 2) ? 'تفعيل' : 'إيقاف'}
+                            <button class="btn btn-success" onclick="toggleCodeStatus('${code.id}', ${!code.used})" title="${code.used ? 'تفعيل الكود' : 'إيقاف الكود'}">
+                                <i class="fas fa-${code.used ? 'play' : 'pause'}"></i> 
+                                ${code.used ? 'تفعيل' : 'إيقاف'}
                             </button>
                             <button class="btn btn-danger" onclick="deleteCode('${code.id}')" title="حذف الكود">
                                 <i class="fas fa-trash"></i> حذف
@@ -1482,7 +1476,6 @@
             const videoSelect = document.getElementById('videoIdSelect');
             const selectedVideoIds = videoSelect ? Array.from(videoSelect.selectedOptions).map(o => o.value).filter(v => v) : [];
             const code = document.getElementById('videoCode').value.trim();
-            const maxUses = parseInt(document.getElementById('videoMaxUses').value);
             if (!password) {
                 showAlert('يرجى إدخال كلمة سر', 'danger');
                 return;
@@ -1502,7 +1495,7 @@
                     const response = await fetch('/api/codes', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ password, videoId: vid, fileId: '', code, maxUses })
+                        body: JSON.stringify({ password, videoId: vid, fileId: '', code })
                     });
                     const result = await response.json().catch(() => ({ error: 'خطأ في قراءة الاستجابة' }));
                     results.push({ ok: response.ok, result });
@@ -1521,7 +1514,6 @@
                         videoSelect.value = '';
                     }
                     document.getElementById('videoCode').value = '';
-                    document.getElementById('videoMaxUses').value = '2';
                     loadCodes();
                 } else {
                     showAlert(results[0] && results[0].result && results[0].result.error ? results[0].result.error : 'فشل إضافة الأكواد', 'danger');
@@ -1536,7 +1528,6 @@
             const fileSelect = document.getElementById('fileIdSelect');
             const selectedFileIds = fileSelect ? Array.from(fileSelect.selectedOptions).map(o => o.value).filter(v => v) : [];
             const code = document.getElementById('fileCode').value.trim();
-            const maxUses = parseInt(document.getElementById('fileMaxUses').value);
             if (!password) {
                 showAlert('يرجى إدخال كلمة سر', 'danger');
                 return;
@@ -1555,7 +1546,7 @@
                     const response = await fetch('/api/codes', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ password, videoId: '', fileId: fid, code, maxUses })
+                        body: JSON.stringify({ password, videoId: '', fileId: fid, code })
                     });
                     const result = await response.json().catch(() => ({ error: 'خطأ في قراءة الاستجابة' }));
                     results.push({ ok: response.ok, result });
@@ -1571,7 +1562,6 @@
                         fileSelect.value = '';
                     }
                     document.getElementById('fileCode').value = '';
-                    document.getElementById('fileMaxUses').value = '2';
                     loadCodes();
                 } else {
                     showAlert(results[0] && results[0].result && results[0].result.error ? results[0].result.error : 'فشل إضافة الأكواد', 'danger');
@@ -1650,8 +1640,8 @@
             const fileCodes = codes.filter(c => c.fileId);
             document.getElementById('totalPasswords').textContent = passwords.length;
             document.getElementById('totalCodes').textContent = codes.length;
-            document.getElementById('activeCodes').textContent = codes.filter(c => !c.used && (c.useCount || 0) < (c.maxUses || 2)).length;
-            document.getElementById('usedCodes').textContent = codes.filter(c => c.used || (c.useCount || 0) >= (c.maxUses || 2)).length;
+            document.getElementById('activeCodes').textContent = codes.filter(c => !c.used).length;
+            document.getElementById('usedCodes').textContent = codes.filter(c => c.used).length;
         }
         // Copy to clipboard function
         // Center toast for quick confirmations (e.g., copy)

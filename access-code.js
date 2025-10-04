@@ -269,16 +269,11 @@ async function handleVerify() {
             return;
         }
 
-        // التحقق من حالة الاستخدام
-        const useCountExceeded = (found.useCount || 0) >= (found.maxUses || 2);
-        const alreadyUsed = found.used === true || useCountExceeded;
-        
+        // التحقق من حالة الاستخدام (نفحص فقط علامة 'used'؛ لم نعد نطبق حد أقصى لعدد الاستخدامات)
+        const alreadyUsed = found.used === true;
+
         if (alreadyUsed) {
-            if (useCountExceeded) {
-                errorMessage.textContent = 'تم استخدام الكود بالفعل. يرجى التواصل مع الدعم لتغيير حالة الكود لإمكانية الاستخدام مرة أخرى.';
-            } else {
-                errorMessage.textContent = isVideo ? 'هذا الكود مستخدم بالفعل لهذا الفيديو' : 'هذا الكود مستخدم بالفعل لهذا الملف';
-            }
+            errorMessage.textContent = isVideo ? 'هذا الكود مستخدم بالفعل لهذا الفيديو' : 'هذا الكود مستخدم بالفعل لهذا الملف';
             errorMessage.style.display = 'block';
             if (attempts >= MAX_ATTEMPTS) {
                 attemptsLeft.textContent = 'تم استنفاد جميع المحاولات';
@@ -299,17 +294,7 @@ async function handleVerify() {
                 });
                 
                 if (useResponse.ok) {
-                    const result = await useResponse.json();
-                    if (!result.canUse) {
-                        errorMessage.textContent = 'تم استخدام الكود بالفعل. يرجى التواصل مع الدعم لتغيير حالة الكود لإمكانية الاستخدام مرة أخرى.';
-                        errorMessage.style.display = 'block';
-                        if (attempts >= MAX_ATTEMPTS) {
-                            attemptsLeft.textContent = 'تم استنفاد جميع المحاولات';
-                        } else {
-                            attemptsLeft.textContent = `محاولات متبقية: ${MAX_ATTEMPTS - attempts}`;
-                        }
-                        return;
-                    }
+                    // الخادم الآن لا يمنع الاستخدام بناءً على عدد المرات - نعتبر الطلب ناجحاً لو استجاب الخادم بنجاح
                     useSuccess = true;
                 } else {
                     console.error('فشل في تحديث عدد مرات الاستخدام');
