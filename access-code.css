@@ -113,3 +113,84 @@
     pointer-events: none !important;
 }
 
+/* Transparent overlays that block clicks on YouTube's top-left/top-right in-iframe controls
+   These overlays are added dynamically by JS inside the .video-modal .video-modal-content
+   They are invisible but intercept pointer events so controls like "share" / "watch later"
+   and the channel title/profile badge cannot be clicked.
+*/
+.video-modal .video-modal-content { position: relative; }
+.video-modal .video-overlay {
+    position: absolute;
+    z-index: 1; /* ensure above iframe (iframe has no z-index) but below the close button (z-index:2 inline) */
+    background: transparent;
+    pointer-events: auto;
+}
+.video-modal .video-overlay.top-left {
+    top: 8px;
+    left: 8px;
+    width: 84px; /* adjust if needed */
+    height: 44px;
+}
+.video-modal .video-overlay.top-right {
+    top: 8px;
+    right: 8px;
+    width: 45%; /* covers the right portion where the title/profile usually appears */
+    max-width: 560px;
+    min-width: 140px;
+    height: 48px;
+}
+
+/* On small screens make overlays a bit taller to cover touch targets */
+@media (max-width: 600px) {
+    .video-modal .video-overlay.top-left { width: 64px; height: 56px; }
+    .video-modal .video-overlay.top-right { height: 56px; }
+}
+
+/* Smart overlay and calibration UI */
+.video-smart-overlay {
+    position: absolute;
+    inset: 0; /* cover modal content */
+    z-index: 3; /* above iframe but below close button which had z-index:2 inline; adjust if needed */
+    pointer-events: auto;
+}
+.video-smart-overlay.blocked-flash {
+    animation: blockedFlash 0.22s ease-in-out;
+}
+@keyframes blockedFlash {
+    0% { box-shadow: 0 0 0 4px rgba(255,0,0,0.12) inset; }
+    100% { box-shadow: none; }
+}
+.video-smart-overlay .debug-zone {
+    position: absolute;
+    background: rgba(255,0,0,0.18);
+    border: 1px solid rgba(255,0,0,0.28);
+    box-sizing: border-box;
+    pointer-events: none;
+}
+.video-calibrate-panel {
+    position: absolute;
+    right: 12px;
+    bottom: 12px;
+    z-index: 5;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    background: rgba(0,0,0,0.6);
+    padding: 8px 10px;
+    border-radius: 8px;
+    color: #fff;
+    font-size: 13px;
+}
+.video-calibrate-panel button {
+    background: #e31837;
+    color: #fff;
+    border: none;
+    padding: 6px 8px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+.video-calibrate-panel input[type="checkbox"] { margin-left: 6px; }
+
+/* Make sure close button remains on top */
+.video-modal .close-video-modal { z-index: 20 !important; }
+

@@ -87,12 +87,17 @@ document.body.appendChild(videoModal);
 const closeVideoModalBtn = videoModal.querySelector('.close-video-modal');
 const videoEmbedContainer = videoModal.querySelector('.video-embed-container');
 closeVideoModalBtn.onclick = function() {
+    // Remove overlays if present
+    const modalContent = videoModal.querySelector('.video-modal-content');
+    if (modalContent) modalContent.querySelectorAll('.video-overlay').forEach(el => el.remove());
     videoModal.style.display = 'none';
     videoEmbedContainer.innerHTML = '';
     document.body.style.overflow = '';
 };
 videoModal.onclick = function(e) {
     if (e.target === videoModal) {
+        const modalContent = videoModal.querySelector('.video-modal-content');
+        if (modalContent) modalContent.querySelectorAll('.video-overlay').forEach(el => el.remove());
         videoModal.style.display = 'none';
         videoEmbedContainer.innerHTML = '';
         document.body.style.overflow = '';
@@ -200,10 +205,212 @@ function showVideoModal(url) {
         openBtn.style.textDecoration = 'none';
         videoEmbedContainer.appendChild(openBtn);
     });
+    // Ensure previous overlays are removed (avoid duplicates)
+    const modalContent = videoModal.querySelector('.video-modal-content');
+    function removeVideoOverlays() {
+        if (!modalContent) return;
+        modalContent.querySelectorAll('.video-overlay').forEach(el => el.remove());
+    }
+    removeVideoOverlays();
+
     videoEmbedContainer.appendChild(iframe);
+
+    // Create transparent overlays to block clicks on top-left and top-right YouTube overlay UI
+    if (modalContent) {
+        const overlayTopLeft = document.createElement('div');
+        overlayTopLeft.className = 'video-overlay top-left';
+        overlayTopLeft.setAttribute('title', '');
+        overlayTopLeft.addEventListener('click', function(e) { e.stopPropagation(); e.preventDefault(); });
+        overlayTopLeft.addEventListener('contextmenu', function(e) { e.preventDefault(); });
+
+        const overlayTopRight = document.createElement('div');
+        overlayTopRight.className = 'video-overlay top-right';
+        overlayTopRight.setAttribute('title', '');
+        overlayTopRight.addEventListener('click', function(e) { e.stopPropagation(); e.preventDefault(); });
+        overlayTopRight.addEventListener('contextmenu', function(e) { e.preventDefault(); });
+
+        // Insert overlays into the modal content so they sit above the iframe but below the close button
+        modalContent.appendChild(overlayTopLeft);
+        modalContent.appendChild(overlayTopRight);
+    }
     videoModal.style.display = 'flex';
     document.body.style.overflow = 'hidden';
 }
+// --- Dynamic blocking overlay & calibration helpers ---
+// Zones are stored as percentages relative to the iframe bounding box: { x, y, w, h } in [0..1]
+const DEFAULT_BLOCK_ZONES = [
+    // small top-left zone
+    { x: 0.01, y: 0.01, w: 0.12, h: 0.10 },
+    // top-right title/profile area (broad)
+    { x: 0.55, y: 0.02, w: 0.44, h: 0.12 }
+];
+
+function loadBlockZones() {
+    try {
+        const raw = localStorage.getItem('gelvano_block_zones');
+        if (!raw) return DEFAULT_BLOCK_ZONES.slice();
+        return JSON.parse(raw);
+    } catch (e) {
+        return DEFAULT_BLOCK_ZONES.slice();
+    }
+}
+
+function saveBlockZones(zones) {
+    try { localStorage.setItem('gelvano_block_zones', JSON.stringify(zones)); } catch (e) { /* ignore */ }
+}
+
+// Attach a smart overlay that intercepts clicks over the iframe and blocks clicks in configured zones.
+function attachSmartOverlayToModal() {
+    const modalContent = videoModal.querySelector('.video-modal-content');
+    const iframe = videoEmbedContainer.querySelector('iframe');
+    if (!modalContent || !iframe) return null;
+
+    // remove existing overlay if present
+    modalContent.querySelectorAll('.video-smart-overlay, .video-calibrate-panel').forEach(n => n.remove());
+
+    const overlay = document.createElement('div');
+    overlay.className = 'video-smart-overlay';
+
+    // Zones in percent
+    const zones = loadBlockZones();
+
+    // draw debug boxes if debugging
+    function renderDebugBoxes() {
+        overlay.querySelectorAll('.debug-zone').forEach(n => n.remove());
+        if (!overlay.dataset.debug) return;
+        const r = iframe.getBoundingClientRect();
+        zones.forEach((z, i) => {
+            const el = document.createElement('div');
+            el.className = 'debug-zone';
+            el.style.left = (z.x * 100) + '%';
+            el.style.top = (z.y * 100) + '%';
+            el.style.width = (z.w * 100) + '%';
+            el.style.height = (z.h * 100) + '%';
+            el.title = 'blocked zone ' + (i+1);
+            overlay.appendChild(el);
+        });
+    }
+
+    // check if a relative point is inside any zone
+    function isInZones(relX, relY) {
+        return zones.some(z => relX >= z.x && relY >= z.y && relX <= (z.x + z.w) && relY <= (z.y + z.h));
+    }
+
+    // On pointerdown: decide whether to block
+    overlay.addEventListener('pointerdown', function(ev) {
+        const rect = iframe.getBoundingClientRect();
+        const relX = (ev.clientX - rect.left) / rect.width;
+        const relY = (ev.clientY - rect.top) / rect.height;
+        // if outside iframe area, ignore
+        if (relX < 0 || relY < 0 || relX > 1 || relY > 1) return;
+
+        if (isInZones(relX, relY)) {
+            ev.stopPropagation();
+            ev.preventDefault();
+            // visual feedback briefly
+            overlay.classList.add('blocked-flash');
+            setTimeout(() => overlay.classList.remove('blocked-flash'), 220);
+            return;
+        }
+
+        // allow click to pass through: temporarily disable pointer-events on overlay so the iframe receives the event
+        overlay.style.pointerEvents = 'none';
+        // re-enable after next tick to avoid intercepting further events
+        requestAnimationFrame(() => { overlay.style.pointerEvents = ''; });
+    }, { passive: false });
+
+    // calibration UI: panel with buttons
+    const panel = document.createElement('div');
+    panel.className = 'video-calibrate-panel';
+    panel.innerHTML = `
+        <button class="calib-start">معايرة</button>
+        <button class="calib-clear">مسح الحظر</button>
+        <label><input type="checkbox" class="calib-debug"> عرض مناطق الحظر</label>
+        <button class="calib-save">حفظ</button>
+    `;
+
+    // calibration state
+    let calibrating = false;
+    let tempZones = zones.slice();
+
+    panel.querySelector('.calib-start').addEventListener('click', function() {
+        calibrating = true;
+        tempZones = zones.slice();
+        panel.querySelector('.calib-start').textContent = 'انقر على المناطق لإضافتها (إنهاء)';
+        overlay.dataset.calibrating = '1';
+        overlay.dataset.debug = '1';
+        renderDebugBoxes();
+    });
+    panel.querySelector('.calib-clear').addEventListener('click', function() {
+        tempZones = [];
+        zones.length = 0;
+        saveBlockZones(zones);
+        renderDebugBoxes();
+        alert('تم مسح مناطق الحظر');
+    });
+    panel.querySelector('.calib-save').addEventListener('click', function() {
+        // copy tempZones to persistent zones
+        try { zones.length = 0; tempZones.forEach(z => zones.push(z)); saveBlockZones(zones); } catch (e) {}
+        alert('تم حفظ إعدادات الحظر');
+    });
+    const debugCheckbox = panel.querySelector('.calib-debug');
+    debugCheckbox.addEventListener('change', function() {
+        if (debugCheckbox.checked) overlay.dataset.debug = '1'; else delete overlay.dataset.debug;
+        renderDebugBoxes();
+    });
+
+    // when calibrating, record clicks as small zones
+    overlay.addEventListener('click', function(ev) {
+        if (!calibrating) return;
+        const rect = iframe.getBoundingClientRect();
+        const relX = (ev.clientX - rect.left) / rect.width;
+        const relY = (ev.clientY - rect.top) / rect.height;
+        const zoneSizeW = 0.12;
+        const zoneSizeH = 0.10;
+        const newZone = {
+            x: Math.max(0, relX - zoneSizeW/2),
+            y: Math.max(0, relY - zoneSizeH/2),
+            w: zoneSizeW,
+            h: zoneSizeH
+        };
+        tempZones.push(newZone);
+        // reflect immediate
+        zones.length = 0; tempZones.forEach(z => zones.push(z));
+        renderDebugBoxes();
+        // if user clicked the panel button to finish, toggling is handled by Start button; here, we keep calibrating until user clicks Start again
+    });
+
+    // stop calibrating when user clicks Start again
+    panel.querySelector('.calib-start').addEventListener('dblclick', function() {
+        calibrating = false;
+        delete overlay.dataset.calibrating;
+        panel.querySelector('.calib-start').textContent = 'معايرة';
+        renderDebugBoxes();
+    });
+
+    // show the panel in a corner of modalContent
+    modalContent.appendChild(panel);
+    modalContent.appendChild(overlay);
+
+    // keep debug boxes in sync when window resizes
+    const ro = new ResizeObserver(() => renderDebugBoxes());
+    ro.observe(modalContent);
+
+    // return cleanup function
+    return function detach() {
+        ro.disconnect();
+        modalContent.querySelectorAll('.video-smart-overlay, .video-calibrate-panel').forEach(n => n.remove());
+    };
+}
+
+// Whenever we open a video modal, attach the smart overlay
+const originalShowVideoModal = showVideoModal;
+// wrap showVideoModal so overlay is attached after iframe insertion
+showVideoModal = function(url) {
+    originalShowVideoModal(url);
+    // small timeout so iframe exists and layout stabilizes
+    setTimeout(() => { attachSmartOverlayToModal(); }, 120);
+};
 function showPdfModal(url) {
     const normalizedUrl = (url || '').replace(/\\/g, '/');
     if (!normalizedUrl || normalizedUrl === '#') {
