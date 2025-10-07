@@ -359,13 +359,14 @@ async function handleVerify() {
                 // تجاهل الخطأ إذا لم تكن الصفحة في iframe
             }
             
+
             // محاولة إرسال رسالة عبر localStorage كبديل
             try {
                 localStorage.setItem('gelvano_code_used', Date.now().toString());
             } catch (e) {
                 // تجاهل الخطأ
             }
-            
+
             hidePopup();
             if (isVideo) {
                 showVideoModal(currentContentUrl);
