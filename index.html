@@ -6,6 +6,7 @@
     <title>gelvano</title>
     <link rel="icon" type="image/png" href="assets/6546847867645351321321354564687654545343.png">
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="login.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
@@ -319,7 +320,7 @@
 </head>
 <body style="margin:0; padding:0;">
     <!-- Login Overlay -->
-    <div class="login-overlay" id="loginOverlay">
+    <div class="login-overlay hidden" id="loginOverlay" style="display: none;">
         <form class="login-box" id="loginForm" autocomplete="off" onsubmit="return false;">
             <h2>تسجيل الدخول</h2>
             <input type="text" id="studentName" placeholder="اسم الطالب (بالعربية)" autocomplete="off" required style="direction:rtl;">
@@ -457,11 +458,8 @@
     </footer>
 
     <script src="script.js"></script>
+    <script src="login.js"></script>
     <script>
-    // حذف القائمة الثابتة allowedPasswords
-    // const allowedPasswords = [ ... ];
-    let allowedPasswords = [];
-    let passwordsLoaded = false;
     // جلب كلمات السر المفعلة من السيرفر أو الملف مباشرة عند النشر كصفحة ثابتة
     async function fetchAllowedPasswords() {
         passwordsLoaded = false;
