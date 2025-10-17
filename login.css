@@ -108,6 +108,44 @@
     color: #ff8671;
 }
 
+/* Profile Modal Styles */
+.profile-modal-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.5);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 4000;
+}
+.profile-modal-overlay[style*="display: flex"] {
+    display: flex !important;
+}
+.profile-modal-box {
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+    padding: 2.5rem 2rem 2rem 2rem;
+    min-width: 320px;
+    max-width: 90vw;
+    text-align: center;
+    position: relative;
+    animation: fadeInDown 0.5s;
+}
+.profile-modal-close {
+    position: absolute;
+    top: 12px;
+    right: 18px;
+    font-size: 2rem;
+    color: #d5472f;
+    cursor: pointer;
+    font-weight: bold;
+    transition: color 0.2s;
+}
+.profile-modal-close:hover {
+    color: #ff8671;
+}
+
 /* Animations */
 @keyframes fadeIn {
     from { opacity: 0; }

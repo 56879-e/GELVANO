@@ -39,39 +39,52 @@ function showProfileUI(name, password) {
     if (profileContainer) {
         profileContainer.innerHTML = `
             <i class="fas fa-user-circle profile-icon" id="profileIcon"></i>
-            <div class="profile-dropdown" id="profileDropdown">
-                <div class="profile-info-item">
-                    <strong>الاسم:</strong> <span id="profileName">${name}</span>
-                </div>
-                <div class="profile-info-item">
-                    <strong>ID:</strong> <span id="profilePassword">${password}</span>
-                </div>
-                <div class="profile-info-item logout-item">
-                    <button id="logoutButton" class="logout-button">
-                        <i class="fas fa-sign-out-alt"></i>
-                        تسجيل الخروج
-                    </button>
-                </div>
-            </div>
         `;
-        
+        // Create modal if not exists
+        let modal = document.getElementById('profileModal');
+        if (!modal) {
+            modal = document.createElement('div');
+            modal.id = 'profileModal';
+            modal.className = 'profile-modal-overlay';
+            modal.innerHTML = `
+                <div class="profile-modal-box">
+                    <span class="profile-modal-close" id="profileModalClose">&times;</span>
+                    <div class="profile-info-item">
+                        <strong>الاسم:</strong> <span id="profileNameModal">${name}</span>
+                    </div>
+                    <div class="profile-info-item">
+                        <strong>ID:</strong> <span id="profilePasswordModal">${password}</span>
+                    </div>
+                    <div class="profile-info-item logout-item">
+                        <button id="logoutButtonModal" class="logout-button">
+                            <i class="fas fa-sign-out-alt"></i>
+                            تسجيل الخروج
+                        </button>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(modal);
+        }
         const profileIcon = document.getElementById('profileIcon');
-        const profileDropdown = document.getElementById('profileDropdown');
-        const logoutButton = document.getElementById('logoutButton');
-        
+        const profileModal = document.getElementById('profileModal');
+        const profileModalClose = document.getElementById('profileModalClose');
+        const logoutButtonModal = document.getElementById('logoutButtonModal');
         profileIcon.addEventListener('click', (e) => {
             e.stopPropagation();
-            profileDropdown.classList.toggle('show');
+            profileModal.style.display = 'flex';
         });
-        
-        logoutButton.addEventListener('click', () => {
+        profileModalClose.addEventListener('click', () => {
+            profileModal.style.display = 'none';
+        });
+        logoutButtonModal.addEventListener('click', () => {
             localStorage.removeItem('gelvano_password');
             localStorage.removeItem('gelvano_student_name');
             location.reload();
         });
-        
-        window.addEventListener('click', () => {
-            profileDropdown.classList.remove('show');
+        profileModal.addEventListener('click', (e) => {
+            if (e.target === profileModal) {
+                profileModal.style.display = 'none';
+            }
         });
     }
 }
