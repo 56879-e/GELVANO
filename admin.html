@@ -568,35 +568,73 @@
                 grid-template-columns: 1fr;
             }
         }
-            /* Improved multi-select styling */
+            /* Enhanced multi-select styling */
             #videoIdSelect, #fileIdSelect {
                 min-height: 48px;
                 max-height: 220px;
                 padding: 0.6rem 0.8rem;
-                background: linear-gradient(180deg,#ffffff,#f7fafc);
+                background: linear-gradient(180deg,#ffffff,#f8f9fa);
                 border: 2px solid #c4ccd3;
                 border-radius: 8px;
                 box-shadow: 0 4px 12px rgba(0,0,0,0.06);
                 font-size: 0.98rem;
                 color: #2c3e50;
                 overflow-y: auto;
+                cursor: pointer;
+                transition: all 0.3s ease;
             }
+            
             #videoIdSelect:focus, #fileIdSelect:focus {
                 border-color: #2c3e50;
                 box-shadow: 0 6px 20px rgba(44,62,80,0.12);
                 outline: none;
+                background: #ffffff;
             }
-            /* selected option appearance (browser support varies) */
+            
+            #videoIdSelect:hover, #fileIdSelect:hover {
+                border-color: #2c3e50;
+                box-shadow: 0 6px 16px rgba(44,62,80,0.1);
+            }
+            
+            /* Improved option styling */
+            #videoIdSelect option, #fileIdSelect option {
+                padding: 8px 12px;
+                margin: 2px 0;
+                border-radius: 4px;
+                transition: background 0.2s ease;
+                cursor: pointer;
+            }
+            
+            #videoIdSelect option:hover, #fileIdSelect option:hover {
+                background-color: #e9ecef;
+            }
+            
+            /* Selected option appearance */
             #videoIdSelect option:checked, #fileIdSelect option:checked {
-                background: #2c3e50;
+                background: linear-gradient(135deg, #2c3e50, #34495e);
                 color: #ffffff;
+                font-weight: 600;
             }
+            
+            /* First option (placeholder) styling */
+            #videoIdSelect option:first-child, #fileIdSelect option:first-child {
+                font-style: italic;
+                color: #6c757d;
+                border-bottom: 1px solid #dee2e6;
+                margin-bottom: 4px;
+                padding-bottom: 8px;
+            }
+            
             .multi-select-hint {
                 font-size: 0.85rem;
                 color: #666;
-                margin-top: 0.35rem;
+                margin-top: 0.5rem;
                 direction: rtl;
                 text-align: right;
+                padding: 0.5rem;
+                background: #f8f9fa;
+                border-radius: 6px;
+                border: 1px solid #e9ecef;
             }
     </style>
 </head>
@@ -745,16 +783,24 @@
                     <div class="form-group">
                         <label for="videoIdSelect">معرف الفيديو:</label>
                         <div style="display: flex; gap: 0.5rem;">
-                            <select id="videoIdSelect" multiple style="flex: 1; border: 3px solid #bdc3c7; border-radius: 8px; padding: 0.8rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-                                <option value="">اختر معرف الفيديو</option>
-                            </select>
-                            <button class="btn btn-danger" onclick="deleteVideoId()" title="حذف المعرف المحدد" style="margin: 0;">
-                                <i class="fas fa-trash"></i>
-                            </button>
-                            <input type="text" id="newVideoId" placeholder="إضافة معرف جديد" style="flex: 1; border: 3px solid #bdc3c7; border-radius: 8px; padding: 0.8rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-                            <button class="btn" onclick="addVideoId()" style="margin: 0;">
-                                <i class="fas fa-plus"></i>
-                            </button>
+                            <div style="flex: 1; display: flex; flex-direction: column;">
+                                <select id="videoIdSelect" multiple size="6">
+                                    <option value="">اختر معرف الفيديو (يمكن اختيار أكثر من واحد)</option>
+                                </select>
+                                <div class="multi-select-hint">
+                                    <i class="fas fa-info-circle"></i>
+                                    يمكنك اختيار عدة معرفات باستخدام Ctrl + النقر أو Shift + النقر
+                                </div>
+                            </div>
+                            <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                                <button class="btn btn-danger" onclick="deleteVideoId()" title="حذف المعرف المحدد" style="margin: 0;">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                                <input type="text" id="newVideoId" placeholder="إضافة معرف جديد" style="width: 120px; border: 2px solid #bdc3c7; border-radius: 8px; padding: 0.8rem;">
+                                <button class="btn" onclick="addVideoId()" style="margin: 0;" title="إضافة معرف جديد">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </div>
                         </div>
                 </div>
                     <div class="form-group">
@@ -1194,19 +1240,58 @@
                 if (selectedRaw) selectedArray = [String(selectedRaw)];
             }
 
-            // Rebuild options using DOM to keep raw values intact (textContent will be escaped automatically)
+            // Rebuild options using DOM to keep raw values intact
             select.innerHTML = '';
             const emptyOpt = document.createElement('option');
             emptyOpt.value = '';
             emptyOpt.textContent = 'اختر معرف الفيديو (يمكن اختيار أكثر من واحد)';
             select.appendChild(emptyOpt);
-            videoIds.slice().sort().forEach(id => {
-                const opt = document.createElement('option');
-                opt.value = String(id);
-                opt.textContent = String(id);
-                if (selectedArray.includes(String(id))) opt.selected = true;
-                select.appendChild(opt);
-            });
+
+            // تنظيم المعرفات حسب النوع والترتيب
+            const organizedIds = videoIds.slice().reduce((acc, id) => {
+                const idStr = String(id);
+                if (idStr.startsWith('F')) acc.F.push(idStr);
+                else if (idStr.startsWith('S')) acc.S.push(idStr);
+                else if (idStr.startsWith('T')) acc.T.push(idStr);
+                else acc.other.push(idStr);
+                return acc;
+            }, { F: [], S: [], T: [], other: [] });
+
+            // إضافة المعرفات مرتبة حسب المجموعة
+            const addGroup = (ids, prefix) => {
+                if (ids.length > 0) {
+                    // إضافة عنوان المجموعة
+                    const groupTitle = document.createElement('option');
+                    groupTitle.disabled = true;
+                    groupTitle.style.backgroundColor = '#f8f9fa';
+                    groupTitle.style.color = '#2c3e50';
+                    groupTitle.style.fontWeight = 'bold';
+                    groupTitle.style.padding = '8px';
+                    groupTitle.textContent = prefix === 'F' ? 'أولى ثانوي' :
+                                           prefix === 'S' ? 'ثانية ثانوي' :
+                                           prefix === 'T' ? 'ثالثة ثانوي' : 'معرفات أخرى';
+                    select.appendChild(groupTitle);
+
+                    // إضافة المعرفات مرتبة رقمياً
+                    ids.sort((a, b) => {
+                        const numA = parseInt(a.slice(1));
+                        const numB = parseInt(b.slice(1));
+                        return numA - numB;
+                    }).forEach(id => {
+                        const opt = document.createElement('option');
+                        opt.value = id;
+                        opt.textContent = id;
+                        if (selectedArray.includes(id)) opt.selected = true;
+                        select.appendChild(opt);
+                    });
+                }
+            };
+
+            // إضافة المجموعات بالترتيب
+            addGroup(organizedIds.F, 'F');
+            addGroup(organizedIds.S, 'S');
+            addGroup(organizedIds.T, 'T');
+            addGroup(organizedIds.other, '');
         }
         // Update file ID select dropdown
         function updateFileIdSelect() {
